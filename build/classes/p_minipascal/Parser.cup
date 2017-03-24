@@ -1,0 +1,136 @@
+package p_minipascal;
+import necessities.*;
+import java.util.*;
+import java.io.*;
+parser code {:
+    
+    /* Change the method report_error so it will display the line and
+       column of where the error occurred in the input as well as the
+       reason for the error which is passed into the method in the
+       String 'message'. */
+    public void report_error(String message, Object info) {
+   
+        /* Create a StringBuilder called 'm' with the string 'Error' in it. */
+        StringBuilder m = new StringBuilder("Error");
+   
+        /* Check if the information passed to the method is the same
+           type as the type java_cup.runtime.Symbol. */
+        if (info instanceof java_cup.runtime.Symbol) {
+            /* Declare a java_cup.runtime.Symbol object 's' with the
+               information in the object info that is being typecasted
+               as a java_cup.runtime.Symbol object. */
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+   
+            /* Check if the line number in the input is greater or
+               equal to zero. */
+            if (s.left >= 0) {                
+                /* Add to the end of the StringBuilder error message
+                   the line number of the error in the input. */
+                m.append(" in line "+(s.left+1));   
+                /* Check if the column number in the input is greater
+                   or equal to zero. */
+                if (s.right >= 0)                    
+                    /* Add to the end of the StringBuilder error message
+                       the column number of the error in the input. */
+                    m.append(", column "+(s.right+1));
+            }
+        }
+   
+        /* Add to the end of the StringBuilder error message created in
+           this method the message that was passed into this method. */
+        m.append(" : "+message);
+   
+        /* Print the contents of the StringBuilder 'm', which contains
+           an error message, out on a line. */
+        System.err.println(m);
+    }
+   
+    /* Change the method report_fatal_error so when it reports a fatal
+       error it will display the line and column number of where the
+       fatal error occurred in the input as well as the reason for the
+       fatal error which is passed into the method in the object
+       'message' and then exit.*/
+    public void report_fatal_error(String message, Object info) {
+        report_error(message, info);
+        System.exit(1);
+    }
+:};
+   
+
+   
+/* ------------Declaration of Terminals and Non Terminals Section----------- */
+/* Types */
+terminal            INTEGER, CHAR, BOOLEAN, STRING, VAR, ARRAY;
+
+/*Booleans */
+terminal            TRUE, FALSE;
+
+/*ciclos */
+terminal            IF, ELSE, WHILE, DO, FOR, TO, REPEAT, THEN, BEGIN, END, OF;
+
+/*functions */
+terminal            PROGRAM;
+
+/*Symbols*/
+terminal            SEMICOLON, COLON, COMMA, DOT;   
+
+/*IO*/
+terminal            READ, WRITE, WRITELN;
+
+/* Arithmetic */
+terminal            PLUS,MINUS,TIMES,DIVIDE;
+
+/*Groups*/
+terminal            LPAREN, RPAREN, LCOR, RCOR;
+
+/* Boolean Expressions */
+terminal            GREATEREQ, LESSEQ, GREATER, LESS, NEQ, EQU;
+
+/* Logic operators */
+terminal            NOT, OR, AND;
+
+/*Assignment*/
+terminal            ASSIGN;
+
+/*Values*/
+terminal    String      ID;
+terminal    String      CONSTSTR;
+terminal    Integer     NUMBER;
+terminal    Character   CONSTCHAR;
+
+ /*Non Terminals section*/
+non terminal Program program;
+non terminal Block block;
+non terminal Variable_dec_part v_d_p;
+non terminal Variable_dec var_dec;
+non terminal Type type;
+non terminal Array_type array_t;
+non terminal Index_range index_r;
+non terminal Simple_type simple_t;
+non terminal Type_ident t_id;
+non terminal Procedure_dec_part p_d_p;
+non terminal Procedure_dec proc_dec;
+non terminal Stament_part stament_p;
+non terminal Assign_stament assign_s;
+non terminal Procedure_stament proc_s;
+non terminal Procedure_iden proc_id;
+non terminal Read_stament read_s;
+non terminal Input_varable Input_var;
+non terminal Write_stament write_s;
+non terminal Output_value output_val;
+non terminal Structured_stament struct_s;
+non terminal If_stament if_s;
+non terminal While_staent while_s;
+non terminal Expression exp;
+non terminal Simple_expression sim_exp;
+non terminal Term term;
+non terminal Factor factor;
+non terminal Variable var;
+non terminal Indexed_variable ind_var;
+non terminal Array_variable array_var;
+non terminal Entire_variable ent_var;
+non terminal Variable_identifier var_ident;
+
+
+/* ----------------------------Grammar Section-------------------- */
+   
