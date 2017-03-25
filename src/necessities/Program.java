@@ -12,7 +12,7 @@ package necessities;
 public class Program {
     
     public Identifier iden;
-    public Block block; //idk si tiene que ir aqui este :(
+    public Block block; 
     
     public Program(Identifier id){
         iden = id;

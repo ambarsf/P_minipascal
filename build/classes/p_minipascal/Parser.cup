@@ -134,7 +134,7 @@ non terminal Variable_identifier var_ident;
 
 /* ----------------------------Grammar Section-------------------- */
 
-program ::= PROGRAM ID COMMA block:blck                          {::}
+program ::= PROGRAM ID:i COMMA block:blck                          {::}
 ;
 
 block ::= v_d_p:vdp p_d_p:pdp stament_p:sp                       {::}
