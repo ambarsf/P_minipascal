@@ -12,7 +12,7 @@ import java.util.Vector;
  * @author ambarsuarez
  */
 public class Variable_dec_part {
-    private Vector declarations;
+    Vector declarations;
     
     public Variable_dec_part(){
         declarations = new Vector();

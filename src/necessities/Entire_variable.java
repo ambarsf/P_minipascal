@@ -10,5 +10,12 @@ package necessities;
  * @author ambarsuarez
  */
 public class Entire_variable {
+    Variable_identifier var_id;
+
+    public Entire_variable(Variable_identifier var_id) {
+        this.var_id = var_id;
+    }
+    
+    
     
 }

@@ -26,5 +26,13 @@ public class Block {
     public Block(Stament_part st_part){
         stament_part = st_part;
     }
+
+    public Block(Variable_dec_part v_declarations, Procedure_dec_part p_declarations, Stament_part stament_part) {
+        this.v_declarations = v_declarations;
+        this.p_declarations = p_declarations;
+        this.stament_part = stament_part;
+    }
     
 }
+    
+   

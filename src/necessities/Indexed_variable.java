@@ -11,10 +11,13 @@ package necessities;
  */
 public class Indexed_variable {
     Array_variable ar_var;
+    Expression exp;
 
-    public Indexed_variable(Array_variable ar_var) {
+    public Indexed_variable(Array_variable ar_var, Expression exp) {
         this.ar_var = ar_var;
+        this.exp = exp;
     }
+
     
     
     

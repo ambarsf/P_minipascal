@@ -119,7 +119,7 @@ non terminal Assign_stament assign_s;
 non terminal Procedure_stament proc_s;
 non terminal Procedure_iden proc_id;
 non terminal Read_stament read_s;
-non terminal Input_varable input_var;
+non terminal Input_variable input_var;
 non terminal Write_stament write_s;
 non terminal Output_value output_val;
 non terminal Structured_stament struct_s;
@@ -142,79 +142,79 @@ non terminal more_w;
 
 /* ----------------------------Grammar Section-------------------- */
 
-program ::= PROGRAM ID:id SEMICOLON block:block                                 {: RESULT = new Program (id,block); :}                    
+program ::= PROGRAM identifier:id SEMICOLON block:block                         {: RESULT = new Program (id,block); :}                    
 ;
 
-block ::= v_d_p: p_d_p: stament_p:                                              {::}                        
+block ::= v_d_p:vdp p_d_p:pdp stament_p:sp                                      {: RESULT = new Block (vdp,pdp,sp); :}                        
 ;
 
-v_d_p ::= VAR var_dec: SEMICOLON  v_d_p                                         {::} 
-          |/*lambda*/                                                           {::}
+v_d_p ::= VAR var_dec:vd SEMICOLON  v_d_p:vdp                                   {: vdp.add(vd); RESULT = vdp; :} 
+          |/*lambda*/                                                           {: RESULT = new Variable_dec_part(); :}
 ;
-
-var_dec ::= ID: more_id: COLON type:                                            {::}
+)
+var_dec ::= identifier:id more_id:mas COLON type:tipo                           {::}
 ;
 
 more_id ::= COMMA ID: more_id:                                                  {::}
             |/*lambda*/                                                         {::}
 ;
 
-type ::= simple_t:                                                              {::}
-         |array_t:                                                              {::}
+type ::= simple_t:st                                                            {: RESULT = new Type(st); :}
+         |array_t:at                                                            {: RESULT = new Type(at); :}
 ;
 
 array_t ::= ARRAY [ index_r: ] OF simple_t:                                     {::}
 ;
 
-index_r ::=                                                                     {::}
+index_r ::= NUMBER DOT DOT NUMBER                                               {::}
 ;
 
-simple_t ::= t_id:                                                              {::}
+simple_t ::= t_id:tid                                                           {: RESULT = new Simple_type (tid); :}
 ;
 
-t_id ::= ID                                                                     {::}
+t_id ::= identifier:id                                                          {: RESULT = new Type_ident (id); :}
 ;
 
-p_d_p ::=  proc_dec: SEMICOLON p_d_p:                                           {::}
-           |/*Lambda*/                                                          {::}
+p_d_p ::=  proc_dec:pd SEMICOLON p_d_p:pdp                                      {: pdp.add(pd); RESULT= pdp; :}
+           |/*Lambda*/                                                          {: RESULT = new Procedure_dec_part(); :}
 ;
 
-proc_dec ::= PROCEDURE ID: SEMICOLON block:                                     {::}
+proc_dec ::= PROCEDURE identifier:id SEMICOLON block:bl                         {: RESULT = new Procedure_dec(id, bl); :}
 ;
 
-stament_p ::= c_stament:                                                        {::}
+stament_p ::= c_stament:cst                                                     {: RESULT = new Stament_part(cst); :}
 ;
 
-c_stament ::= BEGIN stament: more_stament: END                                  {::}
+c_stament ::= BEGIN stament:st more_stament:mst END                             {::}
 ;
 
-more_stament ::= SEMICOLON stament: more_stament:                               {::}
+more_stament ::= SEMICOLON stament:st more_stament:mst                          {::}
                  |/*lamda*/                                                     {::}
 ;
 
-stament ::= sim_stament:                                                        {::}
-            |struct_stament:                                                    {::}
+stament ::= sim_stament:sim_st                                                  {: RESULT = new Stament(sim_st); :}
+            |struct_stament:st_st                                               {: RESULT = new Stament(st_st); :}
 ;
 
-sim_stament ::= assign_s:                                                       {::}
-                |proc_s:                                                        {::}
-                |read_s:                                                        {::}
-                |write_s:                                                       {::}
+sim_stament ::= assign_s:as_s                                                   {: RESULT = new Simple_stament(as_s); :}
+                |proc_s:p_s                                                     {: RESULT = new Simple_stament(p_s); :}
+                |read_s:r_s                                                     {: RESULT = new Simple_stament(r_s); :}
+                |write_s:w_s                                                    {: RESULT = new Simple_stament(w_s); :}
 ;
 
-assign_s ::= var: ASSIGN exp:                                                   {::}
+assign_s ::= var:v ASSIGN exp:ex                                                {: RESULT = new Assign_stament(v,ex); :}
 ;
 
-proc_s ::= proc_id:                                                             {::}
+proc_s ::= proc_id:p_id                                                         {: RESULT = new Procedure_stament(p_id); :}
 ;
 
-proc_id ::= ID                                                                  {::}
+proc_id ::= identifier:id                                                       {: RESULT = new Procedure_iden(id); :}
 ;
 
-read_s ::= READ LPAREN input_var: RPAREN                                {::}
+read_s ::= READ LPAREN input_var:i_v RPAREN                                     {: RESULT = new Read_stament(i_v); :}
 ;
 
-input_var ::= var                                                               {::}
+input_var ::= var:v                                                             {: RESULT = new Input_variable(v); :}
 ;
 
 write_s ::= WRITE LPAREN output_val: more_w: RPAREN                             {::}
@@ -224,19 +224,19 @@ more_w::= COMMA output_val: more_w:                                             
           |/*lambda*/                                                           {::}
 ;
 
-output_val ::= exp                                                              {::}
+output_val ::= exp:ex                                                           {: RESULT = new Output_value(ex); :}
 ;
 
-struct_s ::= c_stament:                                                         {::}
-             |if_stament:                                                       {::}
-             |while_stament:                                                    {::}
+struct_s ::= c_stament: c_st                                                    {: RESULT = new Structured_stament(c_st); :}
+             |if_stament: if_st                                                 {: RESULT = new Structured_stament(if_st); :}
+             |while_stament: w_st                                               {: RESULT = new Structured_stament(w_st); :}
 ;
 
-if_s ::= IF exp: THEN stament:                                                  {::}
-         |IF exp: THEN stament: ELSE stament:                                   {::}
+if_s ::= IF exp:ex THEN stament:st                                              {: RESULT = new If_stament(ex,st); :}
+         |IF exp:ex THEN stament:st1 ELSE stament:st2                           {: RESULT = new If_stament(ex,st1,st2); :}
 ;
 
-while_s ::= WHILE exp: DO stament:                                              {::}
+while_s ::= WHILE exp:ex DO stament:st                                          {: RESULT = new While_stament(ex,st); :}
 ;
 
 exp ::= sim_exp:
@@ -252,18 +252,18 @@ term ::=
 factor ::=
 ;
 
-var ::= ent_var: 
-        |ind_var:
+var ::= ent_var: ent_v                                                          {: RESULT = new Variable(ent_v); :}
+        |ind_var: ind_v                                                         {: RESULT = new Variable(ind_v); :}
 ;
 
-ind_var ::= array_var: LCOR exp: RCOR 
+ind_var ::= array_var:ar_v LCOR exp:ex RCOR                                     {: RESULT = new Indexed_variable(ar_v, ex); :}
 ;
 
-array_var ::= ent_var:
+array_var ::= ent_var:e_var                                                     {: RESULT = new Array_variable(e_var); :}
 ;
 
-ent_var ::= var_ident: 
+ent_var ::= var_ident:var_id                                                    {: RESULT = new Entire_variable(var_id); :} 
 ;
 
-var_ident ::= ID
+var_ident ::= identifier:id                                                     {: RESULT = new Variable_identifier(id); :}
 ;        
