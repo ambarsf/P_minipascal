@@ -115,7 +115,7 @@ non terminal Assign_stament assign_s;
 non terminal Procedure_stament proc_s;
 non terminal Procedure_iden proc_id;
 non terminal Read_stament read_s;
-non terminal Input_varable Input_var;
+non terminal Input_varable input_var;
 non terminal Write_stament write_s;
 non terminal Output_value output_val;
 non terminal Structured_stament struct_s;
@@ -140,6 +140,90 @@ program ::= PROGRAM ID COMMA block:blck                          {::}
 block ::= v_d_p:vdp p_d_p:pdp stament_p:sp                       {::}
 ;
 
-v_d_p ::= VAR var_dec: v_dec COMMA                               {::}
+v_d_p ::= VAR var_dec: v_dec COMMA   /*Solo acepta una variable*/{::}
           |/*lambda*/
-        
+;
+
+var_dec ::=
+;
+
+type ::=
+;
+
+array_t ::=
+;
+
+index_r ::=
+;
+
+simple_t ::=
+;
+
+t_id ::=
+;
+
+p_d_p ::=
+;
+
+proc_dec ::=
+;
+
+stament_p ::=
+;
+
+assign_s ::=
+;
+
+proc_s ::=
+;
+
+proc_id ::=
+;
+
+read_s ::=
+;
+
+input_var ::=
+;
+
+write_s ::=
+;
+
+output_val ::=
+;
+
+struct_s ::=
+;
+
+if_s ::=
+;
+
+while_s ::=
+;
+
+exp ::=
+;
+
+sim_exp ::=
+;
+
+term ::=
+;
+
+factor ::=
+;
+
+var ::=
+;
+
+ind_var ::=
+;
+
+array_var ::=
+;
+
+ent_var ::=
+;
+
+var_ident ::=
+;        
