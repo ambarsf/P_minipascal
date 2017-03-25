@@ -133,4 +133,13 @@ non terminal Variable_identifier var_ident;
 
 
 /* ----------------------------Grammar Section-------------------- */
-   
+
+program ::= PROGRAM ID COMMA block:blck                          {::}
+;
+
+block ::= v_d_p:vdp p_d_p:pdp stament_p:sp                       {::}
+;
+
+v_d_p ::= VAR var_dec: v_dec COMMA                               {::}
+          |/*lambda*/
+        

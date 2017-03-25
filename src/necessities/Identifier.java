@@ -10,5 +10,10 @@ package necessities;
  * @author ambarsuarez
  */
 public class Identifier {
+    public String s;
+
+    public Identifier(String as) {
+        s = as;
+    }
     
 }
