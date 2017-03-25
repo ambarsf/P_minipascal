@@ -22,4 +22,8 @@ public class Program {
         block = blok;
     }
     
+    public Program (Identifier id, Block bl){
+        iden = id;
+        block = bl;
+    }    
 }

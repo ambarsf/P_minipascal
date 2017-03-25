@@ -111,6 +111,10 @@ non terminal Type_ident t_id;
 non terminal Procedure_dec_part p_d_p;
 non terminal Procedure_dec proc_dec;
 non terminal Stament_part stament_p;
+non terminal Compound_stament c_stament;
+non terminal Stament stament;
+non terminal Simple_stament sim_stament;
+non terminal Structured_stament struct_stament;
 non terminal Assign_stament assign_s;
 non terminal Procedure_stament proc_s;
 non terminal Procedure_iden proc_id;
@@ -119,8 +123,8 @@ non terminal Input_varable input_var;
 non terminal Write_stament write_s;
 non terminal Output_value output_val;
 non terminal Structured_stament struct_s;
-non terminal If_stament if_s;
-non terminal While_staent while_s;
+non terminal If_stament if_stament;
+non terminal While_stament while_stament;
 non terminal Expression exp;
 non terminal Simple_expression sim_exp;
 non terminal Term term;
@@ -130,78 +134,113 @@ non terminal Indexed_variable ind_var;
 non terminal Array_variable array_var;
 non terminal Entire_variable ent_var;
 non terminal Variable_identifier var_ident;
+non terminal Identifier identifier;
+non terminal more_id;
+non terminal more_stament;
+non terminal more_w;
 
 
 /* ----------------------------Grammar Section-------------------- */
 
-program ::= PROGRAM ID:i COMMA block:blck                          {::}
+program ::= PROGRAM ID:id SEMICOLON block:block                                 {: RESULT = new Program (id,block); :}                    
 ;
 
-block ::= v_d_p:vdp p_d_p:pdp stament_p:sp                       {::}
+block ::= v_d_p: p_d_p: stament_p:                                              {::}                        
 ;
 
-v_d_p ::= VAR var_dec: v_dec COMMA   /*Solo acepta una variable*/{::}
-          |/*lambda*/
+v_d_p ::= VAR var_dec: SEMICOLON  v_d_p                                         {::} 
+          |/*lambda*/                                                           {::}
 ;
 
-var_dec ::=
+var_dec ::= ID: more_id: COLON type:                                            {::}
 ;
 
-type ::=
+more_id ::= COMMA ID: more_id:                                                  {::}
+            |/*lambda*/                                                         {::}
 ;
 
-array_t ::=
+type ::= simple_t:                                                              {::}
+         |array_t:                                                              {::}
 ;
 
-index_r ::=
+array_t ::= ARRAY [ index_r: ] OF simple_t:                                     {::}
 ;
 
-simple_t ::=
+index_r ::=                                                                     {::}
 ;
 
-t_id ::=
+simple_t ::= t_id:                                                              {::}
 ;
 
-p_d_p ::=
+t_id ::= ID                                                                     {::}
 ;
 
-proc_dec ::=
+p_d_p ::=  proc_dec: SEMICOLON p_d_p:                                           {::}
+           |/*Lambda*/                                                          {::}
 ;
 
-stament_p ::=
+proc_dec ::= PROCEDURE ID: SEMICOLON block:                                     {::}
 ;
 
-assign_s ::=
+stament_p ::= c_stament:                                                        {::}
 ;
 
-proc_s ::=
+c_stament ::= BEGIN stament: more_stament: END                                  {::}
 ;
 
-proc_id ::=
+more_stament ::= SEMICOLON stament: more_stament:                               {::}
+                 |/*lamda*/                                                     {::}
 ;
 
-read_s ::=
+stament ::= sim_stament:                                                        {::}
+            |struct_stament:                                                    {::}
 ;
 
-input_var ::=
+sim_stament ::= assign_s:                                                       {::}
+                |proc_s:                                                        {::}
+                |read_s:                                                        {::}
+                |write_s:                                                       {::}
 ;
 
-write_s ::=
+assign_s ::= var: ASSIGN exp:                                                   {::}
 ;
 
-output_val ::=
+proc_s ::= proc_id:                                                             {::}
 ;
 
-struct_s ::=
+proc_id ::= ID                                                                  {::}
 ;
 
-if_s ::=
+read_s ::= READ LPAREN input_var: RPAREN                                {::}
 ;
 
-while_s ::=
+input_var ::= var                                                               {::}
 ;
 
-exp ::=
+write_s ::= WRITE LPAREN output_val: more_w: RPAREN                             {::}
+;
+
+more_w::= COMMA output_val: more_w:                                             {::}
+          |/*lambda*/                                                           {::}
+;
+
+output_val ::= exp                                                              {::}
+;
+
+struct_s ::= c_stament:                                                         {::}
+             |if_stament:                                                       {::}
+             |while_stament:                                                    {::}
+;
+
+if_s ::= IF exp: THEN stament:                                                  {::}
+         |IF exp: THEN stament: ELSE stament:                                   {::}
+;
+
+while_s ::= WHILE exp: DO stament:                                              {::}
+;
+
+exp ::= sim_exp:
+        |??????????????
 ;
 
 sim_exp ::=
@@ -213,17 +252,18 @@ term ::=
 factor ::=
 ;
 
-var ::=
+var ::= ent_var: 
+        |ind_var:
 ;
 
-ind_var ::=
+ind_var ::= array_var: LCOR exp: RCOR 
 ;
 
-array_var ::=
+array_var ::= ent_var:
 ;
 
-ent_var ::=
+ent_var ::= var_ident: 
 ;
 
-var_ident ::=
+var_ident ::= ID
 ;        

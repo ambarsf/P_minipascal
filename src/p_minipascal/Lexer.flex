@@ -73,9 +73,9 @@ id = {letter}+{letter}*{digit}*
 
 //	{comment}		{ return symbol (sym.COMMENT); }
 
-	";"			{ return symbol (sym.SEMICOLON); }
-        ":"                     { return symbol (sym.COLON); }
-	","			{ return symbol (sym.COMMA); } 
+//	";"			{ return symbol (sym.SEMICOLON); }
+//      ":"                     { return symbol (sym.COLON); }
+//	","			{ return symbol (sym.COMMA); } 
 //      "."                     { return symbol (sym.DOT); }
 
 //   	"+"                     { return symbol(sym.PLUS); }
