@@ -12,14 +12,14 @@ import java.util.Vector;
  * @author ambarsuarez
  */
 public class Index_range {
-    Vector ind_ranges;
-    
-    public Index_range(){
-        ind_ranges = new Vector();
+    int  int1;
+    int  int2;
+
+    public Index_range(int int1, int int2) {
+        this.int1 = int1;
+        this.int2 = int2;
     }
     
-    public void add (Integer_const i_const){
-        ind_ranges.add(0, i_const);
-    }
+    
     
 }

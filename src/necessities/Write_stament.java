@@ -13,14 +13,12 @@ import java.util.Vector;
  */
 public class Write_stament {
     
-    Vector values;
+    Writes write;
 
-    public Write_stament() {
-        this.values = new Vector();
+    public Write_stament(Writes write) {
+        this.write = write;
     }
-    
-     public void add(Output_value o_v){
-        values.add(0, o_v);
-    }
+
+
     
 }

@@ -13,15 +13,13 @@ import java.util.Vector;
  */
 public class Compound_stament {
     
-    Vector staments;
+    Staments staments;
 
-    public Compound_stament(Vector staments) {
-        this.staments = new Vector();
+    public Compound_stament(Staments staments) {
+        this.staments = staments;
     }
     
-    public void add(Stament st){
-        staments.add(0, st);
-    }
+    
     
     
 }

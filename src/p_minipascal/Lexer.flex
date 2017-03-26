@@ -71,7 +71,7 @@ conststr = "'"{AllButR_Quotation}*"'"
 	"write"  		{ return symbol (sym.WRITE); }
 	"read"  		{ return symbol (sym.READ); }
 
-	{comment}		{ return symbol (sym.COMMENT); }
+	{comment}		{}
 
 	";"			{ return symbol (sym.SEMICOLON); }
         ":"                     { return symbol (sym.COLON); }
@@ -79,14 +79,14 @@ conststr = "'"{AllButR_Quotation}*"'"
         "."                     { return symbol (sym.DOT); }
 
    	"+"                     { return symbol(sym.PLUS); }
-   	"-"                     { return symbol(sym.MINUS);       }
-    	"*"                     { return symbol(sym.TIMES);       }
-    	"/"                     { return symbol(sym.DIVIDE);       }
+   	"-"                     { return symbol(sym.MINUS); }
+    	"*"                     { return symbol(sym.TIMES);}
+    	"/"                     { return symbol(sym.DIVIDE);}
 
-	"("                     { return symbol(sym.LPAREN);      }
-    	")"                     { return symbol(sym.RPAREN);      }
-    	"\["                    { return symbol(sym.LCOR);    }
-   	"\]"                    { return symbol(sym.RCOR);     }
+	"("                     { return symbol(sym.LPAREN); }
+    	")"                     { return symbol(sym.RPAREN); }
+    	"\["                    { return symbol(sym.LCOR); }
+   	"\]"                    { return symbol(sym.RCOR); }
 
 
     	">="                    { return symbol(sym.GREATEREQ); }

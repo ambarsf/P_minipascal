@@ -14,13 +14,10 @@ import java.util.Vector;
 public class Variable_dec {
     Vector identifiers;
     Type type;
+    String identifier;
     
     public Variable_dec(){
         identifiers=new Vector();
-    }
-    
-    public Variable_dec(Type taip){
-        type = taip;
     }
     
     public void add(String id){
@@ -29,6 +26,11 @@ public class Variable_dec {
 
     public Variable_dec(Vector identifiers, Type type) {
         this.identifiers = identifiers;
+        this.type = type;
+    }
+    
+    public Variable_dec(String identifier, Type type) {
+        this.identifier = identifier;
         this.type = type;
     }
     

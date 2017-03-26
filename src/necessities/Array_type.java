@@ -14,13 +14,9 @@ import java.util.Vector;
 public class Array_type {
     Index_range ind_range;
     Simple_type  sim_t;
-    
-    public Array_type(Index_range i_r){
-        ind_range = i_r; 
-    }
-    
-    public Array_type(Simple_type s_t){
-        sim_t = s_t;
-    }
-    
+
+    public Array_type(Index_range ind_range, Simple_type sim_t) {
+        this.ind_range = ind_range;
+        this.sim_t = sim_t;
+    }  
 }

@@ -5,19 +5,23 @@
  */
 package necessities;
 
+import java.util.Vector;
+
 /**
  *
  * @author ambarsuarez
  */
-public class Type_ident {
-    String ident;
+public class Writes {
+    Vector values;
     
-    public Type_ident(String id){
-        ident = id;
+    public Writes(){
+        values = new Vector();
     }
-
-    public Type_ident() {
+    
+    public void add(Output_value o_v){
+        values.add(0, o_v);
     }
+    
     
     
     

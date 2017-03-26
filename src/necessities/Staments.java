@@ -5,20 +5,21 @@
  */
 package necessities;
 
+import java.util.Vector;
+
 /**
  *
  * @author ambarsuarez
  */
-public class Type_ident {
-    String ident;
+public class Staments {
+    Vector values;
     
-    public Type_ident(String id){
-        ident = id;
-    }
-
-    public Type_ident() {
+    public Staments(){
+        values = new Vector();
     }
     
-    
+    public void add(Stament st){
+        values.add(0, st);
+    }
     
 }

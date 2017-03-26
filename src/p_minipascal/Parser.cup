@@ -133,9 +133,8 @@ non terminal Indexed_variable ind_var;
 non terminal Array_variable array_var;
 non terminal Entire_variable ent_var;
 non terminal Variable_identifier var_ident;
-non terminal more_id;
-non terminal more_stament;
-non terminal more_w;
+non terminal Staments staments;      /////NOT DONE YET
+non terminal Writes writes; /////NOT DONE YET
 non terminal more_terms;
 non terminal more_fac;
 
@@ -161,27 +160,27 @@ v_d_p ::= VAR var_dec:vd SEMICOLON  v_d_p:vdp                                   
           |/*lambda*/                                                           {: RESULT = new Variable_dec_part(); :}
 ;
 
-var_dec ::= ID:id more_id:mas COLON type:tipo                                   {::}
-;
-
-more_id ::= COMMA ID more_id                                                    {::}
-            |/*lambda*/                                                         {::}
+var_dec ::= ID:id COMMA var_dec:vd                                              {: vd.add(id); RESULT = vd; :}
+            |ID:id COLON type:tipo                                              {: RESULT = new Variable_dec(id,tipo); :}
 ;
 
 type ::= simple_t:st                                                            {: RESULT = new Type(st); :}
          |array_t:at                                                            {: RESULT = new Type(at); :}
 ;
 
-array_t ::= ARRAY LCOR index_r RCOR OF simple_t                                 {::}
+array_t ::= ARRAY LCOR index_r:ind_r RCOR OF simple_t:sim_t                     {: RESULT = new Array_type(ind_r,sim_t); :}
 ;
 
-index_r ::= NUMBER DOT DOT NUMBER                                               {::}
+index_r ::= NUMBER:n1 DOT DOT NUMBER:n2                                         {:RESULT = new Index_range(n1,n2); :}
 ;
 
 simple_t ::= t_id:tid                                                           {: RESULT = new Simple_type (tid); :}
 ;
 
-t_id ::= ID:id /*changes in types*/                                             {: RESULT = new Type_ident (id); :}
+t_id ::= INTEGER                                                                {: RESULT = new Type_ident(); :}
+         |CHAR                                                                  {: RESULT = new Type_ident(); :}
+         |BOOLEAN                                                               {: RESULT = new Type_ident(); :}
+         |STRING                                                                {: RESULT = new Type_ident(); :}
 ;
 
 p_d_p ::=  proc_dec:pd SEMICOLON p_d_p:pdp                                      {: pdp.add(pd); RESULT= pdp; :}
@@ -194,11 +193,11 @@ proc_dec ::= PROCEDURE ID:id SEMICOLON block:bl                                 
 stament_p ::= c_stament:cst                                                     {: RESULT = new Stament_part(cst); :}
 ;
 
-c_stament ::= BEGIN stament:st more_stament:mst END                             {::}
+c_stament ::= BEGIN staments:sts END                                            {:RESULT = new Compound_stament(sts); :}
 ;
 
-more_stament ::= SEMICOLON stament:st more_stament:mst                          {::}
-                 |/*lamda*/                                                     {::}
+staments ::= stament:st SEMICOLON staments:sts                                  {:sts.add(st); RESULT = sts; :}
+             |stament:st                                                        {:RESULT = new Staments(); RESULT.add(st); :}
 ;
 
 stament ::= sim_stament:sim_st                                                  {: RESULT = new Stament(sim_st); :}
@@ -226,11 +225,11 @@ read_s ::= READ LPAREN input_var:i_v RPAREN                                     
 input_var ::= var:v                                                             {: RESULT = new Input_variable(v); :}
 ;
 
-write_s ::= WRITE LPAREN output_val more_w RPAREN                               {::}
+write_s ::= WRITE LPAREN writes:wr RPAREN                                       {: RESULT = new Write_stament(wr); :}
 ;
 
-more_w::= COMMA output_val more_w                                               {::}
-          |/*lambda*/                                                           {::}
+writes ::= output_val:ov COMMA writes:wr                                        {: wr.add(ov); RESULT = wr; :}
+           |output_val:ov                                                       {: RESULT = new Writes(); RESULT.add(ov); :}
 ;
 
 output_val ::= exp:ex                                                           {: RESULT = new Output_value(ex); :}
@@ -248,43 +247,40 @@ if_stament ::= IF exp:ex THEN stament:st                                        
 while_stament ::= WHILE exp:ex DO stament:st                                    {: RESULT = new While_stament(ex,st); :}
 ;
 
-exp ::= sim_exp 
-        |sim_exp EQU sim_exp
-	|sim_exp NEQ sim_exp
-	|sim_exp LESS sim_exp
-	|sim_exp LESSEQ sim_exp
-	|sim_exp GREATEREQ sim_exp
-	|sim_exp GREATER sim_exp
+exp ::= sim_exp                                                                 {::} 
+        |sim_exp EQU sim_exp                                                    {::}
+	|sim_exp NEQ sim_exp                                                    {::}
+	|sim_exp LESS sim_exp                                                   {::}
+	|sim_exp LESSEQ sim_exp                                                 {::}
+	|sim_exp GREATEREQ sim_exp                                              {::}
+	|sim_exp GREATER sim_exp                                                {::}
 ;
 
-sim_exp ::= PLUS term more_terms
-	|
-	MINUS term more_terms
-	|
-	term more_terms
+sim_exp ::= PLUS term more_terms                                                {::}
+	|MINUS term more_terms                                                  {::}
+	|term more_terms                                                        {::}
 ;
 
-more_terms ::= PLUS term more_terms
-	|
-	MINUS term more_terms
-	| /*lambda*/
+more_terms ::= PLUS term more_terms                                             {::}
+	|MINUS term more_terms                                                  {::}
+	| /*lambda*/                                                            {::}
 ;
 
 
-term ::= factor more_fac
+term ::= factor more_fac                                                        {::}
 ;
 
-more_fac ::= TIMES factor more_fac
-	|DIVIDE factor more_fac
-	|/*lambda*/
+more_fac ::= TIMES factor more_fac                                              {::}
+	|DIVIDE factor more_fac                                                 {::}
+	|/*lambda*/                                                             {::}
 ;	
 
-factor ::= var
-	|CONSTSTR
-	|CONSTCHAR
-	|NUMBER	
-	|LPAREN exp RPAREN
-	|NOT factor
+factor ::= var                                                                  {::}
+	|CONSTSTR                                                               {::}
+	|CONSTCHAR                                                              {::}
+	|NUMBER                                                                 {::}	
+	|LPAREN exp RPAREN                                                      {::}
+	|NOT factor                                                             {::}
 ;
 
 var ::= ent_var: ent_v                                                          {: RESULT = new Variable(ent_v); :}
