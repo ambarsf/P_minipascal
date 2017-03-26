@@ -11,7 +11,7 @@ package p_minipascal;
  */
 public class Main_Cup {
     public static void main(String[] args){
-        String params [] = {"-destdir", "src//minipascal","-parser", 
+        String params [] = {"-destdir", "src//p_minipascal","-parser", 
             "parser","src//p_minipascal//Parser.cup"};
         try{
             java_cup.Main.main(params);
