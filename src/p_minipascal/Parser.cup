@@ -138,6 +138,15 @@ non terminal Identifier identifier;
 non terminal more_id;
 non terminal more_stament;
 non terminal more_w;
+non terminal more_terms;
+non terminal more_fac;
+precedence left OR;
+precedence left AND;
+precedence left EQU, NEQ, LESS, LESSEQ, GREATEREQ, GREATER;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE;
+precedence right NOT;
+precedence nonassoc ELSE;
 
 
 /* ----------------------------Grammar Section-------------------- */
@@ -239,18 +248,58 @@ if_s ::= IF exp:ex THEN stament:st                                              
 while_s ::= WHILE exp:ex DO stament:st                                          {: RESULT = new While_stament(ex,st); :}
 ;
 
-exp ::= sim_exp:
-        |??????????????
+
+exp ::= sim_exp 
+        |
+	sim_exp EQU sim_exp
+	| 
+	sim_exp NEQ sim_exp
+	| 
+	sim_exp LESS sim_exp
+	| 
+	sim_exp LESSEQ sim_exp
+	| 
+	sim_exp GREATEREQ sim_exp
+	| 
+	sim_exp GREATER sim_exp
 ;
 
-sim_exp ::=
+sim_exp ::= PLUS term more_terms
+	|
+	MINUS term more_terms
+	|
+	term more_terms
 ;
 
-term ::=
+more_terms ::= PLUS term more_terms
+	|
+	MINUS term more_terms
+	| /*lambda*/
 ;
 
-factor ::=
+
+term ::= factor more_fac
 ;
+
+more_fac ::= TIMES factor more_fac
+	|
+	DIVIDE factor more_fac
+	| /*lambda*/
+;	
+
+factor ::= var
+	|
+	CONSTSTR
+	|
+	CONSTCHAR
+	|
+	NUMBER	
+	|	
+	LPAREN exp RPAREN
+	|
+	NOT factor
+;
+
 
 var ::= ent_var: ent_v                                                          {: RESULT = new Variable(ent_v); :}
         |ind_var: ind_v                                                         {: RESULT = new Variable(ind_v); :}
