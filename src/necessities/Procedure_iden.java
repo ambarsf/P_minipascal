@@ -10,9 +10,9 @@ package necessities;
  * @author ambarsuarez
  */
 public class Procedure_iden {
-    Identifier id;
+    String id;
 
-    public Procedure_iden(Identifier id) {
+    public Procedure_iden(String id) {
         this.id = id;
     }
     

@@ -11,10 +11,10 @@ package necessities;
  */
 public class Program {
     
-    public Identifier iden;
+    public String iden;
     public Block block; 
     
-    public Program(Identifier id){
+    public Program(String id){
         iden = id;
     }
     
@@ -22,7 +22,7 @@ public class Program {
         block = blok;
     }
     
-    public Program (Identifier id, Block bl){
+    public Program (String id, Block bl){
         iden = id;
         block = bl;
     }    

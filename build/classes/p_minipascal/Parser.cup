@@ -133,7 +133,6 @@ non terminal Indexed_variable ind_var;
 non terminal Array_variable array_var;
 non terminal Entire_variable ent_var;
 non terminal Variable_identifier var_ident;
-non terminal Identifier identifier;
 non terminal more_id;
 non terminal more_stament;
 non terminal more_w;
@@ -152,7 +151,7 @@ precedence nonassoc ELSE;
 
 /* ----------------------------Grammar Section-------------------- */
 
-program ::= PROGRAM identifier:id SEMICOLON block:block                         {: RESULT = new Program (id,block); :}                    
+program ::= PROGRAM ID:id SEMICOLON block:block                                 {: RESULT = new Program (id,block); :}                    
 ;
 
 block ::= v_d_p:vdp p_d_p:pdp stament_p:sp                                      {: RESULT = new Block (vdp,pdp,sp); :}                        
@@ -162,7 +161,7 @@ v_d_p ::= VAR var_dec:vd SEMICOLON  v_d_p:vdp                                   
           |/*lambda*/                                                           {: RESULT = new Variable_dec_part(); :}
 ;
 
-var_dec ::= identifier:id more_id:mas COLON type:tipo                           {::}
+var_dec ::= ID:id more_id:mas COLON type:tipo                                   {::}
 ;
 
 more_id ::= COMMA ID more_id                                                    {::}
@@ -182,14 +181,14 @@ index_r ::= NUMBER DOT DOT NUMBER                                               
 simple_t ::= t_id:tid                                                           {: RESULT = new Simple_type (tid); :}
 ;
 
-t_id ::= identifier:id                                                          {: RESULT = new Type_ident (id); :}
+t_id ::= ID:id /*changes in types*/                                             {: RESULT = new Type_ident (id); :}
 ;
 
 p_d_p ::=  proc_dec:pd SEMICOLON p_d_p:pdp                                      {: pdp.add(pd); RESULT= pdp; :}
            |/*Lambda*/                                                          {: RESULT = new Procedure_dec_part(); :}
 ;
 
-proc_dec ::= PROCEDURE identifier:id SEMICOLON block:bl                         {: RESULT = new Procedure_dec(id, bl); :}
+proc_dec ::= PROCEDURE ID:id SEMICOLON block:bl                                 {: RESULT = new Procedure_dec(id, bl); :}
 ;
 
 stament_p ::= c_stament:cst                                                     {: RESULT = new Stament_part(cst); :}
@@ -218,7 +217,7 @@ assign_s ::= var:v ASSIGN exp:ex                                                
 proc_s ::= proc_id:p_id                                                         {: RESULT = new Procedure_stament(p_id); :}
 ;
 
-proc_id ::= identifier:id                                                       {: RESULT = new Procedure_iden(id); :}
+proc_id ::= ID:id                                                               {: RESULT = new Procedure_iden(id); :}
 ;
 
 read_s ::= READ LPAREN input_var:i_v RPAREN                                     {: RESULT = new Read_stament(i_v); :}
@@ -301,5 +300,6 @@ array_var ::= ent_var:e_var                                                     
 ent_var ::= var_ident:var_id                                                    {: RESULT = new Entire_variable(var_id); :} 
 ;
 
-var_ident ::= identifier:id                                                     {: RESULT = new Variable_identifier(id); :}
-;        
+var_ident ::= ID:id                                                             {: RESULT = new Variable_identifier(id); :}
+;
+      

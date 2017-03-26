@@ -11,9 +11,9 @@ package necessities;
  */
 public class Variable_identifier {
     
-   Identifier id;
+   String id;
 
-    public Variable_identifier(Identifier id) {
+    public Variable_identifier(String id) {
         this.id = id;
     }
    

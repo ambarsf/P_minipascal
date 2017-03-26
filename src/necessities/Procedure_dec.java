@@ -10,10 +10,10 @@ package necessities;
  * @author ambarsuarez
  */
 public class Procedure_dec {
-    Identifier ident;
+    String ident;
     Block block;
     
-    public Procedure_dec(Identifier id){
+    public Procedure_dec(String id){
         ident = id;
     }
     
@@ -21,7 +21,7 @@ public class Procedure_dec {
         block = bl;
     }
 
-    public Procedure_dec(Identifier ident, Block block) {
+    public Procedure_dec(String ident, Block block) {
         this.ident = ident;
         this.block = block;
     }

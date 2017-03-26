@@ -10,9 +10,9 @@ package necessities;
  * @author ambarsuarez
  */
 public class Type_ident {
-    Identifier ident;
+    String ident;
     
-    public Type_ident(Identifier id){
+    public Type_ident(String id){
         ident = id;
     }
     

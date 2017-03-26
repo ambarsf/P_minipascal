@@ -23,7 +23,7 @@ public class Variable_dec {
         type = taip;
     }
     
-    public void add(Identifier id){
+    public void add(String id){
         identifiers.add(id);
     }
 
