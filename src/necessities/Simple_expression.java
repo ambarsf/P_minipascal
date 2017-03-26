@@ -11,12 +11,11 @@ package necessities;
  */
 public class Simple_expression {
     Term term;
+    Simple_expression s_e;
 
     public Simple_expression(Term term) {
         this.term = term;
     }
-    
-    
     
     
 }

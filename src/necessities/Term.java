@@ -11,10 +11,15 @@ package necessities;
  */
 public class Term {
     Factor fact;
+    Term term;
+    
 
     public Term(Factor fact) {
         this.fact = fact;
     }
+
+    
+    
     
     
     

@@ -14,7 +14,10 @@ public class Factor {
     Variable var;
     Expression exp;
     Factor fact;
-
+    String str;
+    int num;
+    char ch;
+    
     public Factor(Variable var) {
         this.var = var;
     }
@@ -26,6 +29,20 @@ public class Factor {
     public Factor(Factor fact) {
         this.fact = fact;
     }
+
+    public Factor(String str) {
+        this.str = str;
+    }
+
+    public Factor(char ch) {
+        this.ch = ch;
+    }
+    
+    public Factor(int num){
+        this.num=num;
+    }
+    
+    
     
     
     

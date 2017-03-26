@@ -134,8 +134,8 @@ non terminal Entire_variable ent_var;
 non terminal Variable_identifier var_ident;
 non terminal Staments staments; 
 non terminal Writes writes;
-non terminal v_dec;  ////No tiene clase 
-non terminal p_dec;  /// no tienee clases 
+non terminal Variable_d v_dec;  
+non terminal Procedure_d p_dec;
 non terminal Block_p block_p;
 non terminal Parameters parameters; 
 
@@ -177,15 +177,15 @@ p_d_p ::=  proc_dec:pd  p_d_p:pdp                                               
            |/*Lambda*/                                                          {: RESULT = new Procedure_dec_part(); :}
 ;
 
-proc_dec ::= p_dec block_p:bl SEMICOLON                                         {::}
+proc_dec ::= p_dec:pd block_p:bl SEMICOLON                                      {: RESULT = new Procedure_dec(pd,bl); :}
 ;
 
-p_dec ::= PROCEDURE ID COLON type                                               {::}
-          |PROCEDURE ID LPAREN parameters RPAREN COLON type SEMICOLON           {::}
+p_dec ::= PROCEDURE ID:id COLON type:tipo                                       {: RESULT = new Procedure_d(id,tipo); :}
+          |PROCEDURE ID:id LPAREN parameters:p RPAREN COLON type:tipo SEMICOLON {: RESULT = new Procedure_d (id,tipo,p); :}
 ;
 
-parameters ::=  ID COLON type COMMA parameters                                  {::}
-                |ID COLON type                                                  {::}
+parameters ::=  ID:id COLON type:tipo COMMA parameters:pms                      {::}
+                |ID:id COLON type:tipo                                          {::}
 ;
 
 type ::= simple_t:st                                                            {: RESULT = new Type(st); :}
@@ -271,26 +271,24 @@ exp ::= sim_exp:sime                                                            
 	|sim_exp:se1 GREATER sim_exp:se2                                        {: RESULT = new Greater(se1,se2); :}
 ;
 
-sim_exp ::= term                                                                {::}
+sim_exp ::= term:term                                                           {: RESULT = new Simple_expression(term); :}
             |sim_exp PLUS term                                                  {::}
             |sim_exp MINUS term                                                 {::}
             |PLUS term                                                          {::}
             |MINUS term                                                         {::}
 ;
 
-term ::= factor                                                                 {::}
+term ::= factor:fact                                                            {: RESULT = new Term(fact); :}
          |term TIMES factor                                                     {::}
          |term DIVIDE factor                                                    {::}
 ;
 
-factor ::= var                                                                  {::}
-	|CONSTSTR                                                               {::}
-	|CONSTCHAR                                                              {::}
-	|NUMBER   
-        |FALSE                                                                  {::}
-        |TRUE
-	|LPAREN exp RPAREN                                                      {::}
-	|NOT factor                                                             {::}
+factor ::= var:v                                                                {: RESULT = new Factor(v); :}
+	|CONSTSTR:str                                                           {: RESULT = new Factor(str); :}
+	|CONSTCHAR:ch                                                           {: RESULT = new Factor(ch); :}
+	|NUMBER:num                                                             {: RESULT = new Factor(num); :}   
+	|LPAREN exp:ex RPAREN                                                   {: RESULT = new Factor(ex); :}
+	|NOT factor:ft                                                          {: RESULT = new Factor(ft); :}
 ;
 
 var ::= ent_var: ent_v                                                          {: RESULT = new Variable(ent_v); :}
