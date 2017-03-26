@@ -194,6 +194,7 @@ stament_p ::= c_stament:cst                                                     
 ;
 
 c_stament ::= BEGIN staments:sts END                                            {:RESULT = new Compound_stament(sts); :}
+              |BEGIN END                                            
 ;
 
 staments ::= stament:st SEMICOLON staments:sts                                  {:sts.add(st); RESULT = sts; :}

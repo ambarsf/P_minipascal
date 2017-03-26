@@ -1,9 +1,9 @@
 PROGRAM Whldo;
         { THIS PROGRAM SHOWS THE WHILE-DO LOOP }
         VAR Counter:INTEGER;
-                Sum:INTEGER;
+                VAR Sum:INTEGER;
   BEGIN
-END.
+END
 Counter := 1;
 Sum := 0;
 WHILE Counter <= 15 DO

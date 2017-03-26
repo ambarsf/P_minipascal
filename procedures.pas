@@ -1,6 +1,5 @@
 program exProcedure;
-var
-   a, b, c,  min: integer;
+var a, b, c,  min: integer;
 procedure findMin(x, y, z: integer; var m: integer);
 (* Finds the minimum of the 3 values *)
 
