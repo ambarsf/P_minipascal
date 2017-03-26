@@ -9,13 +9,10 @@ package necessities;
  *
  * @author ambarsuarez
  */
-public class Stament_part {
-    Compound_stament  c_st;
+public class Less extends Expression{
 
-    public Stament_part(Compound_stament c_st) {
-        this.c_st = c_st;
+    public Less(Simple_expression s_exp1, Simple_expression s_exp2) {
+        super(s_exp1, s_exp2);
     }
-    
-    
     
 }

@@ -1,22 +1,25 @@
-program exProcedure;
-var a, b, c,  min: integer;
-procedure findMin(x, y, z: integer; var m: integer);
-(* Finds the minimum of the 3 values *)
+program prueba;
+ var
+ radio,y,v:char;
+ hola:array[1..2]of integer;
 
+procedure esfera(var r:integer; x:array[1..2] of integer):integer;
+  function x(a:integer):integer;
+      begin
+          a:=0;
+          repeat
+              a:=a+3;
+          until (a>b) and (b>c);
+      end;
+ begin
+      esfera:=(4/3)*31416*(r*r*r);
+ end;
 begin
-   if x < y then
-      m:= x
-   else
-      m:= y;
-
-   if z < m then
-      m:= z;
-end; { end of procedure findMin }
-
-begin
-   write(' Enter three numbers: ');
-   read( a, b, c);
-   findMin(a, b, c, min); (* Procedure call *)
-
-   write(' Minimum: ', min);
+  clrscr;
+  Write('Radio: ');
+  Read(radio);
+%
+  a:=0+4+;
+  writeln('Volumen');
+  readkey;
 end.

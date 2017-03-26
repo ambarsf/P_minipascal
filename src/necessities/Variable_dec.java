@@ -21,7 +21,7 @@ public class Variable_dec {
     }
     
     public void add(String id){
-        identifiers.add(id);
+        identifiers.add(0,id);
     }
 
     public Variable_dec(Vector identifiers, Type type) {

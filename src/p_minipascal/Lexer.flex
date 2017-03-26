@@ -105,9 +105,9 @@ conststr = "'"{AllButR_Quotation}*"'"
 
 
 	{number}  		{ return symbol (sym.NUMBER, new Integer(Integer.parseInt(yytext()))); }
+        {id}  			{ return symbol (sym.ID, yytext()); }
 	{constchar}  		{ return symbol (sym.CONSTCHAR, yytext()); }
 	{conststr} 		{ return symbol (sym.CONSTSTR, yytext()); }
-	{id}  			{ return symbol (sym.ID, yytext()); }
         {WhiteSpace}            { /* just skip what was found, do nothing */ }  
 	.			{ System.err.println("Illegal character <" + yytext() + "> at line: " + (yyline + 1) + " column: " + (yycolumn + 1));  }
 }

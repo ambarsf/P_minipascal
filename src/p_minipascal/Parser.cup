@@ -110,7 +110,6 @@ non terminal Simple_type simple_t;
 non terminal Type_ident t_id;
 non terminal Procedure_dec_part p_d_p;
 non terminal Procedure_dec proc_dec;
-non terminal Stament_part stament_p;
 non terminal Compound_stament c_stament;
 non terminal Stament stament;
 non terminal Simple_stament sim_stament;
@@ -133,10 +132,12 @@ non terminal Indexed_variable ind_var;
 non terminal Array_variable array_var;
 non terminal Entire_variable ent_var;
 non terminal Variable_identifier var_ident;
-non terminal Staments staments;      /////NOT DONE YET
-non terminal Writes writes; /////NOT DONE YET
-non terminal more_terms;
-non terminal more_fac;
+non terminal Staments staments; 
+non terminal Writes writes;
+non terminal v_dec;  ////No tiene clase 
+non terminal p_dec;  /// no tienee clases 
+non terminal block_p; //no tiene clase
+non terminal parameters; //no tiene clases 
 
 /* precedence thingy */
 precedence left OR;
@@ -150,18 +151,39 @@ precedence nonassoc ELSE;
 
 /* ----------------------------Grammar Section-------------------- */
 
-program ::= PROGRAM ID:id SEMICOLON block:block                                 {: RESULT = new Program (id,block); :}                    
+program ::= PROGRAM ID:id SEMICOLON block:block DOT                             {: RESULT = new Program (id,block); :}                    
 ;
 
-block ::= v_d_p:vdp p_d_p:pdp stament_p:sp                                      {: RESULT = new Block (vdp,pdp,sp); :}                        
+block ::= v_d_p:vdp p_d_p:pdp c_stament:c_s                                     {: RESULT = new Block (vdp,pdp,c_s); :}                        
 ;
 
-v_d_p ::= VAR var_dec:vd SEMICOLON  v_d_p:vdp                                   {: vdp.add(vd); RESULT = vdp; :} 
-          |/*lambda*/                                                           {: RESULT = new Variable_dec_part(); :}
+block_p ::= v_d_p c_stament;
+
+v_d_p ::= VAR var_dec:vd                                                        
+          |/*lambda*/                                                           
 ;
 
-var_dec ::= ID:id COMMA var_dec:vd                                              {: vd.add(id); RESULT = vd; :}
-            |ID:id COLON type:tipo                                              {: RESULT = new Variable_dec(id,tipo); :}
+var_dec ::= v_dec SEMICOLON var_dec
+           |/*lambda*/
+;
+
+v_dec ::= ID:id COMMA v_dec:vd
+          |ID:id COLON type:tipo    
+;
+
+
+p_d_p ::=  proc_dec:pd  p_d_p:pdp                                               {: pdp.add(pd); RESULT= pdp; :}
+           |/*Lambda*/                                                          {: RESULT = new Procedure_dec_part(); :}
+;
+
+proc_dec ::= p_dec block_p:bl SEMICOLON                                         /*{: RESULT = new Procedure_dec(id, bl); :}*/
+;
+
+p_dec ::= PROCEDURE ID COLON type
+          |PROCEDURE ID LPAREN parameters RPAREN COLON type
+;
+
+parameters ::=
 ;
 
 type ::= simple_t:st                                                            {: RESULT = new Type(st); :}
@@ -183,16 +205,6 @@ t_id ::= INTEGER                                                                
          |STRING                                                                {: RESULT = new Type_ident(); :}
 ;
 
-p_d_p ::=  proc_dec:pd SEMICOLON p_d_p:pdp                                      {: pdp.add(pd); RESULT= pdp; :}
-           |/*Lambda*/                                                          {: RESULT = new Procedure_dec_part(); :}
-;
-
-proc_dec ::= PROCEDURE ID:id SEMICOLON block:bl                                 {: RESULT = new Procedure_dec(id, bl); :}
-;
-
-stament_p ::= c_stament:cst                                                     {: RESULT = new Stament_part(cst); :}
-;
-
 c_stament ::= BEGIN staments:sts END                                            {:RESULT = new Compound_stament(sts); :}
               |BEGIN END                                            
 ;
@@ -211,7 +223,7 @@ sim_stament ::= assign_s:as_s                                                   
                 |write_s:w_s                                                    {: RESULT = new Simple_stament(w_s); :}
 ;
 
-assign_s ::= var:v ASSIGN exp:ex                                                {: RESULT = new Assign_stament(v,ex); :}
+assign_s ::= var:v ASSIGN exp:ex                                                {: RESULT = new Assign_stament(v,ex); :}                                              
 ;
 
 proc_s ::= proc_id:p_id                                                         {: RESULT = new Procedure_stament(p_id); :}
@@ -248,38 +260,33 @@ if_stament ::= IF exp:ex THEN stament:st                                        
 while_stament ::= WHILE exp:ex DO stament:st                                    {: RESULT = new While_stament(ex,st); :}
 ;
 
-exp ::= sim_exp                                                                 {::} 
-        |sim_exp EQU sim_exp                                                    {::}
-	|sim_exp NEQ sim_exp                                                    {::}
-	|sim_exp LESS sim_exp                                                   {::}
-	|sim_exp LESSEQ sim_exp                                                 {::}
-	|sim_exp GREATEREQ sim_exp                                              {::}
-	|sim_exp GREATER sim_exp                                                {::}
+exp ::= sim_exp:sime                                                            {: RESULT =  new Expression(sime); :} 
+        |sim_exp:se1 EQU sim_exp:se2                                            {: RESULT = new Equal(se1,se2); :}
+	|sim_exp:se1 NEQ sim_exp:se2                                            {: RESULT = new Nequal(se1,se2); :}
+	|sim_exp:se1 LESS sim_exp:se2                                           {: RESULT = new Less(se1,se2); :}
+	|sim_exp:se1 LESSEQ sim_exp:se2                                         {: RESULT = new LessE(se1,se2); :}
+	|sim_exp:se1 GREATEREQ sim_exp:se2                                      {: RESULT = new GreaterE(se1,se2); :}
+	|sim_exp:se1 GREATER sim_exp:se2                                        {: RESULT = new Greater(se1,se2); :}
 ;
 
-sim_exp ::= PLUS term more_terms                                                {::}
-	|MINUS term more_terms                                                  {::}
-	|term more_terms                                                        {::}
+sim_exp ::= term
+            |sim_exp PLUS term
+            |sim_exp MINUS term
+            |PLUS term
+            |MINUS term
 ;
 
-more_terms ::= PLUS term more_terms                                             {::}
-	|MINUS term more_terms                                                  {::}
-	| /*lambda*/                                                            {::}
+term ::= factor
+         |term TIMES factor
+         |term DIVIDE factor
 ;
-
-
-term ::= factor more_fac                                                        {::}
-;
-
-more_fac ::= TIMES factor more_fac                                              {::}
-	|DIVIDE factor more_fac                                                 {::}
-	|/*lambda*/                                                             {::}
-;	
 
 factor ::= var                                                                  {::}
 	|CONSTSTR                                                               {::}
 	|CONSTCHAR                                                              {::}
-	|NUMBER                                                                 {::}	
+	|NUMBER   
+        |FALSE                                                                  {::}
+        |TRUE
 	|LPAREN exp RPAREN                                                      {::}
 	|NOT factor                                                             {::}
 ;
