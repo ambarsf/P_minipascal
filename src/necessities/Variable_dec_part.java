@@ -12,13 +12,10 @@ import java.util.Vector;
  * @author ambarsuarez
  */
 public class Variable_dec_part {
-    Vector declarations;
-    
-    public Variable_dec_part(){
-        declarations = new Vector();
+    Variable_dec var_dec;
+
+    public Variable_dec_part(Variable_dec var_dec) {
+        this.var_dec = var_dec;
     }
     
-    public void add(Variable_dec v_dec){
-        declarations.add(0, v_dec);
-    }
 }

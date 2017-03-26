@@ -5,19 +5,19 @@
  */
 package necessities;
 
-import java.util.Vector;
-
 /**
  *
  * @author ambarsuarez
  */
-public class Variable_dec {
-    Vector identifiers;
-    
-    public Variable_dec(){
-        identifiers=new Vector();
+public class Block_p {
+    Variable_dec_part vdp;
+    Compound_stament comp_s;
+
+    public Block_p(Variable_dec_part vdp, Compound_stament comp_s) {
+        this.vdp = vdp;
+        this.comp_s = comp_s;
     }
-    public void add(Variable_d vd){
-        identifiers.add(0, vd);
-    }  
+    
+    
+    
 }

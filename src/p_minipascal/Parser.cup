@@ -75,7 +75,7 @@ terminal            PROGRAM;
 terminal            SEMICOLON, COLON, COMMA, DOT;   
 
 /*IO*/
-terminal            READ, WRITE, WRITELN;
+terminal            READ, WRITE;
 
 /* Arithmetic */
 terminal            PLUS,MINUS,TIMES,DIVIDE;
@@ -136,8 +136,8 @@ non terminal Staments staments;
 non terminal Writes writes;
 non terminal v_dec;  ////No tiene clase 
 non terminal p_dec;  /// no tienee clases 
-non terminal block_p; //no tiene clase
-non terminal parameters; //no tiene clases 
+non terminal Block_p block_p;
+non terminal Parameters parameters; 
 
 /* precedence thingy */
 precedence left OR;
@@ -157,18 +157,19 @@ program ::= PROGRAM ID:id SEMICOLON block:block DOT                             
 block ::= v_d_p:vdp p_d_p:pdp c_stament:c_s                                     {: RESULT = new Block (vdp,pdp,c_s); :}                        
 ;
 
-block_p ::= v_d_p c_stament;
+block_p ::= v_d_p:vdp c_stament:c_s                                             {: RESULT = new Block_p(vdp,c_s); :}
+;
 
-v_d_p ::= VAR var_dec:vd                                                        
+v_d_p ::= VAR var_dec:vd                                                        {: RESULT = new Variable_dec_part(vd); :}                                                       
           |/*lambda*/                                                           
 ;
 
-var_dec ::= v_dec SEMICOLON var_dec
-           |/*lambda*/
+var_dec ::= v_dec:vd SEMICOLON var_dec:var_d                                    {: var_d.add(vd); RESULT = var_d; :}
+           |/*lambda*/                                                          {: RESULT = new Variable_dec(); :}
 ;
 
-v_dec ::= ID:id COMMA v_dec:vd
-          |ID:id COLON type:tipo    
+v_dec ::= ID:id COMMA v_dec:vd                                                  {: vd.add(id); RESULT = vd; :}
+          |ID:id COLON type:tipo                                                {: RESULT = new Variable_d(id,tipo); :}   
 ;
 
 
@@ -176,14 +177,15 @@ p_d_p ::=  proc_dec:pd  p_d_p:pdp                                               
            |/*Lambda*/                                                          {: RESULT = new Procedure_dec_part(); :}
 ;
 
-proc_dec ::= p_dec block_p:bl SEMICOLON                                         /*{: RESULT = new Procedure_dec(id, bl); :}*/
+proc_dec ::= p_dec block_p:bl SEMICOLON                                         {::}
 ;
 
-p_dec ::= PROCEDURE ID COLON type
-          |PROCEDURE ID LPAREN parameters RPAREN COLON type
+p_dec ::= PROCEDURE ID COLON type                                               {::}
+          |PROCEDURE ID LPAREN parameters RPAREN COLON type SEMICOLON           {::}
 ;
 
-parameters ::=
+parameters ::=  ID COLON type COMMA parameters                                  {::}
+                |ID COLON type                                                  {::}
 ;
 
 type ::= simple_t:st                                                            {: RESULT = new Type(st); :}
@@ -269,16 +271,16 @@ exp ::= sim_exp:sime                                                            
 	|sim_exp:se1 GREATER sim_exp:se2                                        {: RESULT = new Greater(se1,se2); :}
 ;
 
-sim_exp ::= term
-            |sim_exp PLUS term
-            |sim_exp MINUS term
-            |PLUS term
-            |MINUS term
+sim_exp ::= term                                                                {::}
+            |sim_exp PLUS term                                                  {::}
+            |sim_exp MINUS term                                                 {::}
+            |PLUS term                                                          {::}
+            |MINUS term                                                         {::}
 ;
 
-term ::= factor
-         |term TIMES factor
-         |term DIVIDE factor
+term ::= factor                                                                 {::}
+         |term TIMES factor                                                     {::}
+         |term DIVIDE factor                                                    {::}
 ;
 
 factor ::= var                                                                  {::}

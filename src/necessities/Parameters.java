@@ -5,19 +5,10 @@
  */
 package necessities;
 
-import java.util.Vector;
-
 /**
  *
  * @author ambarsuarez
  */
-public class Variable_dec {
-    Vector identifiers;
+public class Parameters {
     
-    public Variable_dec(){
-        identifiers=new Vector();
-    }
-    public void add(Variable_d vd){
-        identifiers.add(0, vd);
-    }  
 }

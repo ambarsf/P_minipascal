@@ -11,13 +11,18 @@ import java.util.Vector;
  *
  * @author ambarsuarez
  */
-public class Variable_dec {
-    Vector identifiers;
-    
-    public Variable_dec(){
-        identifiers=new Vector();
+public class Variable_d {
+    Vector variables;
+    String id;
+    Type tipo;
+
+public void add(String id){
+    variables.add(0, id);
+}
+
+    public Variable_d(String id, Type tipo) {
+        this.id = id;
+        this.tipo = tipo;
     }
-    public void add(Variable_d vd){
-        identifiers.add(0, vd);
-    }  
+
 }
