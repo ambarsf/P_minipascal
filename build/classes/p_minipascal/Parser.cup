@@ -4,69 +4,49 @@ import java.util.*;
 import java.io.*;
 import java_cup.runtime.*;
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
+import java.lang.reflect.Field;
 
 parser code {:
-     public Program MPProgram;
-        public Program getProgram(){
-            return MPProgram;
-        } 
-    
-    /* Change the method report_error so it will display the line and
-       column of where the error occurred in the input as well as the
-       reason for the error which is passed into the method in the
-       String 'message'. */
-    public void report_error(String message, Object info) {
-   
-        /* Create a StringBuilder called 'm' with the string 'Error' in it. */
-        StringBuilder m = new StringBuilder("Error");
-   
-        /* Check if the information passed to the method is the same
-           type as the type java_cup.runtime.Symbol. */
-        if (info instanceof java_cup.runtime.Symbol) {
-            /* Declare a java_cup.runtime.Symbol object 's' with the
-               information in the object info that is being typecasted
-               as a java_cup.runtime.Symbol object. */
-            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
-   
-            /* Check if the line number in the input is greater or
-               equal to zero. */
-            if (s.left >= 0) {                
-                /* Add to the end of the StringBuilder error message
-                   the line number of the error in the input. */
-                m.append(" in line "+(s.left+1));   
-                /* Check if the column number in the input is greater
-                   or equal to zero. */
-                if (s.right >= 0)                    
-                    /* Add to the end of the StringBuilder error message
-                       the column number of the error in the input. */
-                    m.append(", column "+(s.right+1));
-            }
-        }
-   
-        /* Add to the end of the StringBuilder error message created in
-           this method the message that was passed into this method. */
-        m.append(" : "+message);
-   
-        /* Print the contents of the StringBuilder 'm', which contains
-           an error message, out on a line. */
-        System.err.println(m);
+    public final Class getSymbolContainer() {
+        return sym.class;
     }
-   
-    /* Change the method report_fatal_error so when it reports a fatal
-       error it will display the line and column number of where the
-       fatal error occurred in the input as well as the reason for the
-       fatal error which is passed into the method in the object
-       'message' and then exit.*/
+
+    public String symbl_name_from_id(int id){
+              Field[] fields = getSymbolContainer().getFields();
+              for(Field f : fields){
+                      try {
+                            if (f.getInt(null)==id)
+                              return f.getName();
+                    } catch (IllegalArgumentException e) {
+                            //e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                            //e.printStackTrace();
+                    }
+              }
+              return "invalid symbol id";
+      }; 
+      
+    public void syntax_error(Symbol cur_token){
+        System.err.print("Syntax error at line: " + (cur_token.left + 1) + ", col: " + (cur_token.right + 1) + " before symbol: " + symbl_name_from_id(cur_token.sym));
+}
+
+public void unrecovered_syntax_error(Symbol cur_token) {
+        //System.err.println("Please check your program's syntax before line: " + (cur_token.left + 1) + ", col: " + (cur_token.right + 1));
+    }
+
     public void report_fatal_error(String message, Object info) {
-        report_error(message, info);
-        System.exit(1);
+        // Nothing
+    }
+    
+    public void report_error(String message, Object info) {
+        //Nothing
     }
 
 
 
+:};
 
-
-:};    
+    
 /* ------------Declaration of Terminals and Non Terminals Section----------- */
 /* Types */
 terminal            INTEGER, CHAR, BOOLEAN, STRING, VAR, ARRAY;
@@ -162,7 +142,9 @@ precedence nonassoc ELSE;
 
 /* ----------------------------Grammar Section-------------------- */
 
-program ::= PROGRAM ID:id SEMICOLON block:block DOT                             {:parser.MPProgram  = new Program (id,block); :}                    
+program ::= PROGRAM ID:id SEMICOLON block:block DOT                             {: RESULT = new Program (id,block); :}
+            |PROGRAM ID error block DOT                                         {: System.err.println(" ; expected"); :}
+            |error ID:id SEMICOLON block:block DOT                              {: System.err.println(" reserved word PROGRAM expected"); :}
 ;
 
 block ::= v_d_p:vdp p_d_p:pdp c_stament:c_s                                     {: RESULT = new Block (vdp,pdp,c_s); :}                        
@@ -172,15 +154,18 @@ block_p ::= v_d_p:vdp c_stament:c_s                                             
 ;
 
 v_d_p ::= VAR var_dec:vd                                                        {: RESULT = new Variable_dec_part(vd); :}                                                       
-          |/*lambda*/                                                           
+          |/*lambda*/                                   
+          |error var_dec:vd                                                     {: System.err.println(" reserved word VAR expected"); :}
 ;
 
 var_dec ::= v_dec:vd SEMICOLON var_dec:var_d                                    {: var_d.add(vd); RESULT = var_d; :}
            |/*lambda*/                                                          {: RESULT = new Variable_dec(); :}
+           |v_dec:vd error var_dec:var_d                                        {: System.err.println(" ; expected"); :}
 ;
 
-v_dec ::= ID:id COMMA v_dec:vd                                                  {: vd.add(id); RESULT = vd; :}
-          |ID:id COLON type:tipo                                                {: RESULT = new Variable_d(id,tipo); :}   
+v_dec ::= ID:id COMMA v_dec:vd                                                  /*{: vd.add(id); RESULT = vd; :}*/
+          |ID:ID error v_dec:vd                                                 {: System.err.println(" , expected"); :}
+          |ID:id COLON type:tipo                                                {: RESULT = new Variable_d(id,tipo); :}            
 ;
 
 
@@ -189,13 +174,21 @@ p_d_p ::=  proc_dec:pd  p_d_p:pdp                                               
 ;
 
 proc_dec ::= p_dec:pd block_p:bl SEMICOLON                                      {: RESULT = new Procedure_dec(pd,bl); :}
+            |p_dec:pd block_p:bl error                                          {: System.err.println(" ; expected"); :}
 ;
 
 p_dec ::= PROCEDURE ID:id COLON type:tipo                                       {: RESULT = new Procedure_d(id,tipo); :}
+          |PROCEDURE ID error type                                              {: System.err.println(" : expected"); :}
           |PROCEDURE ID:id LPAREN parameters:p RPAREN COLON type:tipo SEMICOLON {: RESULT = new Procedure_d (id,tipo,p); :}
+          |PROCEDURE ID:id error parameters:p RPAREN COLON type:tipo SEMICOLON  {: System.err.println(" LPAREN expected"); :}
+          |PROCEDURE ID:id LPAREN parameters:p error COLON type:tipo SEMICOLON  {: System.err.println(" RPAREN expected"); :}
+          |PROCEDURE ID:id LPAREN parameters:p RPAREN error type:tipo SEMICOLON {: System.err.println(" : expected"); :}
+          |PROCEDURE ID:id LPAREN parameters:p RPAREN COLON type:tipo error     {: System.err.println(" ; expected"); :}
+
 ;
 
 parameters ::=  ID:id COLON type:tipo COMMA parameters:pms                      {: pms.add(new Parameter(id,tipo)); RESULT = pms; :}
+                |ID:id error type:tipo COMMA parameters:pms                     {: System.err.println(" , expected"); :}
                 |ID:id COLON type:tipo                                          {: RESULT = new Parameters(id,tipo); :}
 ;
 
@@ -204,9 +197,15 @@ type ::= simple_t:st                                                            
 ;
 
 array_t ::= ARRAY LCOR index_r:ind_r RCOR OF simple_t:sim_t                     {: RESULT = new Array_type(ind_r,sim_t); :}
+            |ARRAY error index_r:ind_r RCOR OF simple_t:sim_t                   {: System.err.println(" [ expected"); :}
+            |ARRAY LCOR index_r:ind_r error OF simple_t:sim_t                   {: System.err.println(" ] expected"); :}
+            |ARRAY LCOR index_r:ind_r RCOR error simple_t:sim_t                 {: System.err.println(" reserved word FOR expected."); :}
 ;
 
 index_r ::= NUMBER:n1 DOT DOT NUMBER:n2                                         {:RESULT = new Index_range(n1,n2); :}
+            |NUMBER:n1 error DOT NUMBER:n2                                      {: System.err.println(" . expected"); :} 
+            |error DOT DOT NUMBER:n2                                            {: System.err.println(" number expected"); :} 
+            |NUMBER:n1 DOT DOT error                                            {: System.err.println(" number expected"); :} 
 ;
 
 simple_t ::= t_id:tid                                                           {: RESULT = new Simple_type (tid); :}
@@ -216,7 +215,7 @@ t_id ::= INTEGER                                                                
          |CHAR                                                                  {: RESULT = new Type_ident(); :}
          |BOOLEAN                                                               {: RESULT = new Type_ident(); :}
          |STRING                                                                {: RESULT = new Type_ident(); :}
-         |error                                                                 {: System.out.println("Type Expected"); :}
+         |error                                                                 {: System.err.println("Type Expected"); :}
 ;
 
 c_stament ::= BEGIN staments:sts END                                            {: RESULT = new Compound_stament(sts); :}
@@ -224,7 +223,9 @@ c_stament ::= BEGIN staments:sts END                                            
 ;
 
 staments ::= stament:st SEMICOLON staments:sts                                  {:sts.add(st); RESULT = sts; :}
+             |stament:st error staments:sts  
              |stament:st SEMICOLON                                              {:RESULT = new Staments(); RESULT.add(st); :}
+             |stament:st error  
 ;
 
 stament ::= sim_stament:sim_st                                                  {: RESULT = new Stament(sim_st); :}
@@ -237,7 +238,7 @@ sim_stament ::= assign_s:as_s                                                   
                 |write_s:w_s                                                    {: RESULT = new Simple_stament(w_s); :}
 ;
 
-assign_s ::= var:v ASSIGN exp:ex                                                {: RESULT = new Assign_stament(v,ex); :}                                              
+assign_s ::= var:v ASSIGN exp:ex                                                {: RESULT = new Assign_stament(v,ex); :}    
 ;
 
 proc_s ::= proc_id:p_id                                                         {: RESULT = new Procedure_stament(p_id); :}
@@ -247,12 +248,16 @@ proc_id ::= ID:id                                                               
 ;
 
 read_s ::= READ LPAREN input_var:i_v RPAREN                                     {: RESULT = new Read_stament(i_v); :}
+          |READ error input_var:i_v RPAREN
+          |READ LPAREN input_var:i_v error
 ;
 
 input_var ::= var:v                                                             {: RESULT = new Input_variable(v); :}
 ;
 
 write_s ::= WRITE LPAREN writes:wr RPAREN                                       {: RESULT = new Write_stament(wr); :}
+            |WRITE error writes:wr RPAREN
+            |WRITE LPAREN writes:wr error
 ;
 
 writes ::= output_val:ov COMMA writes:wr                                        {: wr.add(ov); RESULT = wr; :}
@@ -270,16 +275,23 @@ struct_stament ::= c_stament: c_st                                              
 ;
 
 if_stament ::= IF exp:ex THEN stament:st                                        {: RESULT = new If_stament(ex,st); :}
+         |IF exp:ex error stament:st 
          |IF exp:ex THEN stament:st1 ELSE stament:st2                           {: RESULT = new If_stament(ex,st1,st2); :}
+
 ;
 
 while_stament ::= WHILE exp:ex DO stament:st                                    {: RESULT = new While_stament(ex,st); :}
+                  |WHILE exp:ex error stament:st
 ;
 
-for_stament ::= FOR ID:id ASSIGN NUMBER:m TO NUMBER:n DO c_stament:sts SEMICOLON{: RESULT = new For_stament(new Parameter(id,m),n,sts); :}
+for_stament ::= FOR ID:id ASSIGN NUMBER:m TO NUMBER:n DO c_stament:sts          {: RESULT = new For_stament(new Parameter(id,m),n,sts); :}
+                |FOR ID:id error NUMBER:m TO NUMBER:n DO c_stament:sts
+                |FOR ID:id ASSIGN NUMBER:m error NUMBER:n DO c_stament:sts
+                |FOR ID:id ASSIGN NUMBER:m TO NUMBER:n error c_stament:sts
 ;
 
 repeat_stament ::= REPEAT staments:sts UNTIL exp:ex                             {: RESULT = new Repeat_stament(sts,ex); :}
+                  |REPEAT staments:sts error exp:ex  
 ;
 exp ::= sim_exp:sime                                                            {: RESULT =  new Expression(sime); :} 
         |sim_exp:se1 EQU sim_exp:se2                                            {: RESULT = new Equal(se1,se2); :}
@@ -288,6 +300,8 @@ exp ::= sim_exp:sime                                                            
 	|sim_exp:se1 LESSEQ sim_exp:se2                                         {: RESULT = new LessE(se1,se2); :}
 	|sim_exp:se1 GREATEREQ sim_exp:se2                                      {: RESULT = new GreaterE(se1,se2); :}
 	|sim_exp:se1 GREATER sim_exp:se2                                        {: RESULT = new Greater(se1,se2); :}
+        |error 
+        
 ;
 
 sim_exp ::= term:term                                                           {: RESULT = new Simple_expression(term); :}

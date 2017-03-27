@@ -16,6 +16,12 @@ public class Variable_d {
     String id;
     Type tipo;
 
+    public Variable_d() {
+        this.variables = new Vector();
+    }
+    
+    
+
 public void add(String id){
     variables.add(0, id);
 }
