@@ -15,7 +15,7 @@ import java.io.*;
 public class main_app {
     public static void main(String argv[]){
         try{
-            parser p = new parser(new Lexer(new FileReader("procedures.pas")));
+            parser p = new parser(new Lexer(new FileReader("example1.pas")));
             p.parse();
         }catch(Exception e ){
             e.printStackTrace();

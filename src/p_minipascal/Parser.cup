@@ -145,6 +145,7 @@ precedence nonassoc ELSE;
 program ::= PROGRAM ID:id SEMICOLON block:block DOT                             {: RESULT = new Program (id,block); :}
             |PROGRAM ID error block DOT                                         {: System.err.println(" ; expected"); :}
             |error ID:id SEMICOLON block:block DOT                              {: System.err.println(" reserved word PROGRAM expected"); :}
+            |PROGRAM error                                                      {: System.err.println(" program ID expected"); :}                                                
 ;
 
 block ::= v_d_p:vdp p_d_p:pdp c_stament:c_s                                     {: RESULT = new Block (vdp,pdp,c_s); :}                        
@@ -164,7 +165,7 @@ var_dec ::= v_dec:vd SEMICOLON var_dec:var_d                                    
 ;
 
 v_dec ::= ID:id COMMA v_dec:vd                                                  /*{: vd.add(id); RESULT = vd; :}*/
-          |ID:ID error v_dec:vd                                                 {: System.err.println(" , expected"); :}
+          |ID:id error v_dec:vd                                                 {: System.err.println(" , or : expected"); :}
           |ID:id COLON type:tipo                                                {: RESULT = new Variable_d(id,tipo); :}            
 ;
 
@@ -223,9 +224,9 @@ c_stament ::= BEGIN staments:sts END                                            
 ;
 
 staments ::= stament:st SEMICOLON staments:sts                                  {:sts.add(st); RESULT = sts; :}
-             |stament:st error staments:sts  
+             |stament:st error staments:sts                                     {: System.err.println(" ; expected"); :} 
              |stament:st SEMICOLON                                              {:RESULT = new Staments(); RESULT.add(st); :}
-             |stament:st error  
+             |stament:st error                                                  {: System.err.println(" ; expected"); :} 
 ;
 
 stament ::= sim_stament:sim_st                                                  {: RESULT = new Stament(sim_st); :}
@@ -248,16 +249,16 @@ proc_id ::= ID:id                                                               
 ;
 
 read_s ::= READ LPAREN input_var:i_v RPAREN                                     {: RESULT = new Read_stament(i_v); :}
-          |READ error input_var:i_v RPAREN
-          |READ LPAREN input_var:i_v error
+          |READ error input_var:i_v RPAREN                                      {: System.err.println(" ( expected"); :}
+          |READ LPAREN input_var:i_v error                                      {: System.err.println(" ) expected"); :}
 ;
 
 input_var ::= var:v                                                             {: RESULT = new Input_variable(v); :}
 ;
 
 write_s ::= WRITE LPAREN writes:wr RPAREN                                       {: RESULT = new Write_stament(wr); :}
-            |WRITE error writes:wr RPAREN
-            |WRITE LPAREN writes:wr error
+            |WRITE error writes:wr RPAREN                                       {: System.err.println(" ( expected"); :}
+            |WRITE LPAREN writes:wr error                                       {: System.err.println(" ) expected"); :}
 ;
 
 writes ::= output_val:ov COMMA writes:wr                                        {: wr.add(ov); RESULT = wr; :}
@@ -275,23 +276,22 @@ struct_stament ::= c_stament: c_st                                              
 ;
 
 if_stament ::= IF exp:ex THEN stament:st                                        {: RESULT = new If_stament(ex,st); :}
-         |IF exp:ex error stament:st 
+         |IF exp:ex error stament:st                                            {: System.err.println(" reserved word THEN expected"); :}
          |IF exp:ex THEN stament:st1 ELSE stament:st2                           {: RESULT = new If_stament(ex,st1,st2); :}
-
 ;
 
 while_stament ::= WHILE exp:ex DO stament:st                                    {: RESULT = new While_stament(ex,st); :}
-                  |WHILE exp:ex error stament:st
+                  |WHILE exp:ex error stament:st                                {: System.err.println(" reserved word DO expected"); :}
 ;
 
 for_stament ::= FOR ID:id ASSIGN NUMBER:m TO NUMBER:n DO c_stament:sts          {: RESULT = new For_stament(new Parameter(id,m),n,sts); :}
-                |FOR ID:id error NUMBER:m TO NUMBER:n DO c_stament:sts
-                |FOR ID:id ASSIGN NUMBER:m error NUMBER:n DO c_stament:sts
-                |FOR ID:id ASSIGN NUMBER:m TO NUMBER:n error c_stament:sts
+                |FOR ID:id error NUMBER:m TO NUMBER:n DO c_stament:sts          {: System.err.println(" =: expected"); :}
+                |FOR ID:id ASSIGN NUMBER:m error NUMBER:n DO c_stament:sts      {: System.err.println(" reserved word TO expected"); :}
+                |FOR ID:id ASSIGN NUMBER:m TO NUMBER:n error c_stament:sts      {: System.err.println(" reserved word DO expected"); :}
 ;
 
 repeat_stament ::= REPEAT staments:sts UNTIL exp:ex                             {: RESULT = new Repeat_stament(sts,ex); :}
-                  |REPEAT staments:sts error exp:ex  
+                  |REPEAT staments:sts error exp:ex                             {: System.err.println(" reserved word UNTIL expected"); :}  
 ;
 exp ::= sim_exp:sime                                                            {: RESULT =  new Expression(sime); :} 
         |sim_exp:se1 EQU sim_exp:se2                                            {: RESULT = new Equal(se1,se2); :}
