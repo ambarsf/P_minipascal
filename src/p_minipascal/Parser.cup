@@ -2,6 +2,8 @@ package p_minipascal;
 import necessities.*;
 import java.util.*;
 import java.io.*;
+import java_cup.runtime.*;
+import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 parser code {:
      public Program MPProgram;
         public Program getProgram(){
@@ -58,6 +60,11 @@ parser code {:
         report_error(message, info);
         System.exit(1);
     }
+
+
+
+
+
 :};
    
 
@@ -70,7 +77,7 @@ terminal            INTEGER, CHAR, BOOLEAN, STRING, VAR, ARRAY;
 terminal            TRUE, FALSE;
 
 /*ciclos */
-terminal            PROCEDURE, IF, ELSE, WHILE, DO, FOR, TO, REPEAT, THEN, BEGIN, END, OF;
+terminal            PROCEDURE, IF, ELSE, WHILE, DO, FOR, TO, REPEAT,UNTIL,THEN, BEGIN, END, OF;
 
 /*functions */
 terminal            PROGRAM;
@@ -142,6 +149,8 @@ non terminal Variable_d v_dec;
 non terminal Procedure_d p_dec;
 non terminal Block_p block_p;
 non terminal Parameters parameters; 
+non terminal For_stament for_stament;
+non terminal Repeat_stament repeat_stament;
 
 /* precedence thingy */
 precedence left OR;
@@ -258,6 +267,8 @@ output_val ::= exp:ex                                                           
 struct_stament ::= c_stament: c_st                                              {: RESULT = new Structured_stament(c_st); :}
              |if_stament: if_st                                                 {: RESULT = new Structured_stament(if_st); :}
              |while_stament: w_st                                               {: RESULT = new Structured_stament(w_st); :}
+             |for_stament:f_st                                                  {: RESULT = new Structured_stament(f_st); :}
+             |repeat_stament:r_st                                               {: RESULT = new Structured_stament(r_st); :}
 ;
 
 if_stament ::= IF exp:ex THEN stament:st                                        {: RESULT = new If_stament(ex,st); :}
@@ -267,6 +278,11 @@ if_stament ::= IF exp:ex THEN stament:st                                        
 while_stament ::= WHILE exp:ex DO stament:st                                    {: RESULT = new While_stament(ex,st); :}
 ;
 
+for_stament ::= FOR ID:id ASSIGN NUMBER:m TO NUMBER:n DO c_stament:sts SEMICOLON{: RESULT = new For_stament(new Parameter(id,m),n,sts); :}
+;
+
+repeat_stament ::= REPEAT staments:sts UNTIL exp:ex                             {: RESULT = new Repeat_stament(sts,ex); :}
+;
 exp ::= sim_exp:sime                                                            {: RESULT =  new Expression(sime); :} 
         |sim_exp:se1 EQU sim_exp:se2                                            {: RESULT = new Equal(se1,se2); :}
 	|sim_exp:se1 NEQ sim_exp:se2                                            {: RESULT = new Nequal(se1,se2); :}

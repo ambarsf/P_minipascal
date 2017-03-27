@@ -62,6 +62,7 @@ conststr = "'"{AllButR_Quotation}*"'"
 	"for"  			{ return symbol (sym.FOR); }
 	"to"  			{ return symbol (sym.TO); }
 	"repeat"  		{ return symbol (sym.REPEAT); }
+        "until"  		{ return symbol (sym.UNTIL); }
 	"then"  		{ return symbol (sym.THEN); }
 	"begin" 		{ return symbol (sym.BEGIN); }
 	"end" 			{ return symbol (sym.END); }

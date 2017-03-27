@@ -9,19 +9,15 @@ package necessities;
  *
  * @author ambarsuarez
  */
-public class Parameter {
-    String Id;
+public class For_stament {
+    Parameter params;
     int number;
-    Type tipo;
+    Compound_stament sts;
 
-    public Parameter(String Id, Type tipo) {
-        this.Id = Id;
-        this.tipo = tipo;
-    }
-
-    public Parameter(String Id, int number) {
-        this.Id = Id;
+    public For_stament(Parameter params, int number, Compound_stament sts) {
+        this.params = params;
         this.number = number;
+        this.sts = sts;
     }
     
     
