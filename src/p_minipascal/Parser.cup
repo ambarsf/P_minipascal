@@ -4,6 +4,7 @@ import java.util.*;
 import java.io.*;
 import java_cup.runtime.*;
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
+
 parser code {:
      public Program MPProgram;
         public Program getProgram(){
@@ -65,10 +66,7 @@ parser code {:
 
 
 
-:};
-   
-
-   
+:};    
 /* ------------Declaration of Terminals and Non Terminals Section----------- */
 /* Types */
 terminal            INTEGER, CHAR, BOOLEAN, STRING, VAR, ARRAY;
@@ -164,7 +162,7 @@ precedence nonassoc ELSE;
 
 /* ----------------------------Grammar Section-------------------- */
 
-program ::= PROGRAM ID:id SEMICOLON block:block DOT                             {: parser.MPProgram  = new Program (id,block); :}                    
+program ::= PROGRAM ID:id SEMICOLON block:block DOT                             {:parser.MPProgram  = new Program (id,block); :}                    
 ;
 
 block ::= v_d_p:vdp p_d_p:pdp c_stament:c_s                                     {: RESULT = new Block (vdp,pdp,c_s); :}                        
@@ -221,7 +219,7 @@ t_id ::= INTEGER                                                                
          |error                                                                 {: System.out.println("Type Expected"); :}
 ;
 
-c_stament ::= BEGIN staments:sts END                                            {:RESULT = new Compound_stament(sts); :}
+c_stament ::= BEGIN staments:sts END                                            {: RESULT = new Compound_stament(sts); :}
               |BEGIN END                                            
 ;
 
