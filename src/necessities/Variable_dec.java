@@ -12,7 +12,7 @@ import java.util.Vector;
  * @author ambarsuarez
  */
 public class Variable_dec {
-    Vector identifiers;
+    Vector identifiers = new Vector();
     
     public Variable_dec(){
         identifiers=new Vector();

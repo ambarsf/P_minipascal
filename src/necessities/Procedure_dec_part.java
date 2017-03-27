@@ -12,7 +12,7 @@ import java.util.Vector;
  * @author ambarsuarez
  */
 public class Procedure_dec_part {
-    Vector declarations;
+    Vector declarations = new Vector();
     
     public Procedure_dec_part(){
         declarations = new Vector();

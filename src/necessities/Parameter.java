@@ -9,6 +9,13 @@ package necessities;
  *
  * @author ambarsuarez
  */
-public class Integer_const {
+public class Parameter {
+    String Id;
+    Type tipo;
+
+    public Parameter(String Id, Type tipo) {
+        this.Id = Id;
+        this.tipo = tipo;
+    }
     
 }

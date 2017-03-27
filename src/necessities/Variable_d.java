@@ -12,7 +12,7 @@ import java.util.Vector;
  * @author ambarsuarez
  */
 public class Variable_d {
-    Vector variables;
+    Vector variables = new Vector();
     String id;
     Type tipo;
 

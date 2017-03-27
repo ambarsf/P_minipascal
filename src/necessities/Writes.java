@@ -12,7 +12,7 @@ import java.util.Vector;
  * @author ambarsuarez
  */
 public class Writes {
-    Vector values;
+    Vector values = new Vector();
     
     public Writes(){
         values = new Vector();

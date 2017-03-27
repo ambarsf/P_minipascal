@@ -25,5 +25,12 @@ public class Program {
     public Program (String id, Block bl){
         iden = id;
         block = bl;
-    }    
+    }   
+
+    @Override
+    public String toString() {
+        return "Program to String";
+    }
+    
+    
 }

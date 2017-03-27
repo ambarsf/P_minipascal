@@ -1,6 +1,8 @@
-program prueba;
- var
- radio,y,v:char;
- hola:array[1..2]of integer;
-
-procedure esfera(r:integer, x:integer):integer;
+program exProcedure;
+var a, b, c,  min:integer ;
+procedure findMin(x: integer, m: integer):integer;
+begin
+   write(' Enter three numbers: ');
+   read(a);
+   write(' Minimum: ', min);
+end

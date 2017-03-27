@@ -12,7 +12,7 @@ import java.util.Vector;
  * @author ambarsuarez
  */
 public class Staments {
-    Vector values;
+    Vector values = new Vector();
     
     public Staments(){
         values = new Vector();

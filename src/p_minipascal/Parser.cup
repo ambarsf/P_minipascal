@@ -3,6 +3,10 @@ import necessities.*;
 import java.util.*;
 import java.io.*;
 parser code {:
+     public Program MPProgram;
+        public Program getProgram(){
+            return MPProgram;
+        } 
     
     /* Change the method report_error so it will display the line and
        column of where the error occurred in the input as well as the
@@ -151,7 +155,7 @@ precedence nonassoc ELSE;
 
 /* ----------------------------Grammar Section-------------------- */
 
-program ::= PROGRAM ID:id SEMICOLON block:block DOT                             {: RESULT = new Program (id,block); :}                    
+program ::= PROGRAM ID:id SEMICOLON block:block DOT                             {: parser.MPProgram  = new Program (id,block); :}                    
 ;
 
 block ::= v_d_p:vdp p_d_p:pdp c_stament:c_s                                     {: RESULT = new Block (vdp,pdp,c_s); :}                        
@@ -184,8 +188,8 @@ p_dec ::= PROCEDURE ID:id COLON type:tipo                                       
           |PROCEDURE ID:id LPAREN parameters:p RPAREN COLON type:tipo SEMICOLON {: RESULT = new Procedure_d (id,tipo,p); :}
 ;
 
-parameters ::=  ID:id COLON type:tipo COMMA parameters:pms                      {::}
-                |ID:id COLON type:tipo                                          {::}
+parameters ::=  ID:id COLON type:tipo COMMA parameters:pms                      {: pms.add(new Parameter(id,tipo)); RESULT = pms; :}
+                |ID:id COLON type:tipo                                          {: RESULT = new Parameters(id,tipo); :}
 ;
 
 type ::= simple_t:st                                                            {: RESULT = new Type(st); :}
@@ -205,6 +209,7 @@ t_id ::= INTEGER                                                                
          |CHAR                                                                  {: RESULT = new Type_ident(); :}
          |BOOLEAN                                                               {: RESULT = new Type_ident(); :}
          |STRING                                                                {: RESULT = new Type_ident(); :}
+         |error                                                                 {: System.out.println("Type Expected"); :}
 ;
 
 c_stament ::= BEGIN staments:sts END                                            {:RESULT = new Compound_stament(sts); :}
@@ -212,7 +217,7 @@ c_stament ::= BEGIN staments:sts END                                            
 ;
 
 staments ::= stament:st SEMICOLON staments:sts                                  {:sts.add(st); RESULT = sts; :}
-             |stament:st                                                        {:RESULT = new Staments(); RESULT.add(st); :}
+             |stament:st SEMICOLON                                              {:RESULT = new Staments(); RESULT.add(st); :}
 ;
 
 stament ::= sim_stament:sim_st                                                  {: RESULT = new Stament(sim_st); :}
