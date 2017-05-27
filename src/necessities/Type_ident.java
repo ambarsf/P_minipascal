@@ -19,6 +19,12 @@ public class Type_ident {
     public Type_ident() {
     }
     
-    
+        public String getIdent() {
+        return ident;
+    }
+
+    public void setIdent(String ident) {
+        this.ident = ident;
+    }
     
 }

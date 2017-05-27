@@ -15,5 +15,11 @@ public class Simple_type {
     public Simple_type(Type_ident t_i){
         T_id = t_i;
     }
-    
+        public Type_ident getT_id() {
+        return T_id;
+    }
+
+    public void setT_id(Type_ident T_id) {
+        this.T_id = T_id;
+    }
 }

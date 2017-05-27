@@ -31,4 +31,27 @@ public void add(String id){
         this.tipo = tipo;
     }
 
+    public Vector getVariables() {
+        return variables;
+    }
+
+    public void setVariables(Vector variables) {
+        this.variables = variables;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Type getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Type tipo) {
+        this.tipo = tipo;
+    }
 }

@@ -22,5 +22,20 @@ public class Variable {
     }
     
     
+    public Entire_variable getEnt_v() {
+        return ent_v;
+    }
+
+    public void setEnt_v(Entire_variable ent_v) {
+        this.ent_v = ent_v;
+    }
+
+    public Indexed_variable getInd_v() {
+        return ind_v;
+    }
+
+    public void setInd_v(Indexed_variable ind_v) {
+        this.ind_v = ind_v;
+    }
     
 }
