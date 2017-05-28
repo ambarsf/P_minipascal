@@ -22,4 +22,11 @@ public class Simple_type {
     public void setT_id(Type_ident T_id) {
         this.T_id = T_id;
     }
+
+    @Override
+    public String toString() {
+        return ""+T_id;
+    }
+    
+    
 }

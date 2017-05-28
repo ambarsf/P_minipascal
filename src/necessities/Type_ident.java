@@ -26,5 +26,12 @@ public class Type_ident {
     public void setIdent(String ident) {
         this.ident = ident;
     }
+
+    @Override
+    public String toString() {
+        return ident ;
+    }
+    
+    
     
 }

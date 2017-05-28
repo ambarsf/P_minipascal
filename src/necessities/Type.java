@@ -9,7 +9,8 @@ package necessities;
  *
  * @author ambarsuarez
  */
-public class Type {    Simple_type sim_t;
+public class Type {    
+    Simple_type sim_t;
     Array_type arr_t;
     boolean simple;    
     public Type(Simple_type si_t){
@@ -45,5 +46,17 @@ public class Type {    Simple_type sim_t;
     public void setSimple(boolean simple) {
         this.simple = simple;
     }
+
+    @Override
+    public String toString() {
+        if (simple ==true){
+            return ""+sim_t ;
+        }else{
+            return ""+arr_t;
+    }
+        
+    }
+    
+    
     
 }

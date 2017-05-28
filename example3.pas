@@ -1,5 +1,5 @@
 PROGRAM Adder2;
-VAR Number, Sum, Qty :INTEGER;
+VAR Number, Sum, Qty:INTEGER;
 BEGIN
   Sum := 0;
   READ (Qty);

@@ -5,14 +5,12 @@ import java.io.*;
 import java_cup.runtime.*;
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 import java.lang.reflect.Field;
-import java.util.Vector;
 
 parser code {:
     static SymbolTable tablaSimbolos = new SymbolTable();
     static int verificarTipo = 0;
     static Stack<String> listaIdentificadores = new Stack<String>();
-    int contTipos = 0;
-    Vector tipos = new Vector();
+
     
 
     public final Class getSymbolContainer() {
@@ -172,12 +170,9 @@ var_dec ::= v_dec:vd SEMICOLON var_dec:var_d                                    
            |v_dec:vd error var_dec:var_d                                        {: System.err.println(" ; expected"); :}
 ;
 
-v_dec ::= ID:id COMMA v_dec:vd                                                  /*{: vd.add(id); RESULT = vd; :}*/
+v_dec ::= ID:id COMMA v_dec:vd                                                  {: vd.add(id); RESULT = vd; :}
           |ID:id error v_dec:vd                                                 {: System.err.println(" , or : expected"); :}
-          |ID:id COLON type:tipo                                                {: if(tipo.isSimple())
-                                                                                        RESULT = new Variable_d(id,tipo);
-                                                                                   System.out.println("Esta variable "+id+" es "+tipo.getSim_t().getT_id().getIdent());
-                                                                                    :}            
+          |ID:id COLON type:tipo                                                {: RESULT = new Variable_d(id,tipo); :}            
 ;
 
 
@@ -204,7 +199,7 @@ parameters ::=  ID:id COLON type:tipo COMMA parameters:pms                      
                 |ID:id COLON type:tipo                                          {: RESULT = new Parameters(id,tipo); :}
 ;
 
-type ::= simple_t:st                                                            {: RESULT = new Type(st); :}
+type ::= simple_t:st                                                            {: RESULT = new Type(st);:}
          |array_t:at                                                            {: RESULT = new Type(at); :}
 ;
 
@@ -220,18 +215,17 @@ index_r ::= NUMBER:n1 DOT DOT NUMBER:n2                                         
             |NUMBER:n1 DOT DOT error                                            {: System.err.println(" number expected"); :} 
 ;
 
-simple_t ::= t_id:tid                                                           {: RESULT = new Simple_type (tid);
-                                                                                   System.out.println("Type identifier tipo"+tid.getIdent()); :}
+simple_t ::= t_id:tid                                                           {: RESULT = new Simple_type (tid);:}
 ;
 
-t_id ::= INTEGER:nombre                                                                {: //RESULT = new Type_ident(nombre); 
-                                                                                          tipos.add(nombre); :}
-         |CHAR:nombre                                                                  {: //RESULT = new Type_ident(nombre);
-                                                                                          tipos.add(nombre); :}
-         |BOOLEAN:nombre                                                               {: //RESULT = new Type_ident(nombre);
-                                                                                          tipos.add(nombre); :}
-         |STRING:nombre                                                                {: //RESULT = new Type_ident(nombre);
-                                                                                          tipos.add(nombre); :}
+t_id ::= INTEGER:nombre                                                         {: RESULT = new Type_ident("integer");
+                                                                                 //System.out.println(RESULT.getIdent());:}
+         |CHAR:nombre                                                           {: RESULT = new Type_ident("char");
+                                                                                 //System.out.println(RESULT.getIdent());:}
+         |BOOLEAN:nombre                                                        {: RESULT = new Type_ident("boolean");
+                                                                                 //System.out.println(RESULT.getIdent());:}
+         |STRING:nombre                                                         {: RESULT = new Type_ident("string");
+                                                                                 //System.out.println(RESULT.getIdent());:}
          |error                                                                 {: System.err.println("Type Expected"); :}
 ;
 

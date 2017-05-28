@@ -19,7 +19,7 @@ end;
 procedure findMin(x: integer, m: integer):integer;
 begin
   if a<a then
-    read(b);$
+    read(b);
 end;
 begin
    while a=b do
