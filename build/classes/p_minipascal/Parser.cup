@@ -170,9 +170,12 @@ var_dec ::= v_dec:vd SEMICOLON var_dec:var_d                                    
            |v_dec:vd error var_dec:var_d                                        {: System.err.println(" ; expected"); :}
 ;
 
-v_dec ::= ID:id COMMA v_dec:vd                                                  {: vd.add(id); RESULT = vd; :}
+v_dec ::= ID:id COMMA v_dec:vd                                                  {: vd.add(id); RESULT = vd; 
+                                                                                System.out.print(id+" ");:}
           |ID:id error v_dec:vd                                                 {: System.err.println(" , or : expected"); :}
-          |ID:id COLON type:tipo                                                {: RESULT = new Variable_d(id,tipo); :}            
+          |ID:id COLON type:tipo                                                {: RESULT = new Variable_d(id,tipo); 
+                                                                                System.out.print(tipo +": "+ id+" ");
+                                                                                System.out.println();:}            
 ;
 
 
