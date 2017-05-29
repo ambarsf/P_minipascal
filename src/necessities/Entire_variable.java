@@ -15,6 +15,19 @@ public class Entire_variable {
     public Entire_variable(Variable_identifier var_id) {
         this.var_id = var_id;
     }
+
+    public Variable_identifier getVar_id() {
+        return var_id;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return ""+var_id;
+    }
+    
+    
     
     
     

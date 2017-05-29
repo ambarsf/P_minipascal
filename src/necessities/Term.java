@@ -18,6 +18,21 @@ public class Term {
         this.fact = fact;
     }
 
+    public Term getTerm() {
+        return term;
+    }
+
+    public Factor getFact() {
+        return fact;
+    }
+
+    @Override
+    public String toString() {
+        return ""+fact ;
+    }
+    
+    
+
     
     
     

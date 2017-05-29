@@ -12,13 +12,16 @@ package necessities;
 public class Variable {
     Entire_variable ent_v;
     Indexed_variable  ind_v;
+    boolean entire = true;
 
     public Variable(Entire_variable ent_v) {
         this.ent_v = ent_v;
+        entire =true;
     }
 
     public Variable(Indexed_variable ind_v) {
         this.ind_v = ind_v;
+        entire = false;
     }
     
     
@@ -37,5 +40,16 @@ public class Variable {
     public void setInd_v(Indexed_variable ind_v) {
         this.ind_v = ind_v;
     }
+
+    @Override
+    public String toString() {
+        if (entire=true){
+            return ""+ent_v;
+        }else{
+            return ""+ind_v;
+        }
+    }
+    
+    
     
 }

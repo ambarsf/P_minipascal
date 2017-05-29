@@ -17,9 +17,13 @@ public class Factor {
     String str;
     int num;
     char ch;
+    boolean verd;
+    boolean fals;
+    int type;
     
     public Factor(Variable var) {
         this.var = var;
+        type=1;
     }
 
     public Factor(Expression exp) {
@@ -32,15 +36,57 @@ public class Factor {
 
     public Factor(String str) {
         this.str = str;
+        type=2;
     }
 
     public Factor(char ch) {
         this.ch = ch;
+        type=3;
     }
     
     public Factor(int num){
         this.num=num;
+        type=4;
     }
+
+    public Variable getVar() {
+        return var;
+    }
+
+    public Expression getExp() {
+        return exp;
+    }
+
+    public Factor getFact() {
+        return fact;
+    }
+
+    public String getStr() {
+        return str;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public char getCh() {
+        return ch;
+    }
+
+    @Override
+    public String toString() {
+        if (type==1){
+          return ""+var;  
+        }else if (type==2){
+            return str;
+        }else if(type==3){
+            return ""+ch;
+        }else {
+           return ""+num; 
+        }
+    }
+    
+    
     
     
     

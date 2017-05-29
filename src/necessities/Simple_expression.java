@@ -16,6 +16,17 @@ public class Simple_expression {
     public Simple_expression(Term term) {
         this.term = term;
     }
+
+    public Term getTerm() {
+        return term;
+    }
+
+    @Override
+    public String toString() {
+        return ""+term;
+    }
+    
+    
     
     
 }

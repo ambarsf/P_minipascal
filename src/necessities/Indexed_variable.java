@@ -18,6 +18,21 @@ public class Indexed_variable {
         this.exp = exp;
     }
 
+    public Array_variable getAr_var() {
+        return ar_var;
+    }
+
+    public Expression getExp() {
+        return exp;
+    }
+
+    @Override
+    public String toString() {
+        return ""+ar_var ;
+    }
+    
+    
+
     
     
     

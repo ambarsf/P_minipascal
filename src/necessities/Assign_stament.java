@@ -17,6 +17,18 @@ public class Assign_stament {
         this.var = var;
         this.esp = esp;
     }
+
+    public Variable getVar() {
+        return var;
+    }
+
+    public Expression getEsp() {
+        return esp;
+    }
+    
+    
+    
+    
     
     
     

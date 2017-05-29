@@ -55,7 +55,7 @@ public void unrecovered_syntax_error(Symbol cur_token) {
     
 /* ------------Declaration of Terminals and Non Terminals Section----------- */
 /* Types */
-terminal String           INTEGER, CHAR, BOOLEAN, STRING, VAR, ARRAY;
+terminal String     INTEGER, CHAR, BOOLEAN, STRING, VAR, ARRAY;
 
 /*Booleans */
 terminal            TRUE, FALSE;
@@ -255,7 +255,8 @@ sim_stament ::= assign_s:as_s                                                   
                 |write_s:w_s                                                    {: RESULT = new Simple_stament(w_s); :}
 ;
 
-assign_s ::= var:v ASSIGN exp:ex                                                {: RESULT = new Assign_stament(v,ex); :}    
+assign_s ::= var:v ASSIGN exp:ex                                                {: RESULT = new Assign_stament(v,ex); 
+                                                                                System.out.println(RESULT.getEsp());:}    
 ;
 
 proc_s ::= proc_id:p_id                                                         {: RESULT = new Procedure_stament(p_id); :}
@@ -338,22 +339,22 @@ factor ::= var:v                                                                
 	|NUMBER:num                                                             {: RESULT = new Factor(num); :}   
 	|LPAREN exp:ex RPAREN                                                   {: RESULT = new Factor(ex); :}
 	|NOT factor:ft                                                          {: RESULT = new Factor(ft); :}
+
 ;
 
-var ::= ent_var: ent_v                                                          {: RESULT = new Variable(ent_v); :}
-        |ind_var: ind_v                                                         {: RESULT = new Variable(ind_v); :}
+var ::= ent_var: ent_v                                                          {: RESULT = new Variable(ent_v);:}
+        |ind_var: ind_v                                                         {: RESULT = new Variable(ind_v);:}
 ;
 
 ind_var ::= array_var:ar_v LCOR exp:ex RCOR                                     {: RESULT = new Indexed_variable(ar_v, ex); :}
 ;
 
-array_var ::= ent_var:e_var                                                     {: RESULT = new Array_variable(e_var); :}
+array_var ::= ent_var:e_var                                                     {: RESULT = new Array_variable(e_var);:}
 ;
 
-ent_var ::= var_ident:var_id                                                    {: RESULT = new Entire_variable(var_id); :} 
+ent_var ::= var_ident:var_id                                                    {: RESULT = new Entire_variable(var_id);:} 
 ;
 
-var_ident ::= ID:id                                                             {: RESULT = new Variable_identifier(id); 
-                                                                                   System.out.println("VARIABLE IDENTIFER "+ id);:}
+var_ident ::= ID:id                                                             {: RESULT = new Variable_identifier(id);:}
 ;
       

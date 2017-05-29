@@ -15,6 +15,19 @@ public class Array_variable {
     public Array_variable(Entire_variable ent_var) {
         this.ent_var = ent_var;
     }
+
+    public Entire_variable getEnt_var() {
+        return ent_var;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return ""+ent_var;
+    }
+    
+    
     
     
     

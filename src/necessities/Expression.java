@@ -21,6 +21,21 @@ public class Expression {
         this.s_exp1 = s_exp1;
         this.s_exp2 = s_exp2;
     }
+
+    public Simple_expression getS_exp1() {
+        return s_exp1;
+    }
+
+    public Simple_expression getS_exp2() {
+        return s_exp2;
+    }
+
+    @Override
+    public String toString() {
+        return ""+s_exp1 ;
+    }
+    
+    
     
     
     

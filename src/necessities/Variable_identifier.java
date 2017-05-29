@@ -16,6 +16,13 @@ public class Variable_identifier {
     public Variable_identifier(String id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return id ;
+    }
+    
+    
    
    
     
