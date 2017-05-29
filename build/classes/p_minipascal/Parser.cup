@@ -256,7 +256,48 @@ sim_stament ::= assign_s:as_s                                                   
 ;
 
 assign_s ::= var:v ASSIGN exp:ex                                                {: RESULT = new Assign_stament(v,ex); 
-                                                                                System.out.println(RESULT.getEsp());:}    
+                                                                                System.out.println(RESULT.getEsp());
+                                                                                System.out.println("Asignando valor " + ex + " a " + v);
+                                                                                Simbolo tmp = null;
+                                                                                Simbolo tmp2 = null;
+                                                                                tmp = SymbolTable.buscar(v.toString());
+                                                                                tmp2 = SymbolTable.buscar(ex.toString());
+                                                                                if(tmp!=null){
+                                                                                    if(tmp.valor == null){
+                                                                                        String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
+                                                                                        System.out.println(tipoVariable+" tipo variable");
+                                                                                        if(tipoVariable.equals("integer")&&tmp2==null){
+                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()== 4)
+                                                                                                SymbolTable.insertar(v.toString(),ex);
+                                                                                            else
+                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                        }
+                                                                                        else if (tipoVariable.equals("string")&&tmp2==null){
+                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==2)
+                                                                                                SymbolTable.insertar(v.toString(), ex);
+                                                                                            else
+                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                        }
+                                                                                        else if (tipoVariable.equals("char")&&tmp2==null){
+                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==3)
+                                                                                                SymbolTable.insertar(v.toString(), ex);
+                                                                                            else
+                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                        }
+                                                                                        else if(tmp2!=null){
+                                                                                            System.out.println("Entro al else");
+                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==1){
+                                                                                                System.out.println("Entro al getType==1");
+                                                                                                if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
+                                                                                                    SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
+                                                                                                else
+                                                                                                    System.err.println("Tipo de asignacion incompatible");
+                                                                                                
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                :}    
 ;
 
 proc_s ::= proc_id:p_id                                                         {: RESULT = new Procedure_stament(p_id); :}
@@ -322,7 +363,7 @@ exp ::= sim_exp:sime                                                            
 ;
 
 sim_exp ::= term:term                                                           {: RESULT = new Simple_expression(term); :}
-            |sim_exp PLUS term                                                  {::}
+            |sim_exp PLUS term                                                  {: :}
             |sim_exp MINUS term                                                 {::}
             |PLUS term                                                          {::}
             |MINUS term                                                         {::}

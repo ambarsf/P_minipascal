@@ -1,5 +1,5 @@
 PROGRAM Loop;
-VAR  SumWhile, SumRepeat, SumTo, SumDownTo:integer;
+VAR  SumWhile, SumRepeat, SumTo, SumDownTo, I:integer;
 begin
   WRITE('THE SUM OF 14 TO 728 USING:');
   I := 14;

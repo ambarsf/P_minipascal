@@ -7,9 +7,9 @@
         MODULE 10. }
 PROGRAM Loop;
   VAR
-    CardNumber2, CardNumber1 , CardNumber:integer; {THE NUMBER READ}
+    CardNumber2, CardNumber1 , CardNumber, Sum:integer; {THE NUMBER READ}
     CheckDigit:INTEGER; {ITS LAST DIGIT}
-    DigitsLeft:String; {THE OTHER DIGITS}
+    DigitsLeft, DigitsLeft2:String; {THE OTHER DIGITS}
   BEGIN
     WRITE('ENTER THE CARD NUMBER TO VERIFY ');
     READ(CardNumber);
@@ -19,7 +19,8 @@ PROGRAM Loop;
     WHILE DigitsLeft > 0 DO
             BEGIN
             Sum := Sum + DigitsLeft;
-            DigitsLeft := DigitsLeft;
+            DigitsLeft := 'cadena es esto';
+	    DigitsLeft2 := Sum;
             END;
     IF CheckDigit = Sum THEN
             WRITE(CardNumber,' IS VALID')

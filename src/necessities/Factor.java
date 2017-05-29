@@ -19,7 +19,7 @@ public class Factor {
     char ch;
     boolean verd;
     boolean fals;
-    int type;
+    int type=0;
     
     public Factor(Variable var) {
         this.var = var;
@@ -71,6 +71,18 @@ public class Factor {
 
     public char getCh() {
         return ch;
+    }
+
+    public boolean isVerd() {
+        return verd;
+    }
+
+    public boolean isFals() {
+        return fals;
+    }
+
+    public int getType() {
+        return type;
     }
 
     @Override

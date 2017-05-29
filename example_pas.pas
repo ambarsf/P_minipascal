@@ -4,7 +4,8 @@ Var
 		linf, lsup, j : integer;
 		cadena : string;
 		caracter : char;
-		n: array[1..10] of integer
+		num : integer;
+		n: array[1..10] of integer;
 
 {ESTE ES UN COMENTARIO AMBUCHIS}
 
@@ -20,6 +21,7 @@ Begin
 	for i := linf-3 to lsup*2 do
 		writeln (i);
 	caracter := 'a';
+	num := 100;
 	cadena := 'Ambar likes beans';
 	writeln(caracter);
 	writeln(cadena);

@@ -69,6 +69,12 @@ public class SymbolTable {
         return s.tipo;
     }
     
+    static public Object verificarValor(String nombre){
+        Simbolo s = tablaSimbolos.get(nombre);
+        System.out.println("VALOR DE " + nombre + " ES: " + s.valor);
+        return s.valor;
+    }
+    
     static public String eliminar(String nombre)
     {             
         
@@ -114,7 +120,9 @@ public class SymbolTable {
         if(simbolo.getTipo() == null){
             simbolo.setTipo(UltimoTipo);
             System.out.println("ULTIMO TIPO EN AGREGAR TIPO: " + UltimoTipo);
-            tablaSimbolos.replace(nombre, simbolo);
+            //tablaSimbolos.replace(nombre, simbolo);
+            tablaSimbolos.remove(nombre);
+            tablaSimbolos.put(nombre, simbolo);
             System.out.println("AGREGAR TIPO");
             imprimir();
             return simbolo;
