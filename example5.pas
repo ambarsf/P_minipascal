@@ -7,7 +7,7 @@
         MODULE 10. }
 PROGRAM Loop;
   VAR
-    CardNumber:integer; {THE NUMBER READ}
+    CardNumber2, CardNumber1 , CardNumber:integer; {THE NUMBER READ}
     CheckDigit:INTEGER; {ITS LAST DIGIT}
     DigitsLeft:String; {THE OTHER DIGITS}
   BEGIN

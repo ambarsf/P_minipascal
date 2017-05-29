@@ -52,13 +52,16 @@ public class SymbolTable {
     static Map<String, Simbolo> tablaSimbolos;
     static Stack<String> lista;
     static ArrayList<Nodo> repeticiones;        
+    static String UltimoTipo;
     
     public static Logger log = Logger.getLogger(SymbolTable.class.getName());            
     
     public SymbolTable()
     {        
         tablaSimbolos = new HashMap<String, Simbolo>();                                   
-        lista = new Stack<String>();                
+        lista = new Stack<String>();
+        UltimoTipo = "";
+        
     }
     
     static public String verificarTipo(String nombre){
@@ -90,9 +93,11 @@ public class SymbolTable {
             simbolo = new Simbolo(nombre, tipo, null);
             System.out.println("Agregando a tabla de simbolos con nombre: " + nombre);
             tablaSimbolos.put(nombre, simbolo);
-          
+            if(tipo != null)
+                UltimoTipo = tipo;
+            System.out.println("ULTIMO TIPO EN CREAR" + UltimoTipo);
             //System.out.println("Variable creada exitosamente!!!");
-              
+            
             imprimir();                
             System.out.println(" ");
             return simbolo;
@@ -104,11 +109,13 @@ public class SymbolTable {
         }
     }
     
-    static public Simbolo agregarTipo(String nombre, String tipo){
+    static public Simbolo agregarTipo(String nombre){
         Simbolo simbolo = buscar(nombre);
         if(simbolo.getTipo() == null){
-            simbolo.setTipo(tipo);
+            simbolo.setTipo(UltimoTipo);
+            System.out.println("ULTIMO TIPO EN AGREGAR TIPO: " + UltimoTipo);
             tablaSimbolos.replace(nombre, simbolo);
+            System.out.println("AGREGAR TIPO");
             imprimir();
             return simbolo;
         }
