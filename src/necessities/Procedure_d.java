@@ -23,6 +23,7 @@ public class Procedure_d {
         this.id = id;
         this.tipo = tipo;
         this.parametros = parametros;
+            
     }
 
     public String getId() {

@@ -171,14 +171,14 @@ var_dec ::= v_dec:vd SEMICOLON var_dec:var_d                                    
 ;
 
 v_dec ::= ID:id COMMA v_dec:vd                                                  {: vd.add(id); RESULT = vd; 
-                                                                                System.out.print(id+" ");
+                                                                                //System.out.print(id+" ");
                                                                                 SymbolTable.crear(id,null);
                                                                                 SymbolTable.agregarTipo(id);:}
           |ID:id error v_dec:vd                                                 {: System.err.println(" , or : expected"); :}
           |ID:id COLON type:tipo                                                {: RESULT = new Variable_d(id,tipo); 
-                                                                                System.out.print(tipo +": "+ id+" ");
+                                                                                //System.out.print(tipo +": "+ id+" ");
                                                                                 SymbolTable.crear(id, tipo.toString());
-                                                                                System.out.println();:}            
+                                                                                //System.out.println();:}            
 ;
 
 
@@ -202,7 +202,7 @@ p_dec ::= PROCEDURE ID:id COLON type:tipo                                       
 
 parameters ::=  ID:id COLON type:tipo COMMA parameters:pms                      {: pms.add(new Parameter(id,tipo)); RESULT = pms; :}
                 |ID:id error type:tipo COMMA parameters:pms                     {: System.err.println(" , expected"); :}
-                |ID:id COLON type:tipo                                          {: RESULT = new Parameters(id,tipo); :}
+                |ID:id COLON type:tipo                                          {: RESULT = new Parameters(id,tipo);:}
 ;
 
 type ::= simple_t:st                                                            {: RESULT = new Type(st);:}
@@ -256,8 +256,8 @@ sim_stament ::= assign_s:as_s                                                   
 ;
 
 assign_s ::= var:v ASSIGN exp:ex                                                {: RESULT = new Assign_stament(v,ex); 
-                                                                                System.out.println(RESULT.getEsp());
-                                                                                System.out.println("Asignando valor " + ex + " a " + v);
+                                                                                //System.out.println(RESULT.getEsp());
+                                                                                //System.out.println("Asignando valor " + ex + " a " + v);
                                                                                 Simbolo tmp = null;
                                                                                 Simbolo tmp2 = null;
                                                                                 tmp = SymbolTable.buscar(v.toString());
@@ -265,7 +265,7 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                 if(tmp!=null){
                                                                                     if(tmp.valor == null){
                                                                                         String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
-                                                                                        System.out.println(tipoVariable+" tipo variable");
+                                                                                        //System.out.println(tipoVariable+" tipo variable");
                                                                                         if(tipoVariable.equals("integer")&&tmp2==null){
                                                                                             if(ex.getS_exp1().getTerm().getFact().getType()== 4)
                                                                                                 SymbolTable.insertar(v.toString(),ex);
@@ -285,9 +285,9 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                                 System.err.println("Tipo de asignacion incompatible");
                                                                                         }
                                                                                         else if(tmp2!=null){
-                                                                                            System.out.println("Entro al else");
+                                                                                            //System.out.println("Entro al else");
                                                                                             if(ex.getS_exp1().getTerm().getFact().getType()==1){
-                                                                                                System.out.println("Entro al getType==1");
+                                                                                                //System.out.println("Entro al getType==1");
                                                                                                 if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
                                                                                                     SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
                                                                                                 else
@@ -297,7 +297,7 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                         }
                                                                                     }else if(tmp.valor != null){
                                                                                         String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
-                                                                                        System.out.println(tipoVariable+" tipo variable2");
+                                                                                        //System.out.println(tipoVariable+" tipo variable2");
                                                                                         if(tipoVariable.equals("integer")&&tmp2==null){
                                                                                             if(ex.getS_exp1().getTerm().getFact().getType()== 4)
                                                                                                 SymbolTable.insertar(v.toString(),ex);
@@ -317,9 +317,9 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                                 System.err.println("Tipo de asignacion incompatible");
                                                                                         }
                                                                                         else if(tmp2!=null){
-                                                                                            System.out.println("Entro al else");
+                                                                                            //System.out.println("Entro al else");
                                                                                             if(ex.getS_exp1().getTerm().getFact().getType()==1){
-                                                                                                System.out.println("Entro al getType==1");
+                                                                                                //System.out.println("Entro al getType==1");
                                                                                                 if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
                                                                                                     SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
                                                                                                 else
@@ -346,8 +346,8 @@ read_s ::= READ LPAREN input_var:i_v RPAREN                                     
 input_var ::= var:v                                                             {: RESULT = new Input_variable(v); :}
 ;
 
-write_s ::= WRITE LPAREN writes:wr RPAREN                                       {: RESULT = new Write_stament(wr); :}
-            |WRITE error writes:wr RPAREN                                       {: System.err.println(" ( expected"); :}
+write_s ::= WRITE LPAREN writes:wr RPAREN SEMICOLON                             {: RESULT = new Write_stament(wr); :}
+            |WRITE error writes:wr RPAREN SEMICOLON                             {: System.err.println(" ( expected"); :}
             |WRITE LPAREN writes:wr error                                       {: System.err.println(" ) expected"); :}
 ;
 
@@ -395,20 +395,20 @@ exp ::= sim_exp:sime                                                            
 ;
 
 sim_exp ::= term:term                                                           {: RESULT = new Simple_expression(term); :}
-            |sim_exp:se1 PLUS term:term                                         {:  System.out.println("Entro al plus");
+            |sim_exp:se1 PLUS term:term                                         {:  //System.out.println("Entro al plus");
                                                                                     if(se1.getTerm().getFact().getType()==4){
-                                                                                        System.out.println("entro al type == 4 numero 1");
+                                                                                        //System.out.println("entro al type == 4 numero 1");
                                                                                         if(term.getFact().getType()==4){
-                                                                                            System.out.println("Entro al type == 4 numero 2");
+                                                                                            //System.out.println("Entro al type == 4 numero 2");
                                                                                             RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())+Integer.parseInt(term.toString()))));
                                                                                         }
                                                                                     }
                                                                                 :}
-            |sim_exp:se1 MINUS term:term                                        {:System.out.println("Entro al minus");
+            |sim_exp:se1 MINUS term:term                                        {://System.out.println("Entro al minus");
                                                                                     if(se1.getTerm().getFact().getType()==4){
-                                                                                        System.out.println("entro al type == 4 numero 1");
+                                                                                        //System.out.println("entro al type == 4 numero 1");
                                                                                         if(term.getFact().getType()==4){
-                                                                                            System.out.println("Entro al type == 4 numero 2");
+                                                                                            //System.out.println("Entro al type == 4 numero 2");
                                                                                             RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())-Integer.parseInt(term.toString()))));
                                                                                         }
                                                                                     }:}
@@ -417,19 +417,19 @@ sim_exp ::= term:term                                                           
 ;
 
 term ::= factor:fact                                                            {: RESULT = new Term(fact); :}
-         |term:term TIMES factor:fact                                                     {:System.out.println("Entro al times");
+         |term:term TIMES factor:fact                                                     {://System.out.println("Entro al times");
                                                                                     if(term.getFact().getType()==4){
-                                                                                        System.out.println("entro al type == 4 numero 1");
+                                                                                        //System.out.println("entro al type == 4 numero 1");
                                                                                         if(fact.getType()==4){
-                                                                                            System.out.println("Entro al type == 4 numero 2");
+                                                                                            //System.out.println("Entro al type == 4 numero 2");
                                                                                             RESULT = new Term(new Factor(Integer.parseInt(term.toString())*Integer.parseInt(fact.toString())));
                                                                                         }
                                                                                     }:}
-         |term:term DIVIDE factor:fact                                                    {:System.out.println("Entro al divide");
+         |term:term DIVIDE factor:fact                                                    {://System.out.println("Entro al divide");
                                                                                     if(term.getFact().getType()==4){
-                                                                                        System.out.println("entro al type == 4 numero 1");
+                                                                                        //System.out.println("entro al type == 4 numero 1");
                                                                                         if(fact.getType()==4){
-                                                                                            System.out.println("Entro al type == 4 numero 2");
+                                                                                            //System.out.println("Entro al type == 4 numero 2");
                                                                                             RESULT = new Term(new Factor(Integer.parseInt(term.toString())/Integer.parseInt(fact.toString())));
                                                                                         }
                                                                                     }:}

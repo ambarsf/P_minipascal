@@ -71,14 +71,14 @@ public class SymbolTable {
     
     static public Object verificarValor(String nombre){
         Simbolo s = tablaSimbolos.get(nombre);
-        System.out.println("VALOR DE " + nombre + " ES: " + s.valor);
+        //System.out.println("VALOR DE " + nombre + " ES: " + s.valor);
         return s.valor;
     }
     
     static public String eliminar(String nombre)
     {             
         
-        System.out.println("Eliminando variable: " + nombre);
+        //System.out.println("Eliminando variable: " + nombre);
         try
         {
             tablaSimbolos.remove(nombre);
@@ -97,15 +97,15 @@ public class SymbolTable {
         if(simbolo == null) // La variable no existe
         {
             simbolo = new Simbolo(nombre, tipo, null);
-            System.out.println("Agregando a tabla de simbolos con nombre: " + nombre);
+            //System.out.println("Agregando a tabla de simbolos con nombre: " + nombre);
             tablaSimbolos.put(nombre, simbolo);
             if(tipo != null)
                 UltimoTipo = tipo;
-            System.out.println("ULTIMO TIPO EN CREAR" + UltimoTipo);
+            //System.out.println("ULTIMO TIPO EN CREAR" + UltimoTipo);
             //System.out.println("Variable creada exitosamente!!!");
             
             imprimir();                
-            System.out.println(" ");
+            //System.out.println(" ");
             return simbolo;
         }
         else
@@ -119,23 +119,23 @@ public class SymbolTable {
         Simbolo simbolo = buscar(nombre);
         if(simbolo.getTipo() == null){
             simbolo.setTipo(UltimoTipo);
-            System.out.println("ULTIMO TIPO EN AGREGAR TIPO: " + UltimoTipo);
+            //System.out.println("ULTIMO TIPO EN AGREGAR TIPO: " + UltimoTipo);
             //tablaSimbolos.replace(nombre, simbolo);
             tablaSimbolos.remove(nombre);
             tablaSimbolos.put(nombre, simbolo);
-            System.out.println("AGREGAR TIPO");
+            //System.out.println("AGREGAR TIPO");
             imprimir();
             return simbolo;
         }
         else {
-            log.log(Level.SEVERE, "Redifinicion de la variable: " + nombre);
+            //log.log(Level.SEVERE, "Redifinicion de la variable: " + nombre);
             return null;
         }
     }
         
     static public Simbolo insertar(String nombre, Object valor)            
     {
-        System.out.println("\nIngreso a insertar valor a variable.");
+        //System.out.println("\nIngreso a insertar valor a variable.");
         Simbolo simbolo = buscar(nombre);
         if(simbolo != null) //La variable existe
         {
@@ -144,9 +144,9 @@ public class SymbolTable {
             tablaSimbolos.remove(nombre);//Elimino para actualizar
             tablaSimbolos.put(nombre, simbolo);
             
-            System.out.println("Variable actualizada");
+            //System.out.println("Variable actualizada");
             imprimir();
-            System.out.println("Saliendo de insertar de TablaSimbolos\n");
+            //System.out.println("Saliendo de insertar de TablaSimbolos\n");
             return simbolo;
         }
         else
@@ -164,12 +164,12 @@ public class SymbolTable {
     
     static public void imprimir()
     {
-        System.out.println("\nIngresando a imprimir de TablaSimbolos");
-        System.out.println("    Valores de la tabla de simbolos:");
-        for (Simbolo s : tablaSimbolos.values())
-            System.out.println(String.format("      "
-                    + "Nombre: %s, valor: %s, tipo: %s",s.nombre, s.valor, s.tipo));        
-        System.out.println("Saliendo de imprimir en TablaSimbolos\n ");        
+        //System.out.println("\nIngresando a imprimir de TablaSimbolos");
+        //System.out.println("    Valores de la tabla de simbolos:");
+        //for (Simbolo s : tablaSimbolos.values())
+            //System.out.println(String.format("      "
+                    //+ "Nombre: %s, valor: %s, tipo: %s",s.nombre, s.valor, s.tipo));        
+        //System.out.println("Saliendo de imprimir en TablaSimbolos\n ");        
     }
 }
 

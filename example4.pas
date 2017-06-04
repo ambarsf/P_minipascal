@@ -6,7 +6,6 @@ procedure findMin(x: integer, m: integer):integer;
   var a, b, c,  min:Integer;
   begin
      write(' Enter three numbers: ');
-     read(a);
      a := a+3;
      write(' Minimum: ', min);
  {Hola

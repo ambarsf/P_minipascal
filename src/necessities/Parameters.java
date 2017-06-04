@@ -53,6 +53,12 @@ public void add(Parameter par){
     public void setTipo(Type tipo) {
         this.tipo = tipo;
     }
+    
+    public void showParams(){
+        for (int i = 0; i < parametros.size(); i++) {
+            System.out.println(parametros.get(i));
+        }
+    }
 
 
 
