@@ -346,8 +346,8 @@ read_s ::= READ LPAREN input_var:i_v RPAREN                                     
 input_var ::= var:v                                                             {: RESULT = new Input_variable(v); :}
 ;
 
-write_s ::= WRITE LPAREN writes:wr RPAREN SEMICOLON                             {: RESULT = new Write_stament(wr); :}
-            |WRITE error writes:wr RPAREN SEMICOLON                             {: System.err.println(" ( expected"); :}
+write_s ::= WRITE LPAREN writes:wr RPAREN                                       {: RESULT = new Write_stament(wr); :}
+            |WRITE error writes:wr RPAREN                                       {: System.err.println(" ( expected"); :}
             |WRITE LPAREN writes:wr error                                       {: System.err.println(" ) expected"); :}
 ;
 
