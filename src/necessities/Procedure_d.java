@@ -24,6 +24,30 @@ public class Procedure_d {
         this.tipo = tipo;
         this.parametros = parametros;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Type getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Type tipo) {
+        this.tipo = tipo;
+    }
+
+    public Parameters getParametros() {
+        return parametros;
+    }
+
+    public void setParametros(Parameters parametros) {
+        this.parametros = parametros;
+    }
     
     
     

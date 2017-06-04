@@ -23,6 +23,30 @@ public class Parameter {
         this.Id = Id;
         this.number = number;
     }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String Id) {
+        this.Id = Id;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public Type getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Type tipo) {
+        this.tipo = tipo;
+    }
     
     
     

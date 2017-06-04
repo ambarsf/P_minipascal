@@ -30,6 +30,30 @@ public void add(Parameter par){
         parametros.add(new Parameter(Id,tipo));
     }
 
+    public Vector getParametros() {
+        return parametros;
+    }
+
+    public void setParametros(Vector parametros) {
+        this.parametros = parametros;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String Id) {
+        this.Id = Id;
+    }
+
+    public Type getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Type tipo) {
+        this.tipo = tipo;
+    }
+
 
 
 

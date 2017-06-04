@@ -15,5 +15,15 @@ public class Procedure_iden {
     public Procedure_iden(String id) {
         this.id = id;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+    
     
 }

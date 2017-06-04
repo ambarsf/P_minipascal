@@ -17,4 +17,22 @@ public class Procedure_dec {
         this.pd = pd;
         this.blockp = blockp;
     }
+
+    public Procedure_d getPd() {
+        return pd;
+    }
+
+    public void setPd(Procedure_d pd) {
+        this.pd = pd;
+    }
+
+    public Block_p getBlockp() {
+        return blockp;
+    }
+
+    public void setBlockp(Block_p blockp) {
+        this.blockp = blockp;
+    }
+    
+    
 }

@@ -295,6 +295,38 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                                 
                                                                                             }
                                                                                         }
+                                                                                    }else if(tmp.valor != null){
+                                                                                        String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
+                                                                                        System.out.println(tipoVariable+" tipo variable2");
+                                                                                        if(tipoVariable.equals("integer")&&tmp2==null){
+                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()== 4)
+                                                                                                SymbolTable.insertar(v.toString(),ex);
+                                                                                            else
+                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                        }
+                                                                                        else if (tipoVariable.equals("string")&&tmp2==null){
+                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==2)
+                                                                                                SymbolTable.insertar(v.toString(), ex);
+                                                                                            else
+                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                        }
+                                                                                        else if (tipoVariable.equals("char")&&tmp2==null){
+                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==3)
+                                                                                                SymbolTable.insertar(v.toString(), ex);
+                                                                                            else
+                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                        }
+                                                                                        else if(tmp2!=null){
+                                                                                            System.out.println("Entro al else");
+                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==1){
+                                                                                                System.out.println("Entro al getType==1");
+                                                                                                if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
+                                                                                                    SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
+                                                                                                else
+                                                                                                    System.err.println("Tipo de asignacion incompatible");
+                                                                                                
+                                                                                            }
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                                 :}    
@@ -363,15 +395,44 @@ exp ::= sim_exp:sime                                                            
 ;
 
 sim_exp ::= term:term                                                           {: RESULT = new Simple_expression(term); :}
-            |sim_exp PLUS term                                                  {: :}
-            |sim_exp MINUS term                                                 {::}
-            |PLUS term                                                          {::}
-            |MINUS term                                                         {::}
+            |sim_exp:se1 PLUS term:term                                         {:  System.out.println("Entro al plus");
+                                                                                    if(se1.getTerm().getFact().getType()==4){
+                                                                                        System.out.println("entro al type == 4 numero 1");
+                                                                                        if(term.getFact().getType()==4){
+                                                                                            System.out.println("Entro al type == 4 numero 2");
+                                                                                            RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())+Integer.parseInt(term.toString()))));
+                                                                                        }
+                                                                                    }
+                                                                                :}
+            |sim_exp:se1 MINUS term:term                                        {:System.out.println("Entro al minus");
+                                                                                    if(se1.getTerm().getFact().getType()==4){
+                                                                                        System.out.println("entro al type == 4 numero 1");
+                                                                                        if(term.getFact().getType()==4){
+                                                                                            System.out.println("Entro al type == 4 numero 2");
+                                                                                            RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())-Integer.parseInt(term.toString()))));
+                                                                                        }
+                                                                                    }:}
+            |PLUS term:term                                                     {::}
+            |MINUS term:term                                                    {::}
 ;
 
 term ::= factor:fact                                                            {: RESULT = new Term(fact); :}
-         |term TIMES factor                                                     {::}
-         |term DIVIDE factor                                                    {::}
+         |term:term TIMES factor:fact                                                     {:System.out.println("Entro al times");
+                                                                                    if(term.getFact().getType()==4){
+                                                                                        System.out.println("entro al type == 4 numero 1");
+                                                                                        if(fact.getType()==4){
+                                                                                            System.out.println("Entro al type == 4 numero 2");
+                                                                                            RESULT = new Term(new Factor(Integer.parseInt(term.toString())*Integer.parseInt(fact.toString())));
+                                                                                        }
+                                                                                    }:}
+         |term:term DIVIDE factor:fact                                                    {:System.out.println("Entro al divide");
+                                                                                    if(term.getFact().getType()==4){
+                                                                                        System.out.println("entro al type == 4 numero 1");
+                                                                                        if(fact.getType()==4){
+                                                                                            System.out.println("Entro al type == 4 numero 2");
+                                                                                            RESULT = new Term(new Factor(Integer.parseInt(term.toString())/Integer.parseInt(fact.toString())));
+                                                                                        }
+                                                                                    }:}
 ;
 
 factor ::= var:v                                                                {: RESULT = new Factor(v); :}

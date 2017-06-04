@@ -18,9 +18,9 @@ PROGRAM Loop;
     Sum := 0;
     WHILE DigitsLeft > 0 DO
             BEGIN
-            Sum := Sum + DigitsLeft;
+	    Sum:= 26/2;
             DigitsLeft := 'cadena es esto';
-	    DigitsLeft2 := Sum;
+	    DigitsLeft2 := DigitsLeft;
             END;
     IF CheckDigit = Sum THEN
             WRITE(CardNumber,' IS VALID')

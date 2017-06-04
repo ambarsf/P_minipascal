@@ -15,5 +15,15 @@ public class Procedure_stament {
     public  Procedure_stament(Procedure_iden pid){
         p_id=pid;
     }
+
+    public Procedure_iden getP_id() {
+        return p_id;
+    }
+
+    public void setP_id(Procedure_iden p_id) {
+        this.p_id = p_id;
+    }
+    
+    
     
 }

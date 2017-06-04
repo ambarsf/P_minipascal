@@ -21,5 +21,13 @@ public class Procedure_dec_part {
     public void add(Procedure_dec p_dec){
         declarations.add(0, p_dec);
     }
+
+    public Vector getDeclarations() {
+        return declarations;
+    }
+
+    public void setDeclarations(Vector declarations) {
+        this.declarations = declarations;
+    }
     
 }
