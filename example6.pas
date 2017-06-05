@@ -2,7 +2,7 @@ program exProcedure;
 var
    a, b, c,  min: integer;
 
-   procedure findMin(x: integer, m: integer):integer;
+   function findMin(x: integer, m: integer):integer;
      var a, b, c,  min:Integer;
      begin
         write(' Enter three numbers: ');

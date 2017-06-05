@@ -67,7 +67,7 @@ conststr = "'"{AllButR_Quotation}*"'"
 	"begin" 		{ return symbol (sym.BEGIN); }
 	"end" 			{ return symbol (sym.END); }
         "of"                    { return symbol (sym.OF); }
-        "procedure"             { return symbol (sym.PROCEDURE); }
+        "function"             { return symbol (sym.FUNCTION); }
 
 	"write"  		{ return symbol (sym.WRITE); }
 	"read"  		{ return symbol (sym.READ); }

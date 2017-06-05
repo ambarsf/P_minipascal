@@ -61,7 +61,7 @@ terminal String     INTEGER, CHAR, BOOLEAN, STRING, VAR, ARRAY;
 terminal            TRUE, FALSE;
 
 /*ciclos */
-terminal            PROCEDURE, IF, ELSE, WHILE, DO, FOR, TO, REPEAT,UNTIL,THEN, BEGIN, END, OF;
+terminal            FUNCTION, IF, ELSE, WHILE, DO, FOR, TO, REPEAT,UNTIL,THEN, BEGIN, END, OF;
 
 /*functions */
 terminal            PROGRAM;
@@ -190,13 +190,13 @@ proc_dec ::= p_dec:pd block_p:bl SEMICOLON                                      
             |p_dec:pd block_p:bl error                                          {: System.err.println(" ; expected"); :}
 ;
 
-p_dec ::= PROCEDURE ID:id COLON type:tipo                                       {: RESULT = new Procedure_d(id,tipo); :}
-          |PROCEDURE ID error type                                              {: System.err.println(" : expected"); :}
-          |PROCEDURE ID:id LPAREN parameters:p RPAREN COLON type:tipo SEMICOLON {: RESULT = new Procedure_d (id,tipo,p); :}
-          |PROCEDURE ID:id error parameters:p RPAREN COLON type:tipo SEMICOLON  {: System.err.println(" LPAREN expected"); :}
-          |PROCEDURE ID:id LPAREN parameters:p error COLON type:tipo SEMICOLON  {: System.err.println(" RPAREN expected"); :}
-          |PROCEDURE ID:id LPAREN parameters:p RPAREN error type:tipo SEMICOLON {: System.err.println(" : expected"); :}
-          |PROCEDURE ID:id LPAREN parameters:p RPAREN COLON type:tipo error     {: System.err.println(" ; expected"); :}
+p_dec ::= FUNCTION ID:id COLON type:tipo                                       {: RESULT = new Procedure_d(id,tipo); :}
+          |FUNCTION ID error type                                              {: System.err.println(" : expected"); :}
+          |FUNCTION ID:id LPAREN parameters:p RPAREN COLON type:tipo SEMICOLON {: RESULT = new Procedure_d (id,tipo,p); :}
+          |FUNCTION ID:id error parameters:p RPAREN COLON type:tipo SEMICOLON  {: System.err.println(" LPAREN expected"); :}
+          |FUNCTION ID:id LPAREN parameters:p error COLON type:tipo SEMICOLON  {: System.err.println(" RPAREN expected"); :}
+          |FUNCTION ID:id LPAREN parameters:p RPAREN error type:tipo SEMICOLON {: System.err.println(" : expected"); :}
+          |FUNCTION ID:id LPAREN parameters:p RPAREN COLON type:tipo error     {: System.err.println(" ; expected"); :}
 
 ;
 
