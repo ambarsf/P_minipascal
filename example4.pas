@@ -11,7 +11,7 @@ procedure findMin(x: integer, m: integer):integer;
  {Hola
  como estas ?}
 end;
-procedure findMin(x: integer, m: integer):integer;
+procedudure findMin(x: integer, m: integer):integer;
 begin
   write('Fernando Reyes Magos: ');
 end;

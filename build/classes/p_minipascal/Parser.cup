@@ -258,7 +258,7 @@ sim_stament ::= assign_s:as_s                                                   
 assign_s ::= var:v ASSIGN exp:ex                                                {: RESULT = new Assign_stament(v,ex); 
                                                                                 //System.out.println(RESULT.getEsp());
                                                                                 //System.out.println("Asignando valor " + ex + " a " + v);
-                                                                                Simbolo tmp = null;
+                                                                                /*Simbolo tmp = null;
                                                                                 Simbolo tmp2 = null;
                                                                                 tmp = SymbolTable.buscar(v.toString());
                                                                                 tmp2 = SymbolTable.buscar(ex.toString());
@@ -328,7 +328,7 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                             }
                                                                                         }
                                                                                     }
-                                                                                }
+                                                                                }*/
                                                                                 :}    
 ;
 
