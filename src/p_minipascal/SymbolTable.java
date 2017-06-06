@@ -32,15 +32,21 @@ class Simbolo
     String nombre;
     String tipo;
     Object valor;
+    String ambito;
     
-    public Simbolo(String nombre, String tipo ,Object valor)
+    public Simbolo(String nombre, String tipo ,Object valor, String ambito)
     {
         this.nombre = nombre;       
         this.tipo = tipo;
         this.valor = valor;
+        this.ambito = ambito;
     }
     public String getTipo(){
         return tipo;
+    }
+    
+    public String getAmbito(){
+        return ambito;
     }
     
     public void setTipo(String tipo){
@@ -91,12 +97,12 @@ public class SymbolTable {
         }                
     }
             
-    static public Simbolo crear(String nombre, String tipo)
+    static public Simbolo crear(String nombre, String tipo, String ambito)
     {        
         Simbolo simbolo = buscar(nombre);                            
         if(simbolo == null) // La variable no existe
         {
-            simbolo = new Simbolo(nombre, tipo, null);
+            simbolo = new Simbolo(nombre, tipo, null, ambito);
             System.out.println("Agregando a tabla de simbolos con nombre: " + nombre);
             tablaSimbolos.put(nombre, simbolo);
             if(tipo != null)
@@ -168,7 +174,7 @@ public class SymbolTable {
         System.out.println("    Valores de la tabla de simbolos:");
         for (Simbolo s : tablaSimbolos.values())
             System.out.println(String.format("      "
-                    + "Nombre: %s, valor: %s, tipo: %s",s.nombre, s.valor, s.tipo));        
+                    + "Nombre: %s, valor: %s, tipo: %s, ambito: %s",s.nombre, s.valor, s.tipo, s.ambito));        
         System.out.println("Saliendo de imprimir en TablaSimbolos\n ");        
     }
 }
