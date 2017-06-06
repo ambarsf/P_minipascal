@@ -12,7 +12,7 @@ import java.util.Vector;
  * @author ambarsuarez
  */
 public class Parameters {
-Vector parametros = new Vector();
+Vector <Parameter>parametros = new Vector();
 String Id;
 Type tipo;
 
@@ -20,18 +20,17 @@ Type tipo;
         this.parametros = parametros;
     }
 
-public void add(Parameter par){
-    parametros.add(0,par);
-}
+    public void add(Parameter par){
+        parametros.add(0,par);
+    }
 
     public Parameters(String Id, Type tipo) {
         this.Id = Id;
         this.tipo = tipo;
-        parametros.add(new Parameter(Id,tipo));
-        
+        parametros.add(new Parameter(Id,tipo));        
     }
 
-    public Vector getParametros() {
+    public Vector<Parameter> getParametros() {
         return parametros;
     }
 

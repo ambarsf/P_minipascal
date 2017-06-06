@@ -194,7 +194,7 @@ p_dec ::= FUNCTION ID:id COLON type:tipo                                       {
           |FUNCTION ID error type                                              {: System.err.println(" : expected"); :}
           |FUNCTION ID:id LPAREN parameters:p RPAREN COLON type:tipo SEMICOLON {: RESULT = new Procedure_d (id,tipo,p);
                                                                                   SymbolTable.crear(id, tipo.toString(), "function");
-                                                                                  SymbolTable.crear(p.getParametros().get(0).getId(), p.getParametros.get(0).getTipo().toString(), id); :}
+                                                                                  SymbolTable.crear(p.getParametros().get(0).getId(), p.getParametros().get(0).getTipo().toString(), id); :}
           |FUNCTION ID:id error parameters:p RPAREN COLON type:tipo SEMICOLON  {: System.err.println(" LPAREN expected"); :}
           |FUNCTION ID:id LPAREN parameters:p error COLON type:tipo SEMICOLON  {: System.err.println(" RPAREN expected"); :}
           |FUNCTION ID:id LPAREN parameters:p RPAREN error type:tipo SEMICOLON {: System.err.println(" : expected"); :}
