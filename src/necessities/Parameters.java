@@ -28,6 +28,7 @@ public void add(Parameter par){
         this.Id = Id;
         this.tipo = tipo;
         parametros.add(new Parameter(Id,tipo));
+        
     }
 
     public Vector getParametros() {
