@@ -168,6 +168,10 @@ public class SymbolTable {
         return tablaSimbolos.get(nombre).getTipo();
     }
     
+    static public String buscarAmbito(String nombre){
+        return tablaSimbolos.get(nombre).getAmbito();
+    }
+    
     static public void imprimir()
     {
         System.out.println("\nIngresando a imprimir de TablaSimbolos");
