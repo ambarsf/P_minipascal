@@ -19,7 +19,7 @@ public class Factor {
     char ch;
     boolean verd;
     boolean fals;
-    int type=0;
+    int type;
     
     public Factor(Variable var) {
         this.var = var;
