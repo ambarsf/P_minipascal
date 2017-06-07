@@ -266,6 +266,7 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                 Simbolo tmp2 = null;
                                                                                 tmp = SymbolTable.buscar(v.toString());
                                                                                 tmp2 = SymbolTable.buscar(ex.toString());
+                                                                                String ambito1 = SymbolTable.verificarAmbito(tmp.nombre);
                                                                                 if(tmp!=null){
                                                                                     if(tmp.valor == null){                                                                                       
                                                                                         String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
@@ -273,7 +274,7 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                         if(tipoVariable.equals("integer")&&tmp2==null){
                                                                                             if(ex.getS_exp1()!=null){
                                                                                                 System.out.println(ex.getS_exp1().getTerm().getFact().getType());
-                                                                                                if(ex.getS_exp1().getTerm().getFact().getType()==4)
+                                                                                                if((ex.getS_exp1().getTerm().getFact().getType()==4&&(ambito1.equals(" ")||ambito1.equals(ambito1))))
                                                                                                     SymbolTable.insertar(v.toString(),ex);
                                                                                                 else
                                                                                                     System.err.println("Tipo de asignacion incompatible");
@@ -281,7 +282,7 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                         }
                                                                                         else if (tipoVariable.equals("string")&&tmp2==null){
                                                                                             if(ex.getS_exp1()!=null){
-                                                                                                if(ex.getS_exp1().getTerm().getFact().getType()==2)
+                                                                                                if((ex.getS_exp1().getTerm().getFact().getType()==2)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
                                                                                                     SymbolTable.insertar(v.toString(), ex);
                                                                                                 else
                                                                                                     System.err.println("Tipo de asignacion incompatible");
@@ -289,14 +290,13 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                         }
                                                                                         else if (tipoVariable.equals("char")&&tmp2==null){
                                                                                             if(ex.getS_exp1()!= null){
-                                                                                                if(ex.getS_exp1().getTerm().getFact().getType()==3)
+                                                                                                if((ex.getS_exp1().getTerm().getFact().getType()==3)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
                                                                                                     SymbolTable.insertar(v.toString(), ex);
                                                                                                 else
                                                                                                     System.err.println("Tipo de asignacion incompatible");
                                                                                             }
                                                                                         }
                                                                                         else if(tmp2!=null){
-                                                                                            String ambito1 = SymbolTable.verificarAmbito(tmp.nombre);
                                                                                             String ambito2 = SymbolTable.verificarAmbito(tmp2.nombre);
                                                                                             //System.out.println("Entro al else");
                                                                                             if(ex.getS_exp1()!=null){
@@ -313,25 +313,24 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                         String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
                                                                                         //System.out.println(tipoVariable+" tipo variable2");
                                                                                         if(tipoVariable.equals("integer")&&tmp2==null){
-                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()== 4)
+                                                                                            if((ex.getS_exp1().getTerm().getFact().getType()== 4)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
                                                                                                 SymbolTable.insertar(v.toString(),ex);
                                                                                             else
                                                                                                 System.err.println("Tipo de asignacion incompatible");
                                                                                         }
                                                                                         else if (tipoVariable.equals("string")&&tmp2==null){
-                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==2)
+                                                                                            if((ex.getS_exp1().getTerm().getFact().getType()==2)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
                                                                                                 SymbolTable.insertar(v.toString(), ex);
                                                                                             else
                                                                                                 System.err.println("Tipo de asignacion incompatible");
                                                                                         }
                                                                                         else if (tipoVariable.equals("char")&&tmp2==null){
-                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==3)
+                                                                                            if((ex.getS_exp1().getTerm().getFact().getType()==3)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
                                                                                                 SymbolTable.insertar(v.toString(), ex);
                                                                                             else
                                                                                                 System.err.println("Tipo de asignacion incompatible");
                                                                                         }
                                                                                         else if(tmp2!=null){
-                                                                                            String ambito1 = SymbolTable.verificarAmbito(tmp.nombre);
                                                                                             String ambito2 = SymbolTable.verificarAmbito(tmp2.nombre);
                                                                                             //System.out.println("Entro al else");
                                                                                             if((ex.getS_exp1().getTerm().getFact().getType()==1)&&(ambito1.equals(ambito2)||ambito1.equals(" ")||ambito2.equals(" "))){

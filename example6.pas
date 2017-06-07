@@ -1,12 +1,12 @@
 program exProcedure;
 var
-   a, b, c,  min: integer;
+   a, b, c: integer;
 
-   function findMin(x: integer, m: integer):integer;
-     var a, b, c,  min:Integer;
+   function findMin(j: integer, f: integer):integer;
+     var x, y, l,  min:String;
      begin
+        min := 'Hola';
         write(' Enter three numbers: ');
-        a := a+3;
         write(' Minimum: ', min);
    end;
 
