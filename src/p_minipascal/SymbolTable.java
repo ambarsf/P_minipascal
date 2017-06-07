@@ -75,6 +75,11 @@ public class SymbolTable {
         return s.tipo;
     }
     
+    static public String verificarAmbito(String nombre){
+        Simbolo s = tablaSimbolos.get(nombre);
+        return s.ambito;
+    }
+    
     static public Object verificarValor(String nombre){
         Simbolo s = tablaSimbolos.get(nombre);
         System.out.println("VALOR DE " + nombre + " ES: " + s.valor);
