@@ -10,6 +10,7 @@ parser code {:
     static SymbolTable tablaSimbolos = new SymbolTable();
     static int verificarTipo = 0;
     static Stack<String> listaIdentificadores = new Stack<String>();
+    Symbol cur_token;
 
     
 
@@ -277,7 +278,7 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                                 if((ex.getS_exp1().getTerm().getFact().getType()==4&&(ambito1.equals(" ")||ambito1.equals(ambito1))))
                                                                                                     SymbolTable.insertar(v.toString(),ex);
                                                                                                 else
-                                                                                                    System.err.println("Tipo de asignacion incompatible");
+                                                                                                    System.err.println("Tipo de asignacion incompatible, se esperaba un integer");
                                                                                             }
                                                                                         }
                                                                                         else if (tipoVariable.equals("string")&&tmp2==null){
@@ -285,7 +286,7 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                                 if((ex.getS_exp1().getTerm().getFact().getType()==2)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
                                                                                                     SymbolTable.insertar(v.toString(), ex);
                                                                                                 else
-                                                                                                    System.err.println("Tipo de asignacion incompatible");
+                                                                                                    System.err.println("Tipo de asignacion incompatible, se esperaba una String.");
                                                                                             }
                                                                                         }
                                                                                         else if (tipoVariable.equals("char")&&tmp2==null){
@@ -293,7 +294,7 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                                 if((ex.getS_exp1().getTerm().getFact().getType()==3)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
                                                                                                     SymbolTable.insertar(v.toString(), ex);
                                                                                                 else
-                                                                                                    System.err.println("Tipo de asignacion incompatible");
+                                                                                                    System.err.println("Tipo de asignacion incompatible, se esperaba un char.");
                                                                                             }
                                                                                         }
                                                                                         else if(tmp2!=null){
@@ -316,19 +317,19 @@ assign_s ::= var:v ASSIGN exp:ex                                                
                                                                                             if((ex.getS_exp1().getTerm().getFact().getType()== 4)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
                                                                                                 SymbolTable.insertar(v.toString(),ex);
                                                                                             else
-                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                                System.err.println("Tipo de asignacion incompatible, se esperaba un integer");
                                                                                         }
                                                                                         else if (tipoVariable.equals("string")&&tmp2==null){
                                                                                             if((ex.getS_exp1().getTerm().getFact().getType()==2)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
                                                                                                 SymbolTable.insertar(v.toString(), ex);
                                                                                             else
-                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                                System.err.println("Tipo de asignacion incompatible, se esperaba una String");
                                                                                         }
                                                                                         else if (tipoVariable.equals("char")&&tmp2==null){
                                                                                             if((ex.getS_exp1().getTerm().getFact().getType()==3)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
                                                                                                 SymbolTable.insertar(v.toString(), ex);
                                                                                             else
-                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                                System.err.println("Tipo de asignacion incompatible, se esperaba un char");
                                                                                         }
                                                                                         else if(tmp2!=null){
                                                                                             String ambito2 = SymbolTable.verificarAmbito(tmp2.nombre);

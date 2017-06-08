@@ -3,33 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package p_minipascal;
+package Codigo_Intermedio;
 
 /**
  *
  * @author ambarsuarez
  */
-public class Etiqueta {
+public class Temp {
     private static int cont;
-    private String etiq;
+    String temp;
 
-    public Etiqueta(String name) {
-        this.etiq = name;
+    public Temp() {
+        this.temp = "t"+cont++;     
     }
     
-    public Etiqueta(){
-        this.etiq = "Etiq_"+cont++;
-    }
-
-    public void setEtiq(String etiq) {
-        this.etiq = etiq;
+    public Temp(String temp){
+        this.temp = temp;
     }
 
     @Override
     public String toString() {
-        return etiq;
+        return temp;
     }
-    
     
     
     
