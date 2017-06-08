@@ -5,10 +5,18 @@
  */
 package Codigo_Intermedio;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ambarsuarez
  */
 public class Cuadruplos {
+    ArrayList<Cuadruplo> Cuadruplos = new ArrayList();
+    
+    
+    public void gen(Cuadruplo cuad){
+        Cuadruplos.add(cuad);
+    }
     
 }
