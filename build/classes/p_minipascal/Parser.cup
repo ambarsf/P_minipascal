@@ -438,7 +438,10 @@ sim_exp ::= term:term                                                           
                                                                                                 System.err.println("Error en la linea: "+plleft+" la variable "+term.toString()+" no existe");
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
-                                                                                                RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())+Integer.parseInt(tmp2.valor.toString()))));   
+                                                                                                if(tmp2.valor == null)
+                                                                                                    System.err.println("null pointer exception");
+                                                                                                else
+                                                                                                    RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())+Integer.parseInt(tmp2.valor.toString()))));   
                                                                                             }
                                                                                             else{
                                                                                                 System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos chars");
@@ -459,7 +462,10 @@ sim_exp ::= term:term                                                           
                                                                                                 System.err.println("Error en la linea: "+plleft+" la variable "+term.toString()+" no existe");
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("string")){
-                                                                                                RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())));   
+                                                                                                if(tmp2.valor == null)
+                                                                                                    System.err.println("null pointer exception");
+                                                                                                else
+                                                                                                    RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())));   
                                                                                             }
                                                                                             else{
                                                                                                 System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos cadenas");
@@ -480,7 +486,10 @@ sim_exp ::= term:term                                                           
                                                                                                 System.err.println("Error en la linea: "+plleft+" la variable "+term.toString()+" no existe");
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("char")){
-                                                                                                RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())));   
+                                                                                                if(tmp2.valor == null)
+                                                                                                    System.err.println("null pointer exception");
+                                                                                                else
+                                                                                                    RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())));   
                                                                                             }
                                                                                             else{
                                                                                                 System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos chars");
@@ -497,18 +506,24 @@ sim_exp ::= term:term                                                           
                                                                                             System.err.println("Error en la linea: "+plleft+" variable "+se1.toString()+" no existe");
                                                                                         }
                                                                                         else if(tmp!=null){
-                                                                                            if(tmp.getTipo().equals("integer")){
-                                                                                                if(term.getFact().getType()==4){
-                                                                                                    RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(term.toString()))));
-                                                                                                }
-                                                                                                else if(term.getFact().getType()==1){
-                                                                                                    Simbolo tmp2 = null;
-                                                                                                    tmp2 = SymbolTable.buscar(term.toString());
-                                                                                                    if(tmp2==null){
+                                                                                            if(tmp.valor == null)
+                                                                                                    System.err.println("HA TE HE ENGAÑADO AMBUCHIS ESTOS null pointer exceptions LAS PUSE YO!! YOU JUST GOT CHIPMUNK WHISPERED");
+                                                                                            else
+                                                                                                if(tmp.getTipo().equals("integer")){
+                                                                                                    if(term.getFact().getType()==4){
+                                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(term.toString()))));
+                                                                                                    }
+                                                                                                    else if(term.getFact().getType()==1){
+                                                                                                        Simbolo tmp2 = null;
+                                                                                                        tmp2 = SymbolTable.buscar(term.toString());
+                                                                                                        if(tmp2==null){
                                                                                                         System.err.println("Error en la linea: "+plleft+" la variable "+term.toString()+" no existe");
                                                                                                     }
                                                                                                     else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
-                                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(tmp2.valor.toString()))));   
+                                                                                                        if(tmp2.valor == null)
+                                                                                                            System.err.println("null pointer exception");
+                                                                                                        else
+                                                                                                            RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(tmp2.valor.toString()))));   
                                                                                                     }
                                                                                                     else{
                                                                                                        System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos chars");
@@ -529,7 +544,10 @@ sim_exp ::= term:term                                                           
                                                                                                         System.err.println("Error en la linea: "+plleft+" la variable "+term.toString()+" no existe");
                                                                                                     }
                                                                                                     else if(tmp2!=null&&tmp2.getTipo().equals("string")){
-                                                                                                        RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())));   
+                                                                                                        if(tmp2.valor == null)
+                                                                                                            System.err.println("null pointer exception");
+                                                                                                        else
+                                                                                                            RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())));   
                                                                                                     }
                                                                                                     else{
                                                                                                        System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos chars");
@@ -550,7 +568,10 @@ sim_exp ::= term:term                                                           
                                                                                                         System.err.println("Error en la linea: "+plleft+" la variable "+term.toString()+" no existe");
                                                                                                     }
                                                                                                     else if(tmp2!=null&&tmp2.getTipo().equals("char")){
-                                                                                                        RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())));   
+                                                                                                        if(tmp2.valor == null)
+                                                                                                            System.err.println("null pointer exception");
+                                                                                                        else
+                                                                                                            RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())));   
                                                                                                     }
                                                                                                     else{
                                                                                                        System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos chars");
@@ -577,7 +598,10 @@ sim_exp ::= term:term                                                           
                                                                                                 System.err.println("Error en la linea: "+minleft+" la variable "+term.toString()+" no existe");
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
-                                                                                                RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())-Integer.parseInt(tmp2.valor.toString()))));   
+                                                                                                if(tmp2.valor == null)
+                                                                                                    System.err.println("null pointer exception");
+                                                                                                else
+                                                                                                    RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())-Integer.parseInt(tmp2.valor.toString()))));   
                                                                                             }
                                                                                             else{
                                                                                                 System.err.println("Error en la linea: "+minleft+" no se pueden sumar estos valores, se esperan dos chars");
@@ -594,29 +618,35 @@ sim_exp ::= term:term                                                           
                                                                                             System.err.println("Error en la linea: "+minleft+" variable "+se1.toString()+" no existe");
                                                                                         }
                                                                                         else if(tmp!=null){
-                                                                                            if(tmp.getTipo().equals("integer")){
-                                                                                                if(term.getFact().getType()==4){
-                                                                                                    RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())-Integer.parseInt(term.toString()))));
-                                                                                                }
-                                                                                                else if(term.getFact().getType()==1){
-                                                                                                    Simbolo tmp2 = null;
-                                                                                                    tmp2 = SymbolTable.buscar(term.toString());
-                                                                                                    if(tmp2==null){
-                                                                                                        System.err.println("Error en la linea: "+minleft+" la variable "+term.toString()+" no existe");
+                                                                                            if(tmp.valor == null)
+                                                                                                System.err.println("null pointer exception");
+                                                                                            else
+                                                                                                if(tmp.getTipo().equals("integer")){
+                                                                                                    if(term.getFact().getType()==4){
+                                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())-Integer.parseInt(term.toString()))));
                                                                                                     }
-                                                                                                    else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
-                                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())-Integer.parseInt(tmp2.valor.toString()))));   
+                                                                                                    else if(term.getFact().getType()==1){
+                                                                                                        Simbolo tmp2 = null;
+                                                                                                        tmp2 = SymbolTable.buscar(term.toString());
+                                                                                                        if(tmp2==null){
+                                                                                                            System.err.println("Error en la linea: "+minleft+" la variable "+term.toString()+" no existe");
+                                                                                                        }
+                                                                                                        else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
+                                                                                                            if(tmp2.valor == null)
+                                                                                                                System.err.println("null pointer exception");
+                                                                                                            else
+                                                                                                                RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())-Integer.parseInt(tmp2.valor.toString()))));   
+                                                                                                        }
+                                                                                                        else{
+                                                                                                            System.err.println("Error en la linea: "+minleft+" no se pueden sumar estos valores, se esperan dos enteros");
+                                                                                                        }
                                                                                                     }
                                                                                                     else{
-                                                                                                       System.err.println("Error en la linea: "+minleft+" no se pueden sumar estos valores, se esperan dos enteros");
-                                                                                                    }
+                                                                                                        System.err.println("Error en la linea: "+minleft+" no se pueden restar estos valores, se esperan dos enteros");
+                                                                                                    } 
                                                                                                 }
-                                                                                                else{
-                                                                                                    System.err.println("Error en la linea: "+minleft+" no se pueden restar estos valores, se esperan dos enteros");
-                                                                                                } 
                                                                                             }
-                                                                                        }
-                                                                                    }:}
+                                                                                        }:}
             |PLUS term:term                                                     {:RESULT = new Simple_expression(term);:}
             |MINUS:min term:term                                                    {:if(term.getFact().getType()==4){
                                                                                     RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(term.toString())*-1)));
@@ -628,7 +658,10 @@ sim_exp ::= term:term                                                           
                                                                                         System.err.println("Error en la linea: "+minleft+" la variable" + term.toString()+" no existe");
                                                                                     }
                                                                                     else if(tmp != null&&tmp.getTipo().equals("integer")){
-                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())*-1)));
+                                                                                        if(tmp.valor == null)
+                                                                                            System.err.println("null pointer exception");
+                                                                                        else
+                                                                                            RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())*-1)));
                                                                                     }
                                                                                     else
                                                                                         System.err.println("Error en la linea: "+minleft+" tipo incompatible, se esperaba entero");
@@ -650,7 +683,10 @@ term ::= factor:fact                                                            
                                                                                                 System.err.println("Error en la linea: "+timleft+" la variable "+fact.toString()+" no existe");
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
-                                                                                                RESULT = new Term(new Factor(Integer.parseInt(term.toString())*Integer.parseInt(tmp2.valor.toString())));   
+                                                                                                if(tmp2.valor == null)
+                                                                                                    System.err.println("null pointer exception");
+                                                                                                else
+                                                                                                    RESULT = new Term(new Factor(Integer.parseInt(term.toString())*Integer.parseInt(tmp2.valor.toString())));   
                                                                                             }
                                                                                             else{
                                                                                                System.err.println("Error en la linea: "+timleft+" no se pueden sumar estos valores, se esperan dos enteros");
@@ -667,29 +703,35 @@ term ::= factor:fact                                                            
                                                                                             System.err.println("Error en la linea: "+timleft+" variable "+term.toString()+" no existe");
                                                                                         }
                                                                                         else if(tmp!=null){
-                                                                                            if(tmp.getTipo().equals("integer")){
-                                                                                                if(fact.getType()==4){
-                                                                                                    RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())*Integer.parseInt(fact.toString())));
-                                                                                                }
-                                                                                                else if(fact.getType()==1){
-                                                                                                    Simbolo tmp2 = null;
-                                                                                                    tmp2 = SymbolTable.buscar(fact.toString());
-                                                                                                    if(tmp2==null){
-                                                                                                        System.err.println("Error en la linea: "+timleft+" la variable "+fact.toString()+" no existe");
+                                                                                            if(tmp.valor == null)
+                                                                                                System.err.println("null pointer exception");
+                                                                                            else
+                                                                                                if(tmp.getTipo().equals("integer")){
+                                                                                                    if(fact.getType()==4){
+                                                                                                        RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())*Integer.parseInt(fact.toString())));
                                                                                                     }
-                                                                                                    else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
-                                                                                                        RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())*Integer.parseInt(tmp2.valor.toString())));   
+                                                                                                    else if(fact.getType()==1){
+                                                                                                        Simbolo tmp2 = null;
+                                                                                                        tmp2 = SymbolTable.buscar(fact.toString());
+                                                                                                        if(tmp2==null){
+                                                                                                            System.err.println("Error en la linea: "+timleft+" la variable "+fact.toString()+" no existe");
+                                                                                                        }
+                                                                                                        else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
+                                                                                                            if(tmp2.valor == null)
+                                                                                                                System.err.println("null pointer exception");
+                                                                                                            else
+                                                                                                                RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())*Integer.parseInt(tmp2.valor.toString())));   
+                                                                                                        }
+                                                                                                        else{
+                                                                                                            System.err.println("Error en la linea: "+timleft+" no se pueden sumar estos valores, se esperan dos enteros");
+                                                                                                        }
                                                                                                     }
                                                                                                     else{
-                                                                                                       System.err.println("Error en la linea: "+timleft+" no se pueden sumar estos valores, se esperan dos enteros");
-                                                                                                    }
+                                                                                                        System.err.println("Error en la linea: "+timleft+" no se pueden multiplicar estos valores, se esperan dos enteros");
+                                                                                                    } 
                                                                                                 }
-                                                                                                else{
-                                                                                                    System.err.println("Error en la linea: "+timleft+" no se pueden multiplicar estos valores, se esperan dos enteros");
-                                                                                                } 
                                                                                             }
-                                                                                        }
-                                                                                    }:}
+                                                                                        }:}
          |term:term DIVIDE:div factor:fact                                      {://System.out.println("Entro al divide");
                                                                                     if(term.getFact().getType()==4){
                                                                                         //System.out.println("entro al type == 4 numero 1");
@@ -704,7 +746,10 @@ term ::= factor:fact                                                            
                                                                                                 System.err.println("Error en la linea: "+divleft+" la variable "+fact.toString()+" no existe");
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
-                                                                                                RESULT = new Term(new Factor(Integer.parseInt(term.toString())/Integer.parseInt(tmp2.valor.toString())));   
+                                                                                                if(tmp2.valor == null)
+                                                                                                    System.err.println("null pointer exception");
+                                                                                                else
+                                                                                                    RESULT = new Term(new Factor(Integer.parseInt(term.toString())/Integer.parseInt(tmp2.valor.toString())));   
                                                                                             }
                                                                                             else{
                                                                                                 System.err.println("Error en la linea: "+divleft+" no se pueden sumar estos valores, se esperan dos enteros");
@@ -721,29 +766,35 @@ term ::= factor:fact                                                            
                                                                                             System.err.println("Error en la linea: "+divleft+" variable "+term.toString()+" no existe");
                                                                                         }
                                                                                         else if(tmp!=null){
-                                                                                            if(tmp.getTipo().equals("integer")){
-                                                                                                if(fact.getType()==4){
-                                                                                                    RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())/Integer.parseInt(fact.toString())));
-                                                                                                }
-                                                                                                else if(fact.getType()==1){
-                                                                                                    Simbolo tmp2 = null;
-                                                                                                    tmp2 = SymbolTable.buscar(fact.toString());
-                                                                                                    if(tmp2==null){
-                                                                                                        System.err.println("Error en la linea: "+divleft+" la variable "+fact.toString()+" no existe");
+                                                                                            if(tmp.valor == null)
+                                                                                                System.err.println("null pointer exception");
+                                                                                            else
+                                                                                                if(tmp.getTipo().equals("integer")){
+                                                                                                    if(fact.getType()==4){
+                                                                                                        RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())/Integer.parseInt(fact.toString())));
                                                                                                     }
-                                                                                                    else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
-                                                                                                        RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())/Integer.parseInt(tmp2.valor.toString())));   
+                                                                                                    else if(fact.getType()==1){
+                                                                                                        Simbolo tmp2 = null;
+                                                                                                        tmp2 = SymbolTable.buscar(fact.toString());
+                                                                                                        if(tmp2==null){
+                                                                                                            System.err.println("Error en la linea: "+divleft+" la variable "+fact.toString()+" no existe");
+                                                                                                        }
+                                                                                                        else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
+                                                                                                            if(tmp2.valor == null)
+                                                                                                                System.err.println("null pointer exception");
+                                                                                                            else
+                                                                                                                RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())/Integer.parseInt(tmp2.valor.toString())));   
+                                                                                                        }
+                                                                                                        else{
+                                                                                                            System.err.println("Error en la linea: "+divleft+" no se pueden sumar estos valores, se esperan dos enteros");
+                                                                                                        }
                                                                                                     }
                                                                                                     else{
-                                                                                                        System.err.println("Error en la linea: "+divleft+" no se pueden sumar estos valores, se esperan dos enteros");
-                                                                                                    }
+                                                                                                        System.err.println("Error en la linea: "+divleft+" no se pueden dividir estos valores, se esperan dos enteros");
+                                                                                                    } 
                                                                                                 }
-                                                                                                else{
-                                                                                                    System.err.println("Error en la linea: "+divleft+" no se pueden dividir estos valores, se esperan dos enteros");
-                                                                                                } 
                                                                                             }
-                                                                                        }
-                                                                                    }:}
+                                                                                        }:}
 ;
 
 factor ::= var:v                                                                {: RESULT = new Factor(v); :}
