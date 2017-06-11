@@ -67,7 +67,7 @@ public class SymbolTable {
     static Stack<String> lista;
     static ArrayList<Nodo> repeticiones;        
     static String UltimoTipo;
-    static int profundidad;
+    static String profundidad;
     static String UltimaFuncion;
     
     public static Logger log = Logger.getLogger(SymbolTable.class.getName());            
@@ -78,7 +78,7 @@ public class SymbolTable {
         lista = new Stack<String>();
         UltimoTipo = "";
         UltimaFuncion="";
-        profundidad = 0;
+        profundidad = "main";
         
     }
     
@@ -193,6 +193,7 @@ public class SymbolTable {
     static public String buscarAmbito(String nombre){
         return tablaSimbolos.get(nombre).getAmbito();
     }
+    
     
     static public void imprimir()
     {

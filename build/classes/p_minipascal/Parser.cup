@@ -158,9 +158,8 @@ program ::= PROGRAM ID:id SEMICOLON block:block DOT                             
 block ::= v_d_p:vdp p_d_p:pdp c_stament:c_s                                     {: RESULT = new Block (vdp,pdp,c_s); :}                        
 ;
 
-block_p ::= v_d_p:vdp c_stament:c_s                                             {: RESULT = new Block_p(vdp,c_s);
-                                                                                   SymbolTable.profundidad--;
-                                                                                   System.out.println("PROFUNDIDAD EN BLOQUE "+ SymbolTable.profundidad);:}
+block_p ::= v_d_p:vdp c_stament:c_s                                             {: RESULT = new Block_p(vdp,c_s);                                                                                
+                                                                                   SymbolTable.profundidad="main";:}
 ;
 
 v_d_p ::= VAR var_dec:vd                                                        {: RESULT = new Variable_dec_part(vd); :}                                                       
@@ -183,7 +182,7 @@ v_dec ::= ID:id COMMA v_dec:vd                                                  
           |ID:id error v_dec:vd                                                 {: System.err.println(" , or : expected"); :}
           |ID:id COLON type:tipo                                                {: RESULT = new Variable_d(id,tipo); 
                                                                                 //System.out.print(tipo +": "+ id+" ");
-                                                                                SymbolTable.crear(id, tipo.toString(),"");
+                                                                                SymbolTable.crear(id, tipo.toString(),"main");
                                                                                
                                                                                 //System.out.println("ULTIMA FUNCION EN V_DEC " + SymbolTable.UltimaFuncion);
                                                                                 
@@ -207,8 +206,7 @@ p_dec ::= FUNCTION ID:id COLON type:tipo                                       {
                                                                                     //System.out.println("parametros " + p.getParametros().get(i).getId());
                                                                                 }
                                                                                 SymbolTable.crear(id, tipo.toString(), "function");
-                                                                                SymbolTable.profundidad++;
-                                                                                System.out.println("profundidad despues de aumento "+SymbolTable.profundidad);
+                                                                                SymbolTable.profundidad=id;
                                                                                 SymbolTable.UltimaFuncion=id;:}                                                                    
           |FUNCTION ID:id error parameters:p RPAREN COLON type:tipo SEMICOLON  {: System.err.println(" LPAREN expected"); :}
           |FUNCTION ID:id LPAREN parameters:p error COLON type:tipo SEMICOLON  {: System.err.println(" RPAREN expected"); :}
@@ -273,14 +271,10 @@ sim_stament ::= assign_s:as_s                                                   
 ;
 
 assign_s ::= var:v ASSIGN:as exp:ex                                             {:RESULT = new Assign_stament(v,ex); 
-                                                                                //System.out.println(RESULT.getEsp());
-                                                                                //System.out.println("Asignando valor " + ex + " a " + v);
                                                                                 Simbolo tmp = null;
                                                                                 Simbolo tmp2 = null;
                                                                                 tmp = SymbolTable.buscar(v.toString());
                                                                                 tmp2 = SymbolTable.buscar(ex.toString());
-                                                                                //String ambito1 = SymbolTable.verificarAmbito(tmp.nombre);
-                                                                                //System.out.println("TEMP: " + tmp.getNombre());
                                                                                 if(tmp == null){
                                                                                     System.err.println("Error en la linea: "+asleft+" variable " +v.toString()+ " no existe");
                                                                                 } 
@@ -288,38 +282,52 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                     String ambito1 = SymbolTable.verificarAmbito(tmp.nombre);
                                                                                     if(tmp.valor == null){                                                                                       
                                                                                         String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
-                                                                                        //System.out.println(tipoVariable+" tipo variable");
                                                                                         if(tipoVariable.equals("integer")&&tmp2==null){
                                                                                             if(ex.getS_exp1()!=null){
-                                                                                                //System.out.println(ex.getS_exp1().getTerm().getFact().getType());
-                                                                                                if((ex.getS_exp1().getTerm().getFact().getType()==4&&(ambito1.equals(" ")||ambito1.equals(ambito1))))
-                                                                                                    SymbolTable.insertar(v.toString(),ex);
+                                                                                                System.out.println("Esta es la variable "+ tmp.nombre+ " Este es el ambito: "+ ambito1+ " Esta es la prof: "+ SymbolTable.profundidad);
+                                                                                                if (ex.getS_exp1().getTerm().getFact().getType()==4)
+                                                                                                    if ((ambito1.equals(SymbolTable.profundidad)) ||
+                                                                                                       (ambito1.equals(" ") && !SymbolTable.profundidad.equals(" ")) || (ambito1.contains(SymbolTable.profundidad))){
+                                                                                                            SymbolTable.insertar(v.toString(),ex);
+                                                                                                    }else{
+                                                                                                        System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
+                                                                                                    }
                                                                                                 else
-                                                                                                    System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un integer");
+                                                                                                        System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un integer");
                                                                                             }
                                                                                         }
                                                                                         else if (tipoVariable.equals("string")&&tmp2==null){
                                                                                             if(ex.getS_exp1()!=null){
-                                                                                                if((ex.getS_exp1().getTerm().getFact().getType()==2)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
-                                                                                                    SymbolTable.insertar(v.toString(), ex);
+                                                                                                 System.out.println("Esta es la variable "+ tmp.nombre+ " Este es el ambito: "+ ambito1+ " Esta es la prof: "+ SymbolTable.profundidad);
+                                                                                                if(ex.getS_exp1().getTerm().getFact().getType()==2)
+                                                                                                    if ((ambito1.equals(SymbolTable.profundidad)) ||
+                                                                                                       (ambito1.equals(" ") && !SymbolTable.profundidad.equals(" ")) || (ambito1.contains(SymbolTable.profundidad))){
+                                                                                                            SymbolTable.insertar(v.toString(),ex);
+                                                                                                    }else{
+                                                                                                        System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
+                                                                                                    }
                                                                                                 else
                                                                                                     System.err.println("Error en la linea: "+asleft+"Tipo de asignacion incompatible, se esperaba una String.");
                                                                                             }
                                                                                         }
                                                                                         else if (tipoVariable.equals("char")&&tmp2==null){
                                                                                             if(ex.getS_exp1()!= null){
-                                                                                                if((ex.getS_exp1().getTerm().getFact().getType()==3)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
-                                                                                                    SymbolTable.insertar(v.toString(), ex);
+                                                                                                 System.out.println("Esta es la variable "+ tmp.nombre+ " Este es el ambito: "+ ambito1+ " Esta es la prof: "+ SymbolTable.profundidad);
+                                                                                                if(ex.getS_exp1().getTerm().getFact().getType()==3)
+                                                                                                    if ((ambito1.equals(SymbolTable.profundidad)) ||
+                                                                                                       (ambito1.equals(" ") && !SymbolTable.profundidad.equals(" ")) || (ambito1.contains(SymbolTable.profundidad))){
+                                                                                                            SymbolTable.insertar(v.toString(),ex);
+                                                                                                    }else{
+                                                                                                        System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
+                                                                                                    }
                                                                                                 else
                                                                                                     System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un char.");
                                                                                             }
                                                                                         }
                                                                                         else if(tmp2!=null){
                                                                                             String ambito2 = SymbolTable.verificarAmbito(tmp2.nombre);
-                                                                                            //System.out.println("Entro al else");
                                                                                             if(ex.getS_exp1()!=null){
-                                                                                                if((ex.getS_exp1().getTerm().getFact().getType()==1)&&(ambito1.equals(ambito2)||ambito1.equals(" ")||ambito2.equals(" "))){
-                                                                                                    //System.out.println("Entro al getType==1");
+                                                                                                if(ex.getS_exp1().getTerm().getFact().getType()==1){
                                                                                                     if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
                                                                                                         SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
                                                                                                     else
@@ -329,30 +337,45 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                         }
                                                                                     }else if(tmp.valor != null){
                                                                                         String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
-                                                                                        //System.out.println(tipoVariable+" tipo variable2");
                                                                                         if(tipoVariable.equals("integer")&&tmp2==null){
-                                                                                            if((ex.getS_exp1().getTerm().getFact().getType()== 4)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
-                                                                                                SymbolTable.insertar(v.toString(),ex);
+                                                                                             System.out.println("Esta es la variable "+ tmp.nombre+ " Este es el ambito: "+ ambito1+ " Esta es la prof: "+ SymbolTable.profundidad);
+                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()== 4)
+                                                                                                if ((ambito1.equals(SymbolTable.profundidad)) ||
+                                                                                                       (ambito1.equals(" ") && !SymbolTable.profundidad.equals(" ")) || (ambito1.contains(SymbolTable.profundidad))){
+                                                                                                            SymbolTable.insertar(v.toString(),ex);
+                                                                                                    }else{
+                                                                                                        System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
+                                                                                                    }
                                                                                             else
                                                                                                 System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un integer");
                                                                                         }
                                                                                         else if (tipoVariable.equals("string")&&tmp2==null){
-                                                                                            if((ex.getS_exp1().getTerm().getFact().getType()==2)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
-                                                                                                SymbolTable.insertar(v.toString(), ex);
+                                                                                            System.out.println("Esta es la variable "+ tmp.nombre+ " Este es el ambito: "+ ambito1+ " Esta es la prof: "+ SymbolTable.profundidad);
+                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==2)
+                                                                                                if ((ambito1.equals(SymbolTable.profundidad)) ||
+                                                                                                       (ambito1.equals(" ") && !SymbolTable.profundidad.equals(" ")) || (ambito1.contains(SymbolTable.profundidad))){
+                                                                                                            SymbolTable.insertar(v.toString(),ex);
+                                                                                                    }else{
+                                                                                                        System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
+                                                                                                    }
                                                                                             else
                                                                                                 System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba una String");
                                                                                         }
                                                                                         else if (tipoVariable.equals("char")&&tmp2==null){
+                                                                                             System.out.println("Esta es la variable "+ tmp.nombre+ " Este es el ambito: "+ ambito1+ " Esta es la prof: "+ SymbolTable.profundidad);
                                                                                             if((ex.getS_exp1().getTerm().getFact().getType()==3)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
-                                                                                                SymbolTable.insertar(v.toString(), ex);
+                                                                                                if ((ambito1.equals(SymbolTable.profundidad)) ||
+                                                                                                       (ambito1.equals(" ") && !SymbolTable.profundidad.equals(" ")) || (ambito1.contains(SymbolTable.profundidad))){
+                                                                                                            SymbolTable.insertar(v.toString(),ex);
+                                                                                                    }else{
+                                                                                                        System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
+                                                                                                    }
                                                                                             else
                                                                                                 System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un char");
                                                                                         }
                                                                                         else if(tmp2!=null){
                                                                                             String ambito2 = SymbolTable.verificarAmbito(tmp2.nombre);
-                                                                                            //System.out.println("Entro al else");
-                                                                                            if((ex.getS_exp1().getTerm().getFact().getType()==1)&&(ambito1.equals(ambito2)||ambito1.equals(" ")||ambito2.equals(" "))){
-                                                                                                //System.out.println("Entro al getType==1");
+                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==1){
                                                                                                 if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
                                                                                                     SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
                                                                                                 else
