@@ -158,7 +158,9 @@ program ::= PROGRAM ID:id SEMICOLON block:block DOT                             
 block ::= v_d_p:vdp p_d_p:pdp c_stament:c_s                                     {: RESULT = new Block (vdp,pdp,c_s); :}                        
 ;
 
-block_p ::= v_d_p:vdp c_stament:c_s                                             {: RESULT = new Block_p(vdp,c_s);:}
+block_p ::= v_d_p:vdp c_stament:c_s                                             {: RESULT = new Block_p(vdp,c_s);
+                                                                                   SymbolTable.profundidad--;
+                                                                                   System.out.println("PROFUNDIDAD EN BLOQUE "+ SymbolTable.profundidad);:}
 ;
 
 v_d_p ::= VAR var_dec:vd                                                        {: RESULT = new Variable_dec_part(vd); :}                                                       
@@ -205,6 +207,8 @@ p_dec ::= FUNCTION ID:id COLON type:tipo                                       {
                                                                                     //System.out.println("parametros " + p.getParametros().get(i).getId());
                                                                                 }
                                                                                 SymbolTable.crear(id, tipo.toString(), "function");
+                                                                                SymbolTable.profundidad++;
+                                                                                System.out.println("profundidad despues de aumento "+SymbolTable.profundidad);
                                                                                 SymbolTable.UltimaFuncion=id;:}                                                                    
           |FUNCTION ID:id error parameters:p RPAREN COLON type:tipo SEMICOLON  {: System.err.println(" LPAREN expected"); :}
           |FUNCTION ID:id LPAREN parameters:p error COLON type:tipo SEMICOLON  {: System.err.println(" RPAREN expected"); :}

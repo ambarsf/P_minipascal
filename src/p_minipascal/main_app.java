@@ -21,5 +21,6 @@ public class main_app {
             e.printStackTrace();
         }
     }
-   
+   //Character ch = (Character)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value.toString().charAt(0);
+
 }

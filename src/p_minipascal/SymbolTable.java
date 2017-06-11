@@ -78,6 +78,7 @@ public class SymbolTable {
         lista = new Stack<String>();
         UltimoTipo = "";
         UltimaFuncion="";
+        profundidad = 0;
         
     }
     
