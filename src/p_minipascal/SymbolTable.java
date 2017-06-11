@@ -126,7 +126,7 @@ public class SymbolTable {
             //System.out.println("ULTIMO TIPO EN CREAR" + UltimoTipo);
             //System.out.println("Variable creada exitosamente!!!");
             
-            //imprimir();                
+            imprimir();                
             System.out.println(" ");
             return simbolo;
         }
@@ -146,7 +146,7 @@ public class SymbolTable {
             tablaSimbolos.remove(nombre);
             tablaSimbolos.put(nombre, simbolo);
             //System.out.println("AGREGAR TIPO");
-            //imprimir();
+            imprimir();
             return simbolo;
         }
         else {
@@ -199,7 +199,7 @@ public class SymbolTable {
         System.out.println("    Valores de la tabla de simbolos:");
         for (Simbolo s : tablaSimbolos.values())
             System.out.println(String.format("      "
-                    + "Nombre: %s, valor: %s, tipo: %s, ambito: %s",s.nombre, s.valor, s.tipo, s.ambito));        
+                    + "Nombre: %-15s valor: %-15s tipo: %-15s ambito: %-15s",s.nombre, s.valor, s.tipo, s.ambito));        
         System.out.println("Saliendo de imprimir en TablaSimbolos\n ");        
     }
 }
