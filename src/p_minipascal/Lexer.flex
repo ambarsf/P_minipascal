@@ -8,8 +8,8 @@ import java_cup.runtime.*;
 %class Lexer
 %cup
 %line
-%ignorecase
 %column
+%ignorecase
 
 %{
 	private Symbol symbol (int type){
@@ -79,10 +79,10 @@ conststr = "'"{AllButR_Quotation}*"'"
 	","			{ return symbol (sym.COMMA); } 
         "."                     { return symbol (sym.DOT); }
 
-   	"+"                     { return symbol(sym.PLUS); }
-   	"-"                     { return symbol(sym.MINUS); }
-    	"*"                     { return symbol(sym.TIMES);}
-    	"/"                     { return symbol(sym.DIVIDE);}
+   	"+"                     { return new Symbol(sym.PLUS, yyline+1, yycolumn+1); }
+   	"-"                     { return new Symbol(sym.MINUS, yyline+1, yycolumn+1); }
+    	"*"                     { return new Symbol(sym.TIMES, yyline+1, yycolumn+1);}
+    	"/"                     { return new Symbol(sym.DIVIDE, yyline+1, yycolumn+1);}
 
 	"("                     { return symbol(sym.LPAREN); }
     	")"                     { return symbol(sym.RPAREN); }
@@ -101,7 +101,7 @@ conststr = "'"{AllButR_Quotation}*"'"
 	"or"			{ return symbol (sym.OR); }
 	"not"			{ return symbol (sym.NOT); }
 
-	":="			{ return symbol(sym.ASSIGN); }
+	":="			{ return new Symbol(sym.ASSIGN, yyline+1, yycolumn+1); }
 
 
 
