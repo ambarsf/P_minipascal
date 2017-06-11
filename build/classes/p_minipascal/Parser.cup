@@ -173,7 +173,6 @@ var_dec ::= v_dec:vd SEMICOLON var_dec:var_d                                    
 ;
 
 v_dec ::= ID:id COMMA v_dec:vd                                                  {: vd.add(id); RESULT = vd; 
-                                                                                //System.out.print(id+" ");
                                                                                 SymbolTable.crear(id,null,SymbolTable.UltimaFuncion);
                                                                                 SymbolTable.agregarTipo(id);
                                                                              
@@ -181,7 +180,6 @@ v_dec ::= ID:id COMMA v_dec:vd                                                  
                                                                                 :}
           |ID:id error v_dec:vd                                                 {: System.err.println(" , or : expected"); :}
           |ID:id COLON type:tipo                                                {: RESULT = new Variable_d(id,tipo); 
-                                                                                //System.out.print(tipo +": "+ id+" ");
                                                                                 SymbolTable.crear(id, tipo.toString(),"main");
                                                                                
                                                                                 //System.out.println("ULTIMA FUNCION EN V_DEC " + SymbolTable.UltimaFuncion);
