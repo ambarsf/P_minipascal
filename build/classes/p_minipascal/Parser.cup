@@ -159,7 +159,8 @@ block ::= v_d_p:vdp p_d_p:pdp c_stament:c_s                                     
 ;
 
 block_p ::= v_d_p:vdp c_stament:c_s                                             {: RESULT = new Block_p(vdp,c_s);                                                                                
-                                                                                   SymbolTable.profundidad="main";:}
+                                                                                   SymbolTable.profundidad="main";
+                                                                                   SymbolTable.UltimaFuncion="main";:}
 ;
 
 v_d_p ::= VAR var_dec:vd                                                        {: RESULT = new Variable_dec_part(vd); :}                                                       
@@ -174,13 +175,13 @@ var_dec ::= v_dec:vd SEMICOLON var_dec:var_d                                    
 
 v_dec ::= ID:id COMMA v_dec:vd                                                  {: vd.add(id); RESULT = vd; 
                                                                                 SymbolTable.crear(id,null,SymbolTable.UltimaFuncion);
-                                                                                SymbolTable.agregarTipo(id);
+                                                                                SymbolTable.agregarTipo(id, SymbolTable.UltimaFuncion);
                                                                              
                                                                                 //System.out.println("ULTIMA FUNCION EN V_DEC " + SymbolTable.UltimaFuncion);
                                                                                 :}
           |ID:id error v_dec:vd                                                 {: System.err.println(" , or : expected"); :}
           |ID:id COLON type:tipo                                                {: RESULT = new Variable_d(id,tipo); 
-                                                                                SymbolTable.crear(id, tipo.toString(),"main");
+                                                                                SymbolTable.crear(id, tipo.toString(),SymbolTable.UltimaFuncion);
                                                                                
                                                                                 //System.out.println("ULTIMA FUNCION EN V_DEC " + SymbolTable.UltimaFuncion);
                                                                                 

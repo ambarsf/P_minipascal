@@ -77,7 +77,7 @@ public class SymbolTable {
         tablaSimbolos = new HashMap<String, Simbolo>();                                   
         lista = new Stack<String>();
         UltimoTipo = "";
-        UltimaFuncion="";
+        UltimaFuncion="main";
         profundidad = "main";
         
     }
@@ -127,7 +127,7 @@ public class SymbolTable {
             //System.out.println("ULTIMO TIPO EN CREAR" + UltimoTipo);
             //System.out.println("Variable creada exitosamente!!!");
             
-            //imprimir();                
+            imprimir();                
             System.out.println(" ");
             return simbolo;
         }
@@ -138,10 +138,12 @@ public class SymbolTable {
         }
     }
     
-    static public Simbolo agregarTipo(String nombre){
+    static public Simbolo agregarTipo(String nombre, String Ambito){
         Simbolo simbolo = buscar(nombre);
         if(simbolo.getTipo() == null){
             simbolo.setTipo(UltimoTipo);
+            System.out.println("AMBITO EN AGREGAR TIPO: "+ Ambito);
+            simbolo.setAmbito(Ambito);
             //System.out.println("ULTIMO TIPO EN AGREGAR TIPO: " + UltimoTipo);
             tablaSimbolos.replace(nombre, simbolo);
             tablaSimbolos.remove(nombre);
@@ -167,9 +169,9 @@ public class SymbolTable {
             tablaSimbolos.remove(nombre);//Elimino para actualizar
             tablaSimbolos.put(nombre, simbolo);
             
-            //System.out.println("Variable actualizada");
-            //imprimir();
-            //System.out.println("Saliendo de insertar de TablaSimbolos\n");
+            System.out.println("Variable actualizada");
+            imprimir();
+            System.out.println("Saliendo de insertar de TablaSimbolos\n");
             return simbolo;
         }
         else
