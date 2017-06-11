@@ -41,6 +41,10 @@ class Simbolo
         this.valor = valor;
         this.ambito = ambito;
     }
+    
+    public String getNombre(){
+        return nombre;
+    }
     public String getTipo(){
         return tipo;
     }
@@ -52,6 +56,10 @@ class Simbolo
     public void setTipo(String tipo){
         this.tipo = tipo;
     }
+    
+    public void setAmbito(String ambito){
+        this.ambito = ambito;
+    }
 }
 
 public class SymbolTable {
@@ -59,6 +67,8 @@ public class SymbolTable {
     static Stack<String> lista;
     static ArrayList<Nodo> repeticiones;        
     static String UltimoTipo;
+    static int profundidad;
+    static String UltimaFuncion;
     
     public static Logger log = Logger.getLogger(SymbolTable.class.getName());            
     
@@ -67,6 +77,7 @@ public class SymbolTable {
         tablaSimbolos = new HashMap<String, Simbolo>();                                   
         lista = new Stack<String>();
         UltimoTipo = "";
+        UltimaFuncion="";
         
     }
     
@@ -165,8 +176,13 @@ public class SymbolTable {
     }
     
     static public Simbolo buscar(String nombre)
-    {
-        return (Simbolo)tablaSimbolos.get(nombre);
+    {   
+       // if ((Simbolo)tablaSimbolos.get(nombre)!=null)
+            return (Simbolo)tablaSimbolos.get(nombre);
+        //else{
+          //  System.out.println("no existe");
+            //return new Simbolo(null, null, null, null);
+        //}
     }
     
     static public String buscarTipo(String nombre){
