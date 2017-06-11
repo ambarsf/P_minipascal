@@ -10,6 +10,7 @@ parser code {:
     static SymbolTable tablaSimbolos = new SymbolTable();
     static int verificarTipo = 0;
     static Stack<String> listaIdentificadores = new Stack<String>();
+    Symbol cur_token;
 
     
 
@@ -61,7 +62,7 @@ terminal String     INTEGER, CHAR, BOOLEAN, STRING, VAR, ARRAY;
 terminal            TRUE, FALSE;
 
 /*ciclos */
-terminal            PROCEDURE, IF, ELSE, WHILE, DO, FOR, TO, REPEAT,UNTIL,THEN, BEGIN, END, OF;
+terminal            FUNCTION, IF, ELSE, WHILE, DO, FOR, TO, REPEAT,UNTIL,THEN, BEGIN, END, OF;
 
 /*functions */
 terminal            PROGRAM;
@@ -157,7 +158,7 @@ program ::= PROGRAM ID:id SEMICOLON block:block DOT                             
 block ::= v_d_p:vdp p_d_p:pdp c_stament:c_s                                     {: RESULT = new Block (vdp,pdp,c_s); :}                        
 ;
 
-block_p ::= v_d_p:vdp c_stament:c_s                                             {: RESULT = new Block_p(vdp,c_s); :}
+block_p ::= v_d_p:vdp c_stament:c_s                                             {: RESULT = new Block_p(vdp,c_s);:}
 ;
 
 v_d_p ::= VAR var_dec:vd                                                        {: RESULT = new Variable_dec_part(vd); :}                                                       
@@ -171,14 +172,20 @@ var_dec ::= v_dec:vd SEMICOLON var_dec:var_d                                    
 ;
 
 v_dec ::= ID:id COMMA v_dec:vd                                                  {: vd.add(id); RESULT = vd; 
-                                                                                System.out.print(id+" ");
-                                                                                SymbolTable.crear(id,null);
-                                                                                SymbolTable.agregarTipo(id);:}
+                                                                                //System.out.print(id+" ");
+                                                                                SymbolTable.crear(id,null,SymbolTable.UltimaFuncion);
+                                                                                SymbolTable.agregarTipo(id);
+                                                                             
+                                                                                System.out.println("ULTIMA FUNCION EN V_DEC " + SymbolTable.UltimaFuncion);
+                                                                                :}
           |ID:id error v_dec:vd                                                 {: System.err.println(" , or : expected"); :}
           |ID:id COLON type:tipo                                                {: RESULT = new Variable_d(id,tipo); 
-                                                                                System.out.print(tipo +": "+ id+" ");
-                                                                                SymbolTable.crear(id, tipo.toString());
-                                                                                System.out.println();:}            
+                                                                                //System.out.print(tipo +": "+ id+" ");
+                                                                                SymbolTable.crear(id, tipo.toString(),"");
+                                                                               
+                                                                                System.out.println("ULTIMA FUNCION EN V_DEC " + SymbolTable.UltimaFuncion);
+                                                                                
+                                                                                //System.out.println();:}            
 ;
 
 
@@ -190,19 +197,25 @@ proc_dec ::= p_dec:pd block_p:bl SEMICOLON                                      
             |p_dec:pd block_p:bl error                                          {: System.err.println(" ; expected"); :}
 ;
 
-p_dec ::= PROCEDURE ID:id COLON type:tipo                                       {: RESULT = new Procedure_d(id,tipo); :}
-          |PROCEDURE ID error type                                              {: System.err.println(" : expected"); :}
-          |PROCEDURE ID:id LPAREN parameters:p RPAREN COLON type:tipo SEMICOLON {: RESULT = new Procedure_d (id,tipo,p); :}
-          |PROCEDURE ID:id error parameters:p RPAREN COLON type:tipo SEMICOLON  {: System.err.println(" LPAREN expected"); :}
-          |PROCEDURE ID:id LPAREN parameters:p error COLON type:tipo SEMICOLON  {: System.err.println(" RPAREN expected"); :}
-          |PROCEDURE ID:id LPAREN parameters:p RPAREN error type:tipo SEMICOLON {: System.err.println(" : expected"); :}
-          |PROCEDURE ID:id LPAREN parameters:p RPAREN COLON type:tipo error     {: System.err.println(" ; expected"); :}
+p_dec ::= FUNCTION ID:id COLON type:tipo                                       {: RESULT = new Procedure_d(id,tipo); :}
+          |FUNCTION ID error type                                              {: System.err.println(" : expected"); :}
+          |FUNCTION ID:id LPAREN parameters:p RPAREN COLON type:tipo SEMICOLON {: RESULT = new Procedure_d (id,tipo,p);
+                                                                                for(int i=0;i<p.getParametros().size();i++){
+                                                                                    SymbolTable.crear(p.getParametros().get(i).getId(), p.getParametros().get(i).getTipo().toString(), id + "_Param");
+                                                                                    System.out.println("parametros " + p.getParametros().get(i).getId());
+                                                                                }
+                                                                                SymbolTable.crear(id, tipo.toString(), "function");
+                                                                                SymbolTable.UltimaFuncion=id;:}                                                                    
+          |FUNCTION ID:id error parameters:p RPAREN COLON type:tipo SEMICOLON  {: System.err.println(" LPAREN expected"); :}
+          |FUNCTION ID:id LPAREN parameters:p error COLON type:tipo SEMICOLON  {: System.err.println(" RPAREN expected"); :}
+          |FUNCTION ID:id LPAREN parameters:p RPAREN error type:tipo SEMICOLON {: System.err.println(" : expected"); :}
+          |FUNCTION ID:id LPAREN parameters:p RPAREN COLON type:tipo error     {: System.err.println(" ; expected"); :}
 
 ;
 
 parameters ::=  ID:id COLON type:tipo COMMA parameters:pms                      {: pms.add(new Parameter(id,tipo)); RESULT = pms; :}
                 |ID:id error type:tipo COMMA parameters:pms                     {: System.err.println(" , expected"); :}
-                |ID:id COLON type:tipo                                          {: RESULT = new Parameters(id,tipo); :}
+                |ID:id COLON type:tipo                                          {: RESULT = new Parameters(id,tipo);:}
 ;
 
 type ::= simple_t:st                                                            {: RESULT = new Type(st);:}
@@ -255,71 +268,87 @@ sim_stament ::= assign_s:as_s                                                   
                 |write_s:w_s                                                    {: RESULT = new Simple_stament(w_s); :}
 ;
 
-assign_s ::= var:v ASSIGN exp:ex                                                {: RESULT = new Assign_stament(v,ex); 
-                                                                                System.out.println(RESULT.getEsp());
-                                                                                System.out.println("Asignando valor " + ex + " a " + v);
+assign_s ::= var:v ASSIGN exp:ex                                                {:RESULT = new Assign_stament(v,ex); 
+                                                                                //System.out.println(RESULT.getEsp());
+                                                                                //System.out.println("Asignando valor " + ex + " a " + v);
                                                                                 Simbolo tmp = null;
                                                                                 Simbolo tmp2 = null;
                                                                                 tmp = SymbolTable.buscar(v.toString());
                                                                                 tmp2 = SymbolTable.buscar(ex.toString());
-                                                                                if(tmp!=null){
-                                                                                    if(tmp.valor == null){
+                                                                                //String ambito1 = SymbolTable.verificarAmbito(tmp.nombre);
+                                                                                //System.out.println("TEMP: " + tmp.getNombre());
+                                                                                if(tmp == null){
+                                                                                    System.err.println("Variable " +v.toString()+ " no existe");
+                                                                                } 
+                                                                                else if(tmp!=null){
+                                                                                    String ambito1 = SymbolTable.verificarAmbito(tmp.nombre);
+                                                                                    if(tmp.valor == null){                                                                                       
                                                                                         String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
                                                                                         System.out.println(tipoVariable+" tipo variable");
                                                                                         if(tipoVariable.equals("integer")&&tmp2==null){
-                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()== 4)
-                                                                                                SymbolTable.insertar(v.toString(),ex);
-                                                                                            else
-                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                            if(ex.getS_exp1()!=null){
+                                                                                                System.out.println(ex.getS_exp1().getTerm().getFact().getType());
+                                                                                                if((ex.getS_exp1().getTerm().getFact().getType()==4&&(ambito1.equals(" ")||ambito1.equals(ambito1))))
+                                                                                                    SymbolTable.insertar(v.toString(),ex);
+                                                                                                else
+                                                                                                    System.err.println("Tipo de asignacion incompatible, se esperaba un integer");
+                                                                                            }
                                                                                         }
                                                                                         else if (tipoVariable.equals("string")&&tmp2==null){
-                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==2)
-                                                                                                SymbolTable.insertar(v.toString(), ex);
-                                                                                            else
-                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                            if(ex.getS_exp1()!=null){
+                                                                                                if((ex.getS_exp1().getTerm().getFact().getType()==2)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
+                                                                                                    SymbolTable.insertar(v.toString(), ex);
+                                                                                                else
+                                                                                                    System.err.println("Tipo de asignacion incompatible, se esperaba una String.");
+                                                                                            }
                                                                                         }
                                                                                         else if (tipoVariable.equals("char")&&tmp2==null){
-                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==3)
-                                                                                                SymbolTable.insertar(v.toString(), ex);
-                                                                                            else
-                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                            if(ex.getS_exp1()!= null){
+                                                                                                if((ex.getS_exp1().getTerm().getFact().getType()==3)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
+                                                                                                    SymbolTable.insertar(v.toString(), ex);
+                                                                                                else
+                                                                                                    System.err.println("Tipo de asignacion incompatible, se esperaba un char.");
+                                                                                            }
                                                                                         }
                                                                                         else if(tmp2!=null){
-                                                                                            System.out.println("Entro al else");
-                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==1){
-                                                                                                System.out.println("Entro al getType==1");
-                                                                                                if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
-                                                                                                    SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
-                                                                                                else
-                                                                                                    System.err.println("Tipo de asignacion incompatible");
-                                                                                                
+                                                                                            String ambito2 = SymbolTable.verificarAmbito(tmp2.nombre);
+                                                                                            //System.out.println("Entro al else");
+                                                                                            if(ex.getS_exp1()!=null){
+                                                                                                if((ex.getS_exp1().getTerm().getFact().getType()==1)&&(ambito1.equals(ambito2)||ambito1.equals(" ")||ambito2.equals(" "))){
+                                                                                                    //System.out.println("Entro al getType==1");
+                                                                                                    if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
+                                                                                                        SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
+                                                                                                    else
+                                                                                                        System.err.println("Tipo de asignacion incompatible");
+                                                                                                }
                                                                                             }
                                                                                         }
                                                                                     }else if(tmp.valor != null){
                                                                                         String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
-                                                                                        System.out.println(tipoVariable+" tipo variable2");
+                                                                                        //System.out.println(tipoVariable+" tipo variable2");
                                                                                         if(tipoVariable.equals("integer")&&tmp2==null){
-                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()== 4)
+                                                                                            if((ex.getS_exp1().getTerm().getFact().getType()== 4)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
                                                                                                 SymbolTable.insertar(v.toString(),ex);
                                                                                             else
-                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                                System.err.println("Tipo de asignacion incompatible, se esperaba un integer");
                                                                                         }
                                                                                         else if (tipoVariable.equals("string")&&tmp2==null){
-                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==2)
+                                                                                            if((ex.getS_exp1().getTerm().getFact().getType()==2)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
                                                                                                 SymbolTable.insertar(v.toString(), ex);
                                                                                             else
-                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                                System.err.println("Tipo de asignacion incompatible, se esperaba una String");
                                                                                         }
                                                                                         else if (tipoVariable.equals("char")&&tmp2==null){
-                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==3)
+                                                                                            if((ex.getS_exp1().getTerm().getFact().getType()==3)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
                                                                                                 SymbolTable.insertar(v.toString(), ex);
                                                                                             else
-                                                                                                System.err.println("Tipo de asignacion incompatible");
+                                                                                                System.err.println("Tipo de asignacion incompatible, se esperaba un char");
                                                                                         }
                                                                                         else if(tmp2!=null){
-                                                                                            System.out.println("Entro al else");
-                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==1){
-                                                                                                System.out.println("Entro al getType==1");
+                                                                                            String ambito2 = SymbolTable.verificarAmbito(tmp2.nombre);
+                                                                                            //System.out.println("Entro al else");
+                                                                                            if((ex.getS_exp1().getTerm().getFact().getType()==1)&&(ambito1.equals(ambito2)||ambito1.equals(" ")||ambito2.equals(" "))){
+                                                                                                //System.out.println("Entro al getType==1");
                                                                                                 if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
                                                                                                     SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
                                                                                                 else
@@ -395,42 +424,288 @@ exp ::= sim_exp:sime                                                            
 ;
 
 sim_exp ::= term:term                                                           {: RESULT = new Simple_expression(term); :}
-            |sim_exp:se1 PLUS term:term                                         {:  System.out.println("Entro al plus");
+            |sim_exp:se1 PLUS term:term                                         {:  //System.out.println("Entro al plus");
                                                                                     if(se1.getTerm().getFact().getType()==4){
-                                                                                        System.out.println("entro al type == 4 numero 1");
+                                                                                        //System.out.println("entro al type == 4 numero 1");
                                                                                         if(term.getFact().getType()==4){
-                                                                                            System.out.println("Entro al type == 4 numero 2");
+                                                                                            //System.out.println("Entro al type == 4 numero 2");
                                                                                             RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())+Integer.parseInt(term.toString()))));
+                                                                                        }
+                                                                                        else if(term.getFact().getType()==1){
+                                                                                            Simbolo tmp2 = null;
+                                                                                            tmp2 = SymbolTable.buscar(term.toString());
+                                                                                            if(tmp2==null){
+                                                                                                System.err.println("La variable "+term.toString()+" no existe");
+                                                                                            }
+                                                                                            else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
+                                                                                                RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())+Integer.parseInt(tmp2.valor.toString()))));   
+                                                                                            }
+                                                                                        }
+                                                                                        else{
+                                                                                            System.err.println("No se pueden sumar estos valores, se esperan dos enteros");
+                                                                                        }
+                                                                                    }
+                                                                                    else if(se1.getTerm().getFact().getType()==2){
+                                                                                        if(term.getFact().getType()==2){
+                                                                                            RESULT = new Simple_expression(new Term(new Factor(se1.toString()+term.toString())));
+                                                                                        }
+                                                                                        else if(term.getFact().getType()==1){
+                                                                                            Simbolo tmp2 = null;
+                                                                                            tmp2 = SymbolTable.buscar(term.toString());
+                                                                                            if(tmp2==null){
+                                                                                                System.err.println("La variable "+term.toString()+" no existe");
+                                                                                            }
+                                                                                            else if(tmp2!=null&&tmp2.getTipo().equals("string")){
+                                                                                                RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())));   
+                                                                                            }
+                                                                                        }
+                                                                                        else{
+                                                                                            System.err.println("No se pueden sumar estos valores, se esperan dos cadenas");
+                                                                                        }                                                             
+                                                                                    }
+                                                                                    else if(se1.getTerm().getFact().getType()==3){
+                                                                                        if(term.getFact().getType()==3){
+                                                                                            RESULT = new Simple_expression(new Term(new Factor(se1.toString()+term.toString())));
+                                                                                        }
+                                                                                        else if(term.getFact().getType()==1){
+                                                                                            Simbolo tmp2 = null;
+                                                                                            tmp2 = SymbolTable.buscar(term.toString());
+                                                                                            if(tmp2==null){
+                                                                                                System.err.println("La variable "+term.toString()+" no existe");
+                                                                                            }
+                                                                                            else if(tmp2!=null&&tmp2.getTipo().equals("char")){
+                                                                                                RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())));   
+                                                                                            }
+                                                                                        }
+                                                                                        else{
+                                                                                            System.err.println("No se pueden sumar estos valores, se esperan dos chars");
+                                                                                        }
+                                                                                    }
+                                                                                    else if(se1.getTerm().getFact().getType()==1){
+                                                                                        Simbolo tmp = null;
+                                                                                        tmp = SymbolTable.buscar(se1.toString());
+                                                                                        if(tmp == null){
+                                                                                            System.err.println("Variable "+se1.toString()+" no existe");
+                                                                                        }
+                                                                                        else if(tmp!=null){
+                                                                                            if(tmp.getTipo().equals("integer")){
+                                                                                                if(term.getFact().getType()==4){
+                                                                                                    RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(term.toString()))));
+                                                                                                }
+                                                                                                else if(term.getFact().getType()==1){
+                                                                                                    Simbolo tmp2 = null;
+                                                                                                    tmp2 = SymbolTable.buscar(term.toString());
+                                                                                                    if(tmp2==null){
+                                                                                                        System.err.println("La variable "+term.toString()+" no existe");
+                                                                                                    }
+                                                                                                    else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
+                                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(tmp2.valor.toString()))));   
+                                                                                                    }
+                                                                                                }
+                                                                                                else{
+                                                                                                    System.err.println("No se pueden sumar estos valores, se esperan dos enteros");
+                                                                                                } 
+                                                                                            }
+                                                                                            else if(tmp.getTipo().equals("string")){
+                                                                                                if(term.getFact().getType()==2){
+                                                                                                    RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+term.toString())));
+                                                                                                }
+                                                                                                else if(term.getFact().getType()==1){
+                                                                                                    Simbolo tmp2 = null;
+                                                                                                    tmp2 = SymbolTable.buscar(term.toString());
+                                                                                                    if(tmp2==null){
+                                                                                                        System.err.println("La variable "+term.toString()+" no existe");
+                                                                                                    }
+                                                                                                    else if(tmp2!=null&&tmp2.getTipo().equals("string")){
+                                                                                                        RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())));   
+                                                                                                    }
+                                                                                                }
+                                                                                                else{
+                                                                                                    System.err.println("No se pueden sumar estos valores, se esperan dos cadenas");
+                                                                                                }
+                                                                                            }
+                                                                                            else if(tmp.getTipo().equals("char")){
+                                                                                                if(term.getFact().getType()==3){
+                                                                                                    RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+term.toString())));
+                                                                                                }
+                                                                                                else if(term.getFact().getType()==1){
+                                                                                                    Simbolo tmp2 = null;
+                                                                                                    tmp2 = SymbolTable.buscar(term.toString());
+                                                                                                    if(tmp2==null){
+                                                                                                        System.err.println("La variable "+term.toString()+" no existe");
+                                                                                                    }
+                                                                                                    else if(tmp2!=null&&tmp2.getTipo().equals("char")){
+                                                                                                        RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())));   
+                                                                                                    }
+                                                                                                }
+                                                                                                else{
+                                                                                                    System.err.println("No se pueden sumar estos valores, se esperan dos chars");
+                                                                                                }
+                                                                                            }
                                                                                         }
                                                                                     }
                                                                                 :}
-            |sim_exp:se1 MINUS term:term                                        {:System.out.println("Entro al minus");
+            |sim_exp:se1 MINUS term:term                                        {://System.out.println("Entro al minus");
                                                                                     if(se1.getTerm().getFact().getType()==4){
-                                                                                        System.out.println("entro al type == 4 numero 1");
+                                                                                        //System.out.println("entro al type == 4 numero 1");
                                                                                         if(term.getFact().getType()==4){
-                                                                                            System.out.println("Entro al type == 4 numero 2");
+                                                                                            //System.out.println("Entro al type == 4 numero 2");
                                                                                             RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())-Integer.parseInt(term.toString()))));
                                                                                         }
+                                                                                        else if(term.getFact().getType()==1){
+                                                                                            Simbolo tmp2 = null;
+                                                                                            tmp2 = SymbolTable.buscar(term.toString());
+                                                                                            if(tmp2==null){
+                                                                                                System.err.println("La variable "+term.toString()+" no existe");
+                                                                                            }
+                                                                                            else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
+                                                                                                RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())-Integer.parseInt(tmp2.valor.toString()))));   
+                                                                                            }
+                                                                                        }
+                                                                                        else{
+                                                                                            System.err.println("No se pueden restar estos valores, se esperan dos enteros");
+                                                                                        }
+                                                                                    }
+                                                                                        else if(se1.getTerm().getFact().getType()==1){
+                                                                                        Simbolo tmp = null;
+                                                                                        tmp = SymbolTable.buscar(se1.toString());
+                                                                                        if(tmp == null){
+                                                                                            System.err.println("Variable "+se1.toString()+" no existe");
+                                                                                        }
+                                                                                        else if(tmp!=null){
+                                                                                            if(tmp.getTipo().equals("integer")){
+                                                                                                if(term.getFact().getType()==4){
+                                                                                                    RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())-Integer.parseInt(term.toString()))));
+                                                                                                }
+                                                                                                else if(term.getFact().getType()==1){
+                                                                                                    Simbolo tmp2 = null;
+                                                                                                    tmp2 = SymbolTable.buscar(term.toString());
+                                                                                                    if(tmp2==null){
+                                                                                                        System.err.println("La variable "+term.toString()+" no existe");
+                                                                                                    }
+                                                                                                    else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
+                                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())-Integer.parseInt(tmp2.valor.toString()))));   
+                                                                                                    }
+                                                                                                }
+                                                                                                else{
+                                                                                                    System.err.println("No se pueden restar estos valores, se esperan dos enteros");
+                                                                                                } 
+                                                                                            }
+                                                                                        }
                                                                                     }:}
-            |PLUS term:term                                                     {::}
-            |MINUS term:term                                                    {::}
+            |PLUS term:term                                                     {:RESULT = new Simple_expression(term);:}
+            |MINUS term:term                                                    {:if(term.getFact().getType()==4){
+                                                                                    RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(term.toString())*-1)));
+                                                                                }
+                                                                                else if(term.getFact().getType()==1){
+                                                                                    Simbolo tmp = null;
+                                                                                    tmp = SymbolTable.buscar(term.toString());
+                                                                                    if(tmp==null){
+                                                                                        System.err.println("La variable" + term.toString()+" no existe");
+                                                                                    }
+                                                                                    else if(tmp != null&&tmp.getTipo().equals("integer")){
+                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())*-1)));
+                                                                                    }
+                                                                                    else
+                                                                                        System.err.println("Tipo incompatible, se esperaba entero");
+                                                                                }:}
 ;
 
 term ::= factor:fact                                                            {: RESULT = new Term(fact); :}
-         |term:term TIMES factor:fact                                                     {:System.out.println("Entro al times");
+         |term:term TIMES factor:fact                                                     {://System.out.println("Entro al times");
                                                                                     if(term.getFact().getType()==4){
-                                                                                        System.out.println("entro al type == 4 numero 1");
+                                                                                        //System.out.println("entro al type == 4 numero 1");
                                                                                         if(fact.getType()==4){
-                                                                                            System.out.println("Entro al type == 4 numero 2");
+                                                                                            //System.out.println("Entro al type == 4 numero 2");
                                                                                             RESULT = new Term(new Factor(Integer.parseInt(term.toString())*Integer.parseInt(fact.toString())));
                                                                                         }
+                                                                                        else if(fact.getType()==1){
+                                                                                            Simbolo tmp2 = null;
+                                                                                            tmp2 = SymbolTable.buscar(term.toString());
+                                                                                            if(tmp2==null){
+                                                                                                System.err.println("La variable "+fact.toString()+" no existe");
+                                                                                            }
+                                                                                            else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
+                                                                                                RESULT = new Term(new Factor(Integer.parseInt(term.toString())*Integer.parseInt(tmp2.valor.toString())));   
+                                                                                            }
+                                                                                        }
+                                                                                        else{
+                                                                                            System.err.println("No se pueden restar estos valores, se esperan dos enteros");
+                                                                                        }
+                                                                                    }
+                                                                                    else if(term.getFact().getType()==1){
+                                                                                        Simbolo tmp = null;
+                                                                                        tmp = SymbolTable.buscar(term.toString());
+                                                                                        if(tmp == null){
+                                                                                            System.err.println("Variable "+term.toString()+" no existe");
+                                                                                        }
+                                                                                        else if(tmp!=null){
+                                                                                            if(tmp.getTipo().equals("integer")){
+                                                                                                if(fact.getType()==4){
+                                                                                                    RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())*Integer.parseInt(fact.toString())));
+                                                                                                }
+                                                                                                else if(fact.getType()==1){
+                                                                                                    Simbolo tmp2 = null;
+                                                                                                    tmp2 = SymbolTable.buscar(fact.toString());
+                                                                                                    if(tmp2==null){
+                                                                                                        System.err.println("La variable "+fact.toString()+" no existe");
+                                                                                                    }
+                                                                                                    else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
+                                                                                                        RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())*Integer.parseInt(tmp2.valor.toString())));   
+                                                                                                    }
+                                                                                                }
+                                                                                                else{
+                                                                                                    System.err.println("No se pueden multiplicar estos valores, se esperan dos enteros");
+                                                                                                } 
+                                                                                            }
+                                                                                        }
                                                                                     }:}
-         |term:term DIVIDE factor:fact                                                    {:System.out.println("Entro al divide");
+         |term:term DIVIDE factor:fact                                                    {://System.out.println("Entro al divide");
                                                                                     if(term.getFact().getType()==4){
-                                                                                        System.out.println("entro al type == 4 numero 1");
+                                                                                        //System.out.println("entro al type == 4 numero 1");
                                                                                         if(fact.getType()==4){
-                                                                                            System.out.println("Entro al type == 4 numero 2");
+                                                                                            //System.out.println("Entro al type == 4 numero 2");
                                                                                             RESULT = new Term(new Factor(Integer.parseInt(term.toString())/Integer.parseInt(fact.toString())));
+                                                                                        }
+                                                                                        else if(fact.getType()==1){
+                                                                                            Simbolo tmp2 = null;
+                                                                                            tmp2 = SymbolTable.buscar(fact.toString());
+                                                                                            if(tmp2==null){
+                                                                                                System.err.println("La variable "+fact.toString()+" no existe");
+                                                                                            }
+                                                                                            else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
+                                                                                                RESULT = new Term(new Factor(Integer.parseInt(term.toString())/Integer.parseInt(tmp2.valor.toString())));   
+                                                                                            }
+                                                                                        }
+                                                                                        else{
+                                                                                            System.err.println("No se pueden dividir estos valores, se esperan dos enteros");
+                                                                                        }
+                                                                                    }
+                                                                                    else if(term.getFact().getType()==1){
+                                                                                        Simbolo tmp = null;
+                                                                                        tmp = SymbolTable.buscar(term.toString());
+                                                                                        if(tmp == null){
+                                                                                            System.err.println("Variable "+term.toString()+" no existe");
+                                                                                        }
+                                                                                        else if(tmp!=null){
+                                                                                            if(tmp.getTipo().equals("integer")){
+                                                                                                if(fact.getType()==4){
+                                                                                                    RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())/Integer.parseInt(fact.toString())));
+                                                                                                }
+                                                                                                else if(fact.getType()==1){
+                                                                                                    Simbolo tmp2 = null;
+                                                                                                    tmp2 = SymbolTable.buscar(fact.toString());
+                                                                                                    if(tmp2==null){
+                                                                                                        System.err.println("La variable "+fact.toString()+" no existe");
+                                                                                                    }
+                                                                                                    else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
+                                                                                                        RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())/Integer.parseInt(tmp2.valor.toString())));   
+                                                                                                    }
+                                                                                                }
+                                                                                                else{
+                                                                                                    System.err.println("No se pueden dividir estos valores, se esperan dos enteros");
+                                                                                                } 
+                                                                                            }
                                                                                         }
                                                                                     }:}
 ;
