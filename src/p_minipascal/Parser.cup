@@ -439,7 +439,7 @@ sim_exp ::= term:term                                                           
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                 if(tmp2.valor == null)
-                                                                                                    System.err.println("null pointer exception");
+                                                                                                    System.err.println("Error en la linea: "+plleft+"no se le ha asignado un valor a esta variable");
                                                                                                 else
                                                                                                     RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())+Integer.parseInt(tmp2.valor.toString()))));   
                                                                                             }
@@ -463,7 +463,7 @@ sim_exp ::= term:term                                                           
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("string")){
                                                                                                 if(tmp2.valor == null)
-                                                                                                    System.err.println("null pointer exception");
+                                                                                                    System.err.println("Error en la linea: "+plleft+"no se le ha asignado un valor a esta variable");
                                                                                                 else
                                                                                                     RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())));   
                                                                                             }
@@ -487,7 +487,7 @@ sim_exp ::= term:term                                                           
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("char")){
                                                                                                 if(tmp2.valor == null)
-                                                                                                    System.err.println("null pointer exception");
+                                                                                                    System.err.println("Error en la linea: "+plleft+"no se le ha asignado un valor a esta variable");
                                                                                                 else
                                                                                                     RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())));   
                                                                                             }
@@ -507,7 +507,7 @@ sim_exp ::= term:term                                                           
                                                                                         }
                                                                                         else if(tmp!=null){
                                                                                             if(tmp.valor == null)
-                                                                                                    System.err.println("HA TE HE ENGAÑADO AMBUCHIS ESTOS null pointer exceptions LAS PUSE YO!! YOU JUST GOT CHIPMUNK WHISPERED");
+                                                                                                    System.err.println("Error en la linea: "+plleft+"no se le ha asignado un valor a esta variable");
                                                                                             else
                                                                                                 if(tmp.getTipo().equals("integer")){
                                                                                                     if(term.getFact().getType()==4){
@@ -521,7 +521,7 @@ sim_exp ::= term:term                                                           
                                                                                                     }
                                                                                                     else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                         if(tmp2.valor == null)
-                                                                                                            System.err.println("null pointer exception");
+                                                                                                            System.err.println("Error en la linea: "+plleft+"no se le ha asignado un valor a esta variable");
                                                                                                         else
                                                                                                             RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(tmp2.valor.toString()))));   
                                                                                                     }
@@ -545,7 +545,7 @@ sim_exp ::= term:term                                                           
                                                                                                     }
                                                                                                     else if(tmp2!=null&&tmp2.getTipo().equals("string")){
                                                                                                         if(tmp2.valor == null)
-                                                                                                            System.err.println("null pointer exception");
+                                                                                                            System.err.println("Error en la linea: "+plleft+"no se le ha asignado un valor a esta variable");
                                                                                                         else
                                                                                                             RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())));   
                                                                                                     }
@@ -569,7 +569,7 @@ sim_exp ::= term:term                                                           
                                                                                                     }
                                                                                                     else if(tmp2!=null&&tmp2.getTipo().equals("char")){
                                                                                                         if(tmp2.valor == null)
-                                                                                                            System.err.println("null pointer exception");
+                                                                                                            System.err.println("Error en la linea: "+plleft+"no se le ha asignado un valor a esta variable");
                                                                                                         else
                                                                                                             RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())));   
                                                                                                     }
@@ -599,7 +599,7 @@ sim_exp ::= term:term                                                           
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                 if(tmp2.valor == null)
-                                                                                                    System.err.println("null pointer exception");
+                                                                                                    System.err.println("Error en la linea: "+minleft+"no se le ha asignado un valor a esta variable");
                                                                                                 else
                                                                                                     RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())-Integer.parseInt(tmp2.valor.toString()))));   
                                                                                             }
@@ -619,7 +619,7 @@ sim_exp ::= term:term                                                           
                                                                                         }
                                                                                         else if(tmp!=null){
                                                                                             if(tmp.valor == null)
-                                                                                                System.err.println("null pointer exception");
+                                                                                                System.err.println("Error en la linea: "+minleft+"no se le ha asignado un valor a esta variable");
                                                                                             else
                                                                                                 if(tmp.getTipo().equals("integer")){
                                                                                                     if(term.getFact().getType()==4){
@@ -633,7 +633,7 @@ sim_exp ::= term:term                                                           
                                                                                                         }
                                                                                                         else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                             if(tmp2.valor == null)
-                                                                                                                System.err.println("null pointer exception");
+                                                                                                                System.err.println("Error en la linea: "+minleft+"no se le ha asignado un valor a esta variable");
                                                                                                             else
                                                                                                                 RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())-Integer.parseInt(tmp2.valor.toString()))));   
                                                                                                         }
@@ -659,7 +659,7 @@ sim_exp ::= term:term                                                           
                                                                                     }
                                                                                     else if(tmp != null&&tmp.getTipo().equals("integer")){
                                                                                         if(tmp.valor == null)
-                                                                                            System.err.println("null pointer exception");
+                                                                                            System.err.println("Error en la linea: "+minleft+"no se le ha asignado un valor a esta variable");
                                                                                         else
                                                                                             RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())*-1)));
                                                                                     }
@@ -684,7 +684,7 @@ term ::= factor:fact                                                            
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                 if(tmp2.valor == null)
-                                                                                                    System.err.println("null pointer exception");
+                                                                                                    System.err.println("Error en la linea: "+timleft+"no se le ha asignado un valor a esta variable");
                                                                                                 else
                                                                                                     RESULT = new Term(new Factor(Integer.parseInt(term.toString())*Integer.parseInt(tmp2.valor.toString())));   
                                                                                             }
@@ -704,7 +704,7 @@ term ::= factor:fact                                                            
                                                                                         }
                                                                                         else if(tmp!=null){
                                                                                             if(tmp.valor == null)
-                                                                                                System.err.println("null pointer exception");
+                                                                                                System.err.println("Error en la linea: "+timleft+"no se le ha asignado un valor a esta variable");
                                                                                             else
                                                                                                 if(tmp.getTipo().equals("integer")){
                                                                                                     if(fact.getType()==4){
@@ -718,7 +718,7 @@ term ::= factor:fact                                                            
                                                                                                         }
                                                                                                         else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                             if(tmp2.valor == null)
-                                                                                                                System.err.println("null pointer exception");
+                                                                                                                System.err.println("Error en la linea: "+timleft+"no se le ha asignado un valor a esta variable");
                                                                                                             else
                                                                                                                 RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())*Integer.parseInt(tmp2.valor.toString())));   
                                                                                                         }
@@ -747,7 +747,7 @@ term ::= factor:fact                                                            
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                 if(tmp2.valor == null)
-                                                                                                    System.err.println("null pointer exception");
+                                                                                                    System.err.println("Error en la linea: "+divleft+"no se le ha asignado un valor a esta variable");
                                                                                                 else
                                                                                                     RESULT = new Term(new Factor(Integer.parseInt(term.toString())/Integer.parseInt(tmp2.valor.toString())));   
                                                                                             }
@@ -767,7 +767,7 @@ term ::= factor:fact                                                            
                                                                                         }
                                                                                         else if(tmp!=null){
                                                                                             if(tmp.valor == null)
-                                                                                                System.err.println("null pointer exception");
+                                                                                                System.err.println("Error en la linea: "+divleft+"no se le ha asignado un valor a esta variable");
                                                                                             else
                                                                                                 if(tmp.getTipo().equals("integer")){
                                                                                                     if(fact.getType()==4){
@@ -781,7 +781,7 @@ term ::= factor:fact                                                            
                                                                                                         }
                                                                                                         else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                             if(tmp2.valor == null)
-                                                                                                                System.err.println("null pointer exception");
+                                                                                                                System.err.println("Error en la linea: "+divleft+"no se le ha asignado un valor a esta variable");
                                                                                                             else
                                                                                                                 RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())/Integer.parseInt(tmp2.valor.toString())));   
                                                                                                         }
