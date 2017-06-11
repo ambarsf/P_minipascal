@@ -440,6 +440,9 @@ sim_exp ::= term:term                                                           
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                 RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())+Integer.parseInt(tmp2.valor.toString()))));   
                                                                                             }
+                                                                                            else{
+                                                                                                System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos chars");
+                                                                                            }
                                                                                         }
                                                                                         else{
                                                                                             System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos enteros");
@@ -458,6 +461,9 @@ sim_exp ::= term:term                                                           
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("string")){
                                                                                                 RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())));   
                                                                                             }
+                                                                                            else{
+                                                                                                System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos cadenas");
+                                                                                            }
                                                                                         }
                                                                                         else{
                                                                                             System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos cadenas");
@@ -475,6 +481,9 @@ sim_exp ::= term:term                                                           
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("char")){
                                                                                                 RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())));   
+                                                                                            }
+                                                                                            else{
+                                                                                                System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos chars");
                                                                                             }
                                                                                         }
                                                                                         else{
@@ -501,6 +510,9 @@ sim_exp ::= term:term                                                           
                                                                                                     else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                         RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(tmp2.valor.toString()))));   
                                                                                                     }
+                                                                                                    else{
+                                                                                                       System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos chars");
+                                                                                                    }
                                                                                                 }
                                                                                                 else{
                                                                                                     System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos enteros");
@@ -519,6 +531,9 @@ sim_exp ::= term:term                                                           
                                                                                                     else if(tmp2!=null&&tmp2.getTipo().equals("string")){
                                                                                                         RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())));   
                                                                                                     }
+                                                                                                    else{
+                                                                                                       System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos chars");
+                                                                                                    }
                                                                                                 }
                                                                                                 else{
                                                                                                     System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos cadenas");
@@ -536,6 +551,9 @@ sim_exp ::= term:term                                                           
                                                                                                     }
                                                                                                     else if(tmp2!=null&&tmp2.getTipo().equals("char")){
                                                                                                         RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())));   
+                                                                                                    }
+                                                                                                    else{
+                                                                                                       System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos chars");
                                                                                                     }
                                                                                                 }
                                                                                                 else{
@@ -561,6 +579,9 @@ sim_exp ::= term:term                                                           
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                 RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())-Integer.parseInt(tmp2.valor.toString()))));   
                                                                                             }
+                                                                                            else{
+                                                                                                System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos chars");
+                                                                                            }
                                                                                         }
                                                                                         else{
                                                                                             System.err.println("Error en la linea: "+minleft+" no se pueden restar estos valores, se esperan dos enteros");
@@ -585,6 +606,9 @@ sim_exp ::= term:term                                                           
                                                                                                     }
                                                                                                     else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                         RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())-Integer.parseInt(tmp2.valor.toString()))));   
+                                                                                                    }
+                                                                                                    else{
+                                                                                                       System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos enteros");
                                                                                                     }
                                                                                                 }
                                                                                                 else{
@@ -628,6 +652,9 @@ term ::= factor:fact                                                            
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                 RESULT = new Term(new Factor(Integer.parseInt(term.toString())*Integer.parseInt(tmp2.valor.toString())));   
                                                                                             }
+                                                                                            else{
+                                                                                               System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos enteros");
+                                                                                            }
                                                                                         }
                                                                                         else{
                                                                                             System.err.println("Error en la linea: "+timleft+" no se pueden restar estos valores, se esperan dos enteros");
@@ -653,6 +680,9 @@ term ::= factor:fact                                                            
                                                                                                     else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                         RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())*Integer.parseInt(tmp2.valor.toString())));   
                                                                                                     }
+                                                                                                    else{
+                                                                                                       System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos enteros");
+                                                                                                    }
                                                                                                 }
                                                                                                 else{
                                                                                                     System.err.println("Error en la linea: "+timleft+" no se pueden multiplicar estos valores, se esperan dos enteros");
@@ -675,6 +705,9 @@ term ::= factor:fact                                                            
                                                                                             }
                                                                                             else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                 RESULT = new Term(new Factor(Integer.parseInt(term.toString())/Integer.parseInt(tmp2.valor.toString())));   
+                                                                                            }
+                                                                                            else{
+                                                                                                System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos enteros");
                                                                                             }
                                                                                         }
                                                                                         else{
@@ -700,6 +733,9 @@ term ::= factor:fact                                                            
                                                                                                     }
                                                                                                     else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                         RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())/Integer.parseInt(tmp2.valor.toString())));   
+                                                                                                    }
+                                                                                                    else{
+                                                                                                        System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos enteros");
                                                                                                     }
                                                                                                 }
                                                                                                 else{

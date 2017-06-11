@@ -16,6 +16,6 @@ begin
    b:= 15 + a;   {si 15 se cambia por e tira un null pointer exception}
    c:= a + b;    {si b se cambia por e que es un integer, no tira error}
    e:= 'Ambar' + 'hol'; {si hol se cambia por solo l hay un null pointer exception}
-   f:= 'Ambar' + 10; {No funciona si le asigno 'Ambar+a'}
+   f:= 'Ambar' + a; {No funciona si le asigno 'Ambar+a'}
 end
 .
