@@ -125,9 +125,9 @@ public class SymbolTable {
             if(tipo != null)
                 UltimoTipo = tipo;
             //System.out.println("ULTIMO TIPO EN CREAR" + UltimoTipo);
-            //System.out.println("Variable creada exitosamente!!!");
+            System.out.println("Variable creada exitosamente!!!");
             
-            //imprimir();                
+            imprimir();                
             System.out.println(" ");
             return simbolo;
         }
@@ -167,7 +167,7 @@ public class SymbolTable {
             simbolo.valor = valor;
             tablaSimbolos.remove(nombre);//Elimino para actualizar
             tablaSimbolos.put(nombre, simbolo);
-            //imprimir();
+            imprimir();
             return simbolo;
         }
         else

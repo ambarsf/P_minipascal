@@ -15,9 +15,9 @@ var
         write(' Minimum: ', min);
      end;
 begin
-   a  :=5;
-   b := 5+a+a ; { esto tira un null pointer exception }
-   e:= 'Ambar' + 'hola';
-   f:= 'Ambar';
+   {a :=5 + 10 + 8;}
+   b := a+a+10 ; { esto tira un null pointer exception }
+   {e:= 'Ambar' + 'hola';
+   f:= 'Ambar';}
 end
 .

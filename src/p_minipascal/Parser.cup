@@ -458,7 +458,8 @@ exp ::= sim_exp:sime                                                            
 ;
 
 sim_exp ::= term:term                                                           {: RESULT = new Simple_expression(term); :}
-            |sim_exp:se1 PLUS:pl term:term                                      {:if(se1.getTerm().getFact().getType()==4){
+            |sim_exp:se1 PLUS:pl term:term                                      {:System.out.println("ESTO ES SE1 " + se1.getTerm().getFact().getType());
+                                                                                 if(se1.getTerm().getFact().getType()==4){
                                                                                         if(term.getFact().getType()==4){
                                                                                             RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())+Integer.parseInt(term.toString()))));
                                                                                         }
