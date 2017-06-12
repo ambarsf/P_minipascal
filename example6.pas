@@ -7,22 +7,14 @@ var
      var x, y, l,  min:String;
          m, n :integer;
      begin
-        m := 10;
+        m := 10 + 20;
+        j := 5;
         min := 'Hola';
         write(' Enter three numbers: ');
         write(' Minimum: ', min);
      end;
-    function Ambuchis(h: integer, i: String):String;
-	var o, p, q: String;
-	begin
-		o:= 'Trece';
-		p:= 'Catorce';
-		q:= 'Ambar likes beans';
-	end;
 begin
-   e:= 'Ambar' + 'hola'; {si hol se cambia por solo l hay un null pointer exception}
-   f:= 'Ambar'; {No funciona si le asigno 'Ambar+a'}
-   a:= 10;       {tira error si se le asigna f por ejemplo, pero hay un null pointer exception}
-   m := 11;
+   e:= 'Ambar' + 'hola';
+   f:= 'Ambar';
 end
 .

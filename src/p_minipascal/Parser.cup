@@ -283,10 +283,9 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                         String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
                                                                                         if(tipoVariable.equals("integer")&&tmp2==null){
                                                                                             if(ex.getS_exp1()!=null){
-                                                                                                System.out.println("Esta es la variable "+ tmp.nombre+ " Este es el ambito: "+ ambito1+ " Esta es la prof: "+ SymbolTable.profundidad);
                                                                                                 if (ex.getS_exp1().getTerm().getFact().getType()==4)
                                                                                                     if ((ambito1.equals(SymbolTable.profundidad)) ||
-                                                                                                       (ambito1.equals(" ") && !SymbolTable.profundidad.equals(" ")) || (ambito1.contains(SymbolTable.profundidad))){
+                                                                                                       (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))){
                                                                                                             SymbolTable.insertar(v.toString(),ex);
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
@@ -297,10 +296,9 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                         }
                                                                                         else if (tipoVariable.equals("string")&&tmp2==null){
                                                                                             if(ex.getS_exp1()!=null){
-                                                                                                 System.out.println("Esta es la variable "+ tmp.nombre+ " Este es el ambito: "+ ambito1+ " Esta es la prof: "+ SymbolTable.profundidad);
                                                                                                 if(ex.getS_exp1().getTerm().getFact().getType()==2)
                                                                                                     if ((ambito1.equals(SymbolTable.profundidad)) ||
-                                                                                                       (ambito1.equals(" ") && !SymbolTable.profundidad.equals(" ")) || (ambito1.contains(SymbolTable.profundidad))){
+                                                                                                       (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))){
                                                                                                             SymbolTable.insertar(v.toString(),ex);
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
@@ -311,10 +309,9 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                         }
                                                                                         else if (tipoVariable.equals("char")&&tmp2==null){
                                                                                             if(ex.getS_exp1()!= null){
-                                                                                                 System.out.println("Esta es la variable "+ tmp.nombre+ " Este es el ambito: "+ ambito1+ " Esta es la prof: "+ SymbolTable.profundidad);
                                                                                                 if(ex.getS_exp1().getTerm().getFact().getType()==3)
                                                                                                     if ((ambito1.equals(SymbolTable.profundidad)) ||
-                                                                                                       (ambito1.equals(" ") && !SymbolTable.profundidad.equals(" ")) || (ambito1.contains(SymbolTable.profundidad))){
+                                                                                                       (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))){
                                                                                                             SymbolTable.insertar(v.toString(),ex);
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
@@ -328,7 +325,14 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                             if(ex.getS_exp1()!=null){
                                                                                                 if(ex.getS_exp1().getTerm().getFact().getType()==1){
                                                                                                     if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
-                                                                                                        SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
+                                                                                                        if(((ambito1.equals("main") && ambito2.equals("main")) && ((SymbolTable.profundidad.equals("main")) ||(!SymbolTable.profundidad.equals("main")))) 
+                                                                                                        || ((ambito1.equals("main") && !ambito2.equals("main")) && ((ambito2.equals(SymbolTable.profundidad)) || ambito2.contains(SymbolTable.profundidad)))
+                                                                                                        || ((!ambito1.equals("main")) && ((ambito1.equals(SymbolTable.profundidad)) || ambito1.contains(SymbolTable.profundidad)) 
+                                                                                                        && ((ambito2.equals("main")) || (ambito2.contains(ambito1)) || (ambito2.equals(ambito1))))){
+                                                                                                            SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
+                                                                                                        }else{
+                                                                                                           System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");   
+                                                                                                        }
                                                                                                     else
                                                                                                         System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible");
                                                                                                 }
@@ -337,10 +341,9 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                     }else if(tmp.valor != null){
                                                                                         String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
                                                                                         if(tipoVariable.equals("integer")&&tmp2==null){
-                                                                                             System.out.println("Esta es la variable "+ tmp.nombre+ " Este es el ambito: "+ ambito1+ " Esta es la prof: "+ SymbolTable.profundidad);
                                                                                             if(ex.getS_exp1().getTerm().getFact().getType()== 4)
                                                                                                 if ((ambito1.equals(SymbolTable.profundidad)) ||
-                                                                                                       (ambito1.equals(" ") && !SymbolTable.profundidad.equals(" ")) || (ambito1.contains(SymbolTable.profundidad))){
+                                                                                                       (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))){
                                                                                                             SymbolTable.insertar(v.toString(),ex);
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
@@ -349,10 +352,9 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                 System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un integer");
                                                                                         }
                                                                                         else if (tipoVariable.equals("string")&&tmp2==null){
-                                                                                            System.out.println("Esta es la variable "+ tmp.nombre+ " Este es el ambito: "+ ambito1+ " Esta es la prof: "+ SymbolTable.profundidad);
                                                                                             if(ex.getS_exp1().getTerm().getFact().getType()==2)
                                                                                                 if ((ambito1.equals(SymbolTable.profundidad)) ||
-                                                                                                       (ambito1.equals(" ") && !SymbolTable.profundidad.equals(" ")) || (ambito1.contains(SymbolTable.profundidad))){
+                                                                                                       (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))){
                                                                                                             SymbolTable.insertar(v.toString(),ex);
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
@@ -361,10 +363,9 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                 System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba una String");
                                                                                         }
                                                                                         else if (tipoVariable.equals("char")&&tmp2==null){
-                                                                                             System.out.println("Esta es la variable "+ tmp.nombre+ " Este es el ambito: "+ ambito1+ " Esta es la prof: "+ SymbolTable.profundidad);
-                                                                                            if((ex.getS_exp1().getTerm().getFact().getType()==3)&&(ambito1.equals(" ")||ambito1.equals(ambito1)))
+                                                                                            if(ex.getS_exp1().getTerm().getFact().getType()==3)
                                                                                                 if ((ambito1.equals(SymbolTable.profundidad)) ||
-                                                                                                       (ambito1.equals(" ") && !SymbolTable.profundidad.equals(" ")) || (ambito1.contains(SymbolTable.profundidad))){
+                                                                                                       (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))){
                                                                                                             SymbolTable.insertar(v.toString(),ex);
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
@@ -376,7 +377,14 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                             String ambito2 = SymbolTable.verificarAmbito(tmp2.nombre);
                                                                                             if(ex.getS_exp1().getTerm().getFact().getType()==1){
                                                                                                 if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
-                                                                                                    SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
+                                                                                                    if(((ambito1.equals("main") && ambito2.equals("main")) && ((SymbolTable.profundidad.equals("main")) ||(!SymbolTable.profundidad.equals("main")))) 
+                                                                                                        || ((ambito1.equals("main") && !ambito2.equals("main")) && ((ambito2.equals(SymbolTable.profundidad)) || ambito2.contains(SymbolTable.profundidad)))
+                                                                                                        || ((!ambito1.equals("main")) && ((ambito1.equals(SymbolTable.profundidad)) || ambito1.contains(SymbolTable.profundidad)) 
+                                                                                                        && ((ambito2.equals("main")) || (ambito2.contains(ambito1)) || (ambito2.equals(ambito1))))){
+                                                                                                            SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
+                                                                                                        }else{
+                                                                                                           System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");   
+                                                                                                        }
                                                                                                 else
                                                                                                     System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible");
                                                                                                 
