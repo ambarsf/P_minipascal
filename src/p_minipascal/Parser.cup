@@ -136,6 +136,8 @@ non terminal Block_p block_p;
 non terminal Parameters parameters; 
 non terminal For_stament for_stament;
 non terminal Repeat_stament repeat_stament;
+non terminal Caller_params c_params;
+non terminal Caller caller;
 
 /* precedence thingy */
 precedence left OR;
@@ -922,8 +924,18 @@ factor ::= var:v                                                                
 	|CONSTCHAR:ch                                                           {: RESULT = new Factor(ch); :}
 	|NUMBER:num                                                             {: RESULT = new Factor(num); :}   
 	|LPAREN exp:ex RPAREN                                                   {: RESULT = new Factor(ex); :}
+        |caller:cally                                                           {: RESULT = new Factor (cally); :}
 	|NOT factor:ft                                                          {: RESULT = new Factor(ft); :}
 
+;
+
+caller ::= ID:id LPAREN c_params:c_p RPAREN                                     {: RESULT = new Caller(id, c_p); :}
+;
+                                                                                
+c_params ::= factor:fact COMMA c_params:c_p                                     {: c_p.add(new Factor(fact)); RESULT = c_p; :}
+            |factor:fact error                                                  {: System.err.println(" , expected"); :}
+            |factor:fact                                                        {: RESULT = new Caller_params(fact); :}
+            |
 ;
 
 var ::= ent_var: ent_v                                                          {: RESULT = new Variable(ent_v);:}

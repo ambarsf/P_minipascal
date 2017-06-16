@@ -20,6 +20,7 @@ public class Factor {
     boolean verd;
     boolean fals;
     int type;
+    Caller caller;
     
     public Factor(Variable var) {
         this.var = var;
@@ -47,6 +48,11 @@ public class Factor {
     public Factor(int num){
         this.num=num;
         type=4;
+    }
+    
+    public Factor(Caller caller){
+        this.caller = caller;
+        type =5;
     }
 
     public Variable getVar() {
@@ -93,8 +99,10 @@ public class Factor {
             return str;
         }else if(type==3){
             return ""+ch;
-        }else {
+        }else if (type ==4){
            return ""+num; 
+        }else{
+            return ""+caller;
         }
     }
     

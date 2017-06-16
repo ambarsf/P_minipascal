@@ -7,7 +7,7 @@ var
      var x, y, l,  min:String;
          m, n :integer;
      begin
-        m := 10 + 20;
+        m := 10;
         g:=5;
         j := 5 + g + m;
         min := 'Hola';
