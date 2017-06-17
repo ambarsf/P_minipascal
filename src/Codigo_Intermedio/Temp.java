@@ -16,8 +16,12 @@ public class Temp {
     public Temp() {
         this.temp = "t"+cont++;     
     }
-    
-    public Temp(String temp){
+
+    public String getTemp() {
+        return temp;
+    }
+
+    public void setTemp(String temp) {
         this.temp = temp;
     }
 

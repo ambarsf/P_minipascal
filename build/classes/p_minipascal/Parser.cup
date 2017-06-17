@@ -7,6 +7,7 @@ import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 import java.lang.reflect.Field;
 import Codigo_Intermedio.Cuadruplos;
 import Codigo_Intermedio.Cuadruplo;
+import Codigo_Intermedio.Temp;
 
 parser code {:
     static SymbolTable tablaSimbolos = new SymbolTable();
@@ -933,10 +934,10 @@ term ::= factor:fact                                                            
                                                                                         }:}
 ;
 
-factor ::= var:v                                                                {: RESULT = new Factor(v); :}
-	|CONSTSTR:str                                                           {: RESULT = new Factor(str); :}
+factor ::= var:v                                                                {: RESULT = new Factor(v);:}
+	|CONSTSTR:str                                                           {: RESULT = new Factor(str);:}
 	|CONSTCHAR:ch                                                           {: RESULT = new Factor(ch); :}
-	|NUMBER:num                                                             {: RESULT = new Factor(num); :}   
+	|NUMBER:num                                                             {: RESULT = new Factor(num);:}   
 	|LPAREN exp:ex RPAREN                                                   {: RESULT = new Factor(ex); :}
         |caller:cally                                                           {: RESULT = new Factor (cally); :}
 	|NOT factor:ft                                                          {: RESULT = new Factor(ft); :}

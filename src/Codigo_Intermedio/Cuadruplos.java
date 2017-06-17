@@ -23,6 +23,10 @@ public class Cuadruplos {
         for (int i = 0; i < Cuadruplos.size(); i++) {
             System.out.println(Cuadruplos.get(i));
         }
+        
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
     }
     
     
