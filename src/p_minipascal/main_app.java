@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package p_minipascal;
+import Codigo_Intermedio.Cuadruplos;
 import java.util.*;
 import java.io.*;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class main_app {
             parser p = new parser(new Lexer(new FileReader("example6.pas")));
             p.parse();
             SymbolTable TablaSimbolos = new SymbolTable();
+            Cuadruplos.Imprimir();
         }catch(Exception e ){
             e.printStackTrace();
         }

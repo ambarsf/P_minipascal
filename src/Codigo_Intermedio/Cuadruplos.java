@@ -32,7 +32,6 @@ public class Cuadruplos {
     
     static public void add(Cuadruplo cuad){
         Cuadruplos.add(cuad);
-        Imprimir();
     }
     
 }
