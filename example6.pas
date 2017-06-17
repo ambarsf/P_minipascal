@@ -15,7 +15,7 @@ var
         write(' Minimum: ', min);
      end;
 begin
-   a :=5 + 10 + 8 + 5;
+   a :=5 + 10 + 8 - 5;
    b := a+a ;
    e:= 'Ambar' + 'hola';
    f:= 'Ambar';
