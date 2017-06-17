@@ -206,6 +206,16 @@ public class SymbolTable {
     static public String buscarAmbito(String nombre){
         return tablaSimbolos.get(nombre).getAmbito();
     }
+
+    public static Map<String, Simbolo> getTablaSimbolos() {
+        return tablaSimbolos;
+    }
+
+    public static void setTablaSimbolos(Map<String, Simbolo> tablaSimbolos) {
+        SymbolTable.tablaSimbolos = tablaSimbolos;
+    }
+    
+    
     
     
     static public void imprimir()

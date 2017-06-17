@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package p_minipascal;
-
+import java.util.*;
 import java.io.*;
+import java.util.Map;
+import p_minipascal.Simbolo;
 
 
 /**
@@ -17,10 +19,10 @@ public class main_app {
         try{
             parser p = new parser(new Lexer(new FileReader("example7.pas")));
             p.parse();
+            SymbolTable TablaSimbolos = new SymbolTable();
         }catch(Exception e ){
             e.printStackTrace();
         }
     }
-   //Character ch = (Character)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value.toString().charAt(0);
 
 }
