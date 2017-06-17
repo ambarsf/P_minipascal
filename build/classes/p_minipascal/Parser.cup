@@ -232,7 +232,9 @@ array_t ::= ARRAY LCOR index_r:ind_r RCOR OF simple_t:sim_t                     
             |ARRAY LCOR index_r:ind_r RCOR error simple_t:sim_t                 {: System.err.println(" reserved word FOR expected."); :}
 ;
 
-index_r ::= NUMBER:n1 DOT DOT NUMBER:n2                                         {:RESULT = new Index_range(n1,n2); :}
+index_r ::= NUMBER:n1 DOT DOT NUMBER:n2                                         {:RESULT = new Index_range(n1,n2);
+                                                                                  SymbolTable.num1 = n1;
+                                                                                  SymbolTable.num2 = n2;:}
             |NUMBER:n1 error DOT NUMBER:n2                                      {: System.err.println(" . expected"); :} 
             |error DOT DOT NUMBER:n2                                            {: System.err.println(" number expected"); :} 
             |NUMBER:n1 DOT DOT error                                            {: System.err.println(" number expected"); :} 

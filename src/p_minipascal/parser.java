@@ -2358,6 +2358,8 @@ class CUP$parser$actions {
 		int n2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Integer n2 = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		RESULT = new Index_range(n1,n2); 
+                SymbolTable.num1 = n1;
+                SymbolTable.num2 = n2;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("index_r",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

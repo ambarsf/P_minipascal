@@ -2,6 +2,9 @@ program exProcedure;
 var
    a, b, c: integer;
    e, f, Alvaro: String;
+   arreglo: array[1..10] of integer;
+   caracter: char;
+
 
    function findMin(j: integer, g: integer):integer;
      var x, y, l,  min:String;
@@ -28,4 +31,5 @@ begin
    a:= 10;       {tira error si se le asigna f por ejemplo, pero hay un null pointer exception}
    {m := 11;}
    Alvaro := Ambuchis(a,f);
+   {arreglo[1] := 15;}
 end.

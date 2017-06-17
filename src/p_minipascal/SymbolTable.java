@@ -60,6 +60,13 @@ class Simbolo
     public void setAmbito(String ambito){
         this.ambito = ambito;
     }
+    public void setValor(Object valor){
+        this.valor = valor;
+    }
+    
+    public Object getValor(){
+        return valor;
+    }
 }
 
 public class SymbolTable {
@@ -69,6 +76,8 @@ public class SymbolTable {
     static String UltimoTipo;
     static String profundidad;
     static String UltimaFuncion;
+    static int num1;
+    static int num2;
     
     public static Logger log = Logger.getLogger(SymbolTable.class.getName());            
     
@@ -79,6 +88,8 @@ public class SymbolTable {
         UltimoTipo = "";
         UltimaFuncion="main";
         profundidad = "main";
+        num1=0;
+        num2=0;
         
     }
     
@@ -124,6 +135,41 @@ public class SymbolTable {
             tablaSimbolos.put(nombre, simbolo);
             if(tipo != null)
                 UltimoTipo = tipo;
+            if(UltimoTipo.contains("Array")){
+                System.out.println("ENTRO A ULTIMO TIPO CONTAINS ARRAY");
+                String tipoArreglo = "";
+                for (int i = 9; i < simbolo.getTipo().length(); i++) {
+                    tipoArreglo = tipoArreglo + simbolo.getTipo().charAt(i);
+                }
+                if(tipoArreglo.matches("integer")){
+                    int[] arreglo = new int[num2-num1+1];
+                    for (int i = 0; i < arreglo.length; i++) {
+                        arreglo[i]=0;
+                        SymbolTable.crear(nombre+"["+i+"]", tipoArreglo, ambito);
+                        System.out.println("ARREGLO VALOR "+arreglo[i]);
+                        System.out.println("NUM2"+num2 );
+                        System.out.println("NUM1"+num1);
+                    }
+                    System.out.println("SIZE" + arreglo.length);
+                    simbolo.setValor(arreglo);
+                }
+                else if(tipoArreglo.matches("string")){
+                    String[] arreglo = new String[num2-num1+1];
+                    for (int i = 0; i < arreglo.length; i++) {
+                        arreglo[i]="";
+                        SymbolTable.crear(nombre+"["+i+"]", tipoArreglo, ambito);
+                    }
+                    simbolo.setValor(arreglo);
+                }
+                else if(tipoArreglo.matches("char")){
+                    char[] arreglo = new char[num2-num1+1];
+                    for (int i = 0; i < arreglo.length; i++) {
+                        arreglo[i]='0';
+                        SymbolTable.crear(nombre+"["+i+"]", tipoArreglo, ambito);
+                    }
+                    simbolo.setValor(arreglo);
+                }
+            }
             //System.out.println("ULTIMO TIPO EN CREAR" + UltimoTipo);
             
             
@@ -143,10 +189,43 @@ public class SymbolTable {
         if(simbolo.getTipo() == null){
             simbolo.setTipo(UltimoTipo);
             simbolo.setAmbito(Ambito);
+            System.out.println("AGREGAR TIPO");
+            if(UltimoTipo.contains("Array")){
+                System.out.println("ENTRO A ULTIMO TIPO CONTAINS ARRAY");
+                String tipoArreglo = "";
+                for (int i = 9; i < simbolo.getTipo().length(); i++) {
+                    tipoArreglo = tipoArreglo + simbolo.getTipo().charAt(i);
+                }
+                if(tipoArreglo.matches("integer")){
+                    int[] arreglo = new int[num2-num1+1];
+                    for (int i = 0; i < arreglo.length; i++) {
+                        arreglo[i]=0;
+                        
+                    }
+                    System.out.println(arreglo);
+                    simbolo.setValor(arreglo + " ARREGLO " + arreglo.length);
+                }
+                else if(tipoArreglo.matches("string")){
+                    String[] arreglo = new String[num2-num1+1];
+                    for (int i = 0; i < arreglo.length; i++) {
+                        arreglo[i]="";
+                    }
+                    simbolo.setValor(arreglo);
+                }
+                else if(tipoArreglo.matches("char")){
+                    char[] arreglo = new char[num2-num1+1];
+                    for (int i = 0; i < arreglo.length; i++) {
+                        arreglo[i]='0';
+                    }
+                    simbolo.setValor(arreglo);
+                }
+            }
+            else{
             //System.out.println("ULTIMO TIPO EN AGREGAR TIPO: " + UltimoTipo);
-            tablaSimbolos.replace(nombre, simbolo);
-            tablaSimbolos.remove(nombre);
-            tablaSimbolos.put(nombre, simbolo);
+                tablaSimbolos.replace(nombre, simbolo);
+                tablaSimbolos.remove(nombre);
+                tablaSimbolos.put(nombre, simbolo);
+            }
             //System.out.println("AGREGAR TIPO");
             //imprimir();
             return simbolo;
@@ -164,10 +243,19 @@ public class SymbolTable {
         if(simbolo != null) //La variable existe
         {
             //Actualizar el valor
+            /*if(simbolo.getTipo().contains("Array")){
+                String tipoArreglo = "";
+                for (int i = 9; i < simbolo.getTipo().length(); i++) {
+                    tipoArreglo = tipoArreglo + simbolo.getTipo().charAt(i);
+                }
+                if(tipoArreglo.matches("integer")){
+                    
+                }
+            }*/
             simbolo.valor = valor;
             tablaSimbolos.remove(nombre);//Elimino para actualizar
             tablaSimbolos.put(nombre, simbolo);
-            //imprimir();
+            imprimir();
             return simbolo;
         }
         else
@@ -222,9 +310,22 @@ public class SymbolTable {
     {
         System.out.println("\nIngresando a imprimir de TablaSimbolos");
         System.out.println("    Valores de la tabla de simbolos:");
-        for (Simbolo s : tablaSimbolos.values())
+        for (Simbolo s : tablaSimbolos.values()){
+          //  if(s.getTipo().contains("Array")){
+                //Object[] o = (Object[]) s.getValor();
+             //   if(s.getValor().getClass().isArray()){
+            //        List<Object> list = Arrays.asList(s.getValor());
+              //      System.out.println(list.size()+" SIZE OF LIST");
+                    
+                //    for (int i = 0; i < s.getValor().getClass().getMethods().length;i++) {
+                  //     System.out.println(String.format("      "
+                    //+ "Nombre: %-15s valor: %-15s tipo: %-15s ambito: %-15s",s.nombre+"["+i+"]", s.getValor().getClass().getMethods()[i].toString(), s.tipo, s.ambito));
+                    //}
+                //}
+            //}else
             System.out.println(String.format("      "
-                    + "Nombre: %-15s valor: %-15s tipo: %-15s ambito: %-15s",s.nombre, s.valor, s.tipo, s.ambito));        
+                    + "Nombre: %-15s valor: %-15s tipo: %-15s ambito: %-15s",s.nombre, s.valor, s.tipo, s.ambito));
+        }
         System.out.println("Saliendo de imprimir en TablaSimbolos\n ");        
     }
 }
