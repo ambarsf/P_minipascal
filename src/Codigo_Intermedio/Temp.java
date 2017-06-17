@@ -10,7 +10,7 @@ package Codigo_Intermedio;
  * @author ambarsuarez
  */
 public class Temp {
-    private static int cont;
+    private static int cont =0;
     String temp;
 
     public Temp() {

@@ -10,35 +10,35 @@ package Codigo_Intermedio;
  * @author ambarsuarez
  */
 public class Cuadruplo {
-    public enum Operaciones{ASSIGN,SUMA,RESTA,MULTI,DIV,IF_EQ,IF_GEQ,IF_LEQ,IF_GT,IF_LT,IF_NET,GOTO};
-    Operaciones operacion;
+    //public enum Operaciones{ASSIGN,SUMA,RESTA,MULTI,DIV,IF_EQ,IF_GEQ,IF_LEQ,IF_GT,IF_LT,IF_NET,GOTO};
+    String operacion;
     String argumento1;
     String argumento2;
     String resultado;
 
-    public Cuadruplo(Operaciones operacion,String argumento1, String argumento2, String resultado) {
+    public Cuadruplo(String operacion,String argumento1, String argumento2, String resultado) {
         this.operacion = operacion;
         this.argumento1 = argumento1;
         this.argumento2 = argumento2;
         this.resultado = resultado;
     }
 
-    public Cuadruplo(Operaciones operacion, String argumento1, String resultado) {
+    public Cuadruplo(String operacion, String argumento1, String resultado) {
         this.operacion = operacion;
         this.argumento1 = argumento1;
         this.resultado = resultado;
     }
 
-    public Cuadruplo(Operaciones operacion, String resultado) {
+    public Cuadruplo(String operacion, String resultado) {
         this.operacion = operacion;
         this.resultado = resultado;
     }
 
-    public Operaciones getOperacion() {
+    public String getOperacion() {
         return operacion;
     }
 
-    public void setOperacion(Operaciones operacion) {
+    public void setOperacion(String operacion) {
         this.operacion = operacion;
     }
 
@@ -68,7 +68,7 @@ public class Cuadruplo {
 
     @Override
     public String toString() {
-        String form = "%s %s %s %s";
+        String form = "%-15s %-15s %-15s %-15s";
         return String.format(form, operacion, argumento1, argumento2, resultado);
     }
     
