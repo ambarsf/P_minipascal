@@ -167,7 +167,7 @@ public class SymbolTable {
             simbolo.valor = valor;
             tablaSimbolos.remove(nombre);//Elimino para actualizar
             tablaSimbolos.put(nombre, simbolo);
-            //imprimir();
+            imprimir();
             return simbolo;
         }
         else
