@@ -184,6 +184,21 @@ public class SymbolTable {
         //}
     }
     
+        static public Simbolo buscarConAmbito(String ambito)
+    {   
+       // if ((Simbolo)tablaSimbolos.get(nombre)!=null)
+        Simbolo retval = null;
+        for (Simbolo s : tablaSimbolos.values()){
+            if(s.getAmbito().equals(ambito))
+                retval = s;
+        }
+        return retval;
+        //else{
+          //  System.out.println("no existe");
+            //return new Simbolo(null, null, null, null);
+        //}
+    }
+    
     static public String buscarTipo(String nombre){
         return tablaSimbolos.get(nombre).getTipo();
     }

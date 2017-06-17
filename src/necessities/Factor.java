@@ -21,6 +21,12 @@ public class Factor {
     boolean fals;
     int type;
     Caller caller;
+    String tipo;
+
+    public Caller getCaller() {
+        return caller;
+    }
+    
     
     public Factor(Variable var) {
         this.var = var;
@@ -38,16 +44,19 @@ public class Factor {
     public Factor(String str) {
         this.str = str;
         type=2;
+        tipo = "string";
     }
 
     public Factor(char ch) {
         this.ch = ch;
         type=3;
+        tipo = "character";
     }
     
     public Factor(int num){
         this.num=num;
         type=4;
+        tipo = "integer";
     }
     
     public Factor(Caller caller){
@@ -90,7 +99,10 @@ public class Factor {
     public int getType() {
         return type;
     }
-
+    
+    public String getTipo(){
+        return tipo;
+    }
     @Override
     public String toString() {
         if (type==1){

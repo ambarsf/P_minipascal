@@ -25,7 +25,10 @@ public class Caller_params {
      public Caller_params(String str) {
         callers.add(new Factor(str));
     }
-     
+    
+     public Caller_params(Vector callers){
+        this.callers = callers;
+     }
       public Caller_params(int num) {
         callers.add(new Factor(num));
     }
@@ -47,7 +50,7 @@ public class Caller_params {
     }
 
     public Caller_params(){
-
+        
     }
 
     public Vector<Factor> getCallers() {
