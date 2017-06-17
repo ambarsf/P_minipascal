@@ -1,7 +1,7 @@
 program exProcedure;
 var
    a, b, c: integer;
-   e, f, Alvaro : String;
+   e, f, Alvaro: String;
 
    function findMin(j: integer, g: integer):integer;
      var x, y, l,  min:String;

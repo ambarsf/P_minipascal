@@ -332,7 +332,7 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                         || ((ambito1.equals("main") && !ambito2.equals("main")) && ((ambito2.equals(SymbolTable.profundidad)) || ambito2.contains(SymbolTable.profundidad)))
                                                                                                         || ((!ambito1.equals("main")) && ((ambito1.equals(SymbolTable.profundidad)) || ambito1.contains(SymbolTable.profundidad)) 
                                                                                                         && ((ambito2.equals("main")) || (ambito2.contains(ambito1)) || (ambito2.equals(ambito1))))||ambito1.contains("function")||ambito2.contains("function")){
-                                                                                                            System.out.println("TMP2 "+tmp2.toString()+" TIPO"+ex.getS_exp1().getTerm().getFact().getType());
+                                                                                                            
                                                                                                             SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
                                                                                                         }else{
                                                                                                            System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");   
@@ -955,7 +955,7 @@ caller ::= ID:id LPAREN c_params:c_p RPAREN                                     
                                                                                                    // System.out.println(c_p.getCallers().get(i));
                                                                                                     Simbolo tmp3 = SymbolTable.buscar(c_p.getCallers().get(i).toString());
                                                                                                     if(!tmp3.getTipo().equals(tmp2.getTipo()))
-                                                                                                        System.err.println("El tipo de "+c_p.getCallers().get(i).toString() +" Es incorrecto");
+                                                                                                        System.err.println("El tipo de "+c_p.getCallers().get(i).toString() +" es incorrecto");
                                                                                                     else{
                                                                                                         SymbolTable.insertar(tmp2.getNombre(), tmp3.valor);
                                                                                                     }
