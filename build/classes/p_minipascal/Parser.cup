@@ -492,7 +492,7 @@ sim_exp ::= term:term                                                           
                                                                                     }
                                                                                 :}
             |sim_exp:se1 PLUS:pl term:term                                      {:
-                                                                                 if(se1.getTerm().getFact().getType()==4){
+                                                                                 if(se1.getTerm().getFact().getType()== 4){
                                                                                         if(term.getFact().getType()==4){
                                                                                             Temp tmp = new Temp();
                                                                                             RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())+Integer.parseInt(term.toString()))),tmp);

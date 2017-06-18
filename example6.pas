@@ -2,6 +2,7 @@ program exProcedure;
 var
    a, b, c: integer;
    e, f : String;
+   i : char;
 
    function findMin(j: integer, g: integer):integer;
      var x, y, l,  min:String;
@@ -19,6 +20,7 @@ begin
    {c := 5 / 8 * 7 * 5 + 3 ;}
    {b := 6/3;}
    {b := a+a ;}
+   {i := 'e';} {tira error, tenemos que ver que ondas luego}
    e:= 'Ambar' + 'hola';
    f:= 'Ambar';
 end
