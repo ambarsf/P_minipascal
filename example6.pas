@@ -1,6 +1,6 @@
 program exProcedure;
 var
-   a, b, c,d: integer;
+   a, b, c,d,h: integer;
    e, f : String;
    i : char;
 
@@ -20,6 +20,7 @@ begin
    c := 5 / 8 * 7 * 5 + 3 ;
    b := 6/3;
    d := a+b*c/b;
+   h := a*a*a{*a*a*a};
    {i := 'e';} {tira error, tenemos que ver que ondas luego}
    {e:= 'Ambar' + 'hola';}
    {f:= 'Ambar'+ e;}
