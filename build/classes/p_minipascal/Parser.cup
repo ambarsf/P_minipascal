@@ -406,7 +406,7 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                             }
                                                                                             else if(tmp2!=null){
                                                                                                 String ambito2 = SymbolTable.verificarAmbito(tmp2.nombre);
-                                                                                                if(ex.getS_exp1().getTerm().getFact().getType()==1||ex.getS_exp1().getTerm().getFact().getType()==5){
+                                                                                                if(ex.getS_exp1().getTerm().getFact().getType()==1){
                                                                                                     if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
                                                                                                         if(((ambito1.equals("main") && ambito2.equals("main")) && ((SymbolTable.profundidad.equals("main")) ||(!SymbolTable.profundidad.equals("main")))) 
                                                                                                             || ((ambito1.equals("main") && !ambito2.equals("main")) && ((ambito2.equals(SymbolTable.profundidad)) || ambito2.contains(SymbolTable.profundidad)))
@@ -517,7 +517,7 @@ sim_exp ::= term:term                                                           
                                                                                                Cuadruplos.add(cuad); 
                                                                                             }
                                                                                         }
-                                                                                        else if(term.getFact().getType()==1||term.getFact().getType()==5){
+                                                                                        else if(term.getFact().getType()==1){
                                                                                             Simbolo tmp2 = null;
                                                                                             tmp2 = SymbolTable.buscar(term.toString());
                                                                                             if(tmp2==null){
@@ -560,7 +560,7 @@ sim_exp ::= term:term                                                           
                                                                                                Cuadruplos.add(cuad); 
                                                                                             }
                                                                                         }
-                                                                                        else if(term.getFact().getType()==1||term.getFact().getType()==5){
+                                                                                        else if(term.getFact().getType()==1){
                                                                                             Simbolo tmp2 = null;
                                                                                             tmp2 = SymbolTable.buscar(term.toString());
                                                                                             if(tmp2==null){
@@ -589,7 +589,7 @@ sim_exp ::= term:term                                                           
                                                                                         if(term.getFact().getType()==3){
                                                                                             RESULT = new Simple_expression(new Term(new Factor(se1.toString()+term.toString())));
                                                                                         }
-                                                                                        else if(term.getFact().getType()==1||term.getFact().getType()==5){
+                                                                                        else if(term.getFact().getType()==1){
                                                                                             Simbolo tmp2 = null;
                                                                                             tmp2 = SymbolTable.buscar(term.toString());
                                                                                             if(tmp2==null){
@@ -614,7 +614,7 @@ sim_exp ::= term:term                                                           
                                                                                             System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos chars");
                                                                                         }
                                                                                     }
-                                                                                    else if(se1.getTerm().getFact().getType()==1||se1.getTerm().getFact().getType()==5){
+                                                                                    else if(se1.getTerm().getFact().getType()==1){
                                                                                         Simbolo tmp = null;
                                                                                         tmp = SymbolTable.buscar(se1.toString());
                                                                                         if(tmp == null){
@@ -630,7 +630,7 @@ sim_exp ::= term:term                                                           
                                                                                                         if(term.getFact().getType()==4){
                                                                                                             RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(term.toString()))));
                                                                                                         }
-                                                                                                        else if(term.getFact().getType()==1||term.getFact().getType()==5){
+                                                                                                        else if(term.getFact().getType()==1){
                                                                                                             Simbolo tmp2 = null;
                                                                                                             tmp2 = SymbolTable.buscar(term.toString());
                                                                                                             if(tmp2==null){
@@ -663,7 +663,7 @@ sim_exp ::= term:term                                                           
                                                                                                         if(term.getFact().getType()==2){
                                                                                                             RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+term.toString())));
                                                                                                         }
-                                                                                                        else if(term.getFact().getType()==1||term.getFact().getType()==5){
+                                                                                                        else if(term.getFact().getType()==1){
                                                                                                             Simbolo tmp2 = null;
                                                                                                             tmp2 = SymbolTable.buscar(term.toString());
                                                                                                             if(tmp2==null){
@@ -696,7 +696,7 @@ sim_exp ::= term:term                                                           
                                                                                                         if(term.getFact().getType()==3){
                                                                                                             RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+term.toString())));
                                                                                                         }
-                                                                                                        else if(term.getFact().getType()==1||term.getFact().getType()==5){
+                                                                                                        else if(term.getFact().getType()==1){
                                                                                                             Simbolo tmp2 = null;
                                                                                                             tmp2 = SymbolTable.buscar(term.toString());
                                                                                                             if(tmp2==null){
@@ -746,7 +746,7 @@ sim_exp ::= term:term                                                           
                                                                                                Cuadruplos.add(cuad); 
                                                                                             }
                                                                                         }
-                                                                                        else if(term.getFact().getType()==1||term.getFact().getType()==5){
+                                                                                        else if(term.getFact().getType()==1){
                                                                                             Simbolo tmp2 = null;
                                                                                             tmp2 = SymbolTable.buscar(term.toString());
                                                                                             String ambito = SymbolTable.verificarAmbito(tmp2.nombre);
@@ -772,7 +772,7 @@ sim_exp ::= term:term                                                           
                                                                                             System.err.println("Error en la linea: "+minleft+" no se pueden restar estos valores, se esperan dos enteros");
                                                                                         }
                                                                                     }
-                                                                                        else if(se1.getTerm().getFact().getType()==1||se1.getTerm().getFact().getType()==5){
+                                                                                        else if(se1.getTerm().getFact().getType()==1){
                                                                                         Simbolo tmp = null;
                                                                                         tmp = SymbolTable.buscar(se1.toString());
                                                                                         if(tmp == null){
@@ -791,7 +791,7 @@ sim_exp ::= term:term                                                           
                                                                                                             System.err.println("Error en la linea: "+minleft+" ,variable no ha sido declarada");  
                                                                                                         }
                                                                                                     }
-                                                                                                    else if(term.getFact().getType()==1||term.getFact().getType()==5){
+                                                                                                    else if(term.getFact().getType()==1){
                                                                                                         Simbolo tmp2 = null;
                                                                                                         tmp2 = SymbolTable.buscar(term.toString());
                                                                                                         if(tmp2==null){
@@ -822,7 +822,7 @@ sim_exp ::= term:term                                                           
             |MINUS:min term:term                                                {: if(term.getFact().getType()==4){
                                                                                     RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(term.toString())*-1)));
                                                                                 }
-                                                                                else if(term.getFact().getType()==1||term.getFact().getType()==5){
+                                                                                else if(term.getFact().getType()==1){
                                                                                     Simbolo tmp = null;
                                                                                     tmp = SymbolTable.buscar(term.toString());
                                                                                     if(tmp==null){
@@ -858,7 +858,7 @@ term ::= factor:fact                                                            
                                                                                                 Cuadruplos.add(cuad);
                                                                                             }
                                                                                         }
-                                                                                        else if(fact.getType()==1||fact.getType()==5){
+                                                                                        else if(fact.getType()==1){
                                                                                             Simbolo tmp2 = null;
                                                                                             tmp2 = SymbolTable.buscar(term.toString());
                                                                                             if(tmp2==null){
@@ -883,7 +883,7 @@ term ::= factor:fact                                                            
                                                                                             System.err.println("Error en la linea: "+timleft+" no se pueden restar estos valores, se esperan dos enteros");
                                                                                         }
                                                                                     }
-                                                                                    else if(term.getFact().getType()==1||term.getFact().getType()==5){
+                                                                                    else if(term.getFact().getType()==1){
                                                                                         Simbolo tmp = null;
                                                                                         tmp = SymbolTable.buscar(term.toString());
                                                                                         if(tmp == null){
@@ -902,7 +902,7 @@ term ::= factor:fact                                                            
                                                                                                             System.err.println("Error en la linea: "+timleft+" ,variable no ha sido declarada");  
                                                                                                         } 
                                                                                                     }
-                                                                                                    else if(fact.getType()==1||fact.getType()==5){
+                                                                                                    else if(fact.getType()==1){
                                                                                                         Simbolo tmp2 = null;
                                                                                                         tmp2 = SymbolTable.buscar(fact.toString());
                                                                                                         String ambito2 = SymbolTable.verificarAmbito(tmp2.nombre);
@@ -942,7 +942,7 @@ term ::= factor:fact                                                            
                                                                                                 Cuadruplos.add(cuad);
                                                                                             }
                                                                                         }
-                                                                                        else if(fact.getType()==1||fact.getType()==5){
+                                                                                        else if(fact.getType()==1){
                                                                                             Simbolo tmp2 = null;
                                                                                             tmp2 = SymbolTable.buscar(fact.toString());
                                                                                             if(tmp2==null){
@@ -967,7 +967,7 @@ term ::= factor:fact                                                            
                                                                                             System.err.println("Error en la linea: "+divleft+" no se pueden dividir estos valores, se esperan dos enteros");
                                                                                         }
                                                                                     }
-                                                                                    else if(term.getFact().getType()==1||term.getFact().getType()==5){
+                                                                                    else if(term.getFact().getType()==1){
                                                                                         Simbolo tmp = null;
                                                                                         tmp = SymbolTable.buscar(term.toString());
                                                                                         if(tmp == null){
@@ -986,7 +986,7 @@ term ::= factor:fact                                                            
                                                                                                             System.err.println("Error en la linea: "+divleft+" ,variable no ha sido declarada");  
                                                                                                         } 
                                                                                                     }
-                                                                                                    else if(fact.getType()==1||fact.getType()==5){
+                                                                                                    else if(fact.getType()==1){
                                                                                                         Simbolo tmp2 = null;
                                                                                                         tmp2 = SymbolTable.buscar(fact.toString());
                                                                                                         if(tmp2==null){

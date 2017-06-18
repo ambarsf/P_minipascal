@@ -289,7 +289,7 @@ public class SymbolTable {
             tablaSimbolos.remove(nombre);//Elimino para actualizar
             tablaSimbolos.put(nombre, simbolo);
             
-            //imprimir();
+            imprimir();
             return simbolo;
         }
         else
