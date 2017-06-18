@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import Codigo_Intermedio.Cuadruplos;
 import Codigo_Intermedio.Cuadruplo;
 import Codigo_Intermedio.Temp;
+import Codigo_Intermedio.Etiqueta;
 
 parser code {:
     static SymbolTable tablaSimbolos = new SymbolTable();
@@ -120,7 +121,6 @@ non terminal Procedure_iden proc_id;
 non terminal Read_stament read_s;
 non terminal Input_variable input_var;
 non terminal Write_stament write_s;
-non terminal Output_value output_val;
 non terminal If_stament if_stament;
 non terminal While_stament while_stament;
 non terminal Expression exp;
@@ -486,17 +486,19 @@ read_s ::= READ LPAREN input_var:i_v RPAREN                                     
 input_var ::= var:v                                                             {: RESULT = new Input_variable(v); :}
 ;
 
-write_s ::= WRITE LPAREN writes:wr RPAREN                                       {: RESULT = new Write_stament(wr); :}
+write_s ::= WRITE LPAREN writes:wr RPAREN                                       {: RESULT = new Write_stament(wr);
+                                                                                    for(int i =0; i<wr.getValues().size(); i++){
+                                                                                    Cuadruplo cuad =  new Cuadruplo("WRITE", wr.getValues().get(i).toString());
+                                                                                    Cuadruplos.add(cuad);
+                                                                                    } :}
             |WRITE error writes:wr RPAREN                                       {: System.err.println(" ( expected"); :}
             |WRITE LPAREN writes:wr error                                       {: System.err.println(" ) expected"); :}
 ;
 
-writes ::= output_val:ov COMMA writes:wr                                        {: wr.add(ov); RESULT = wr; :}
-           |output_val:ov                                                       {: RESULT = new Writes(); RESULT.add(ov); :}
+writes ::= exp:ov COMMA writes:wr                                                {: wr.add(ov); RESULT = wr; :}
+           |exp:ov                                                               {: RESULT = new Writes(ov); :}
 ;
 
-output_val ::= exp:ex                                                           {: RESULT = new Output_value(ex); :}
-;
 
 struct_stament ::= c_stament: c_st                                              {: RESULT = new Structured_stament(c_st); :}
              |if_stament: if_st                                                 {: RESULT = new Structured_stament(if_st); :}

@@ -29,9 +29,9 @@ public class Cuadruplo {
         this.resultado = resultado;
     }
 
-    public Cuadruplo(String operacion, String resultado) {
+    public Cuadruplo(String operacion, String argumento1) {
         this.operacion = operacion;
-        this.resultado = resultado;
+        this.argumento1 = argumento1;
     }
 
     public String getOperacion() {
@@ -68,7 +68,7 @@ public class Cuadruplo {
 
     @Override
     public String toString() {
-        String form = "%-15s %-15s %-15s %-15s";
+        String form = "%-15s %-30s %-30s %-15s";
         return String.format(form, operacion, argumento1, argumento2, resultado);
     }
     

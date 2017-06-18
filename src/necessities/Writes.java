@@ -12,15 +12,31 @@ import java.util.Vector;
  * @author ambarsuarez
  */
 public class Writes {
-    Vector values = new Vector();
+    Expression ov;
+    Vector<Expression> values = new Vector();
     
     public Writes(){
         values = new Vector();
     }
     
-    public void add(Output_value o_v){
+    public void add(Expression o_v){
         values.add(0, o_v);
     }
+
+    public Vector getValues() {
+        return values;
+    }
+
+    public void setValues(Vector values) {
+        this.values = values;
+    }
+    
+    public Writes(Expression o_v) {
+        this.ov = o_v;
+        values.add(o_v);        
+    }
+    
+    
     
     
     

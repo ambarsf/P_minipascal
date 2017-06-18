@@ -19,7 +19,7 @@ public class Cuadruplos {
     }
     
     static public void Imprimir(){
-        System.out.println(String.format("%-15s%-15s%-15s%-15s" , "OP", "ARG1","  ARG2","  RES"));     
+        System.out.println(String.format("%-15s%-30s%-30s%-15s" , "OP", "ARG1","  ARG2","  RES"));     
         for (int i = 0; i < Cuadruplos.size(); i++) {
             System.out.println(Cuadruplos.get(i));
         }
