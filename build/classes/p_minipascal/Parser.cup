@@ -529,7 +529,7 @@ sim_exp ::= term:term                                                           
                                                                                                     System.err.println("Error en la linea: "+plleft+" no se le ha asignado un valor a esta variable");
                                                                                                 else
                                                                                                    if ((ambito.equals(SymbolTable.profundidad))|| (ambito.equals("main")) ||(ambito.contains(SymbolTable.profundidad))){
-                                                                                                        System.out.println("ENTRO");
+                                                                                                        
                                                                                                         Temp tmp = new Temp();
                                                                                                         RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())+Integer.parseInt(tmp2.valor.toString()))),tmp);
                                                                                                         if (se1.getTemp() == null && term.getTemp() == null){
@@ -587,7 +587,21 @@ sim_exp ::= term:term                                                           
                                                                                                     System.err.println("Error en la linea: "+plleft+"no se le ha asignado un valor a esta variable");
                                                                                                 else
                                                                                                     if ((ambito.equals(SymbolTable.profundidad))|| (ambito.equals("main")) ||(ambito.contains(SymbolTable.profundidad))){
-                                                                                                        RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())));  
+                                                                                                        Temp tmp = new Temp();
+                                                                                                        RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())),tmp);
+                                                                                                        if (se1.getTemp() == null && term.getTemp() == null){
+                                                                                                            Cuadruplo cuad  =  new Cuadruplo ("+",se1.toString(),term.toString(),tmp.getTemp());
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else if(term.getTemp()!=null && se1.getTemp() == null){
+                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.toString(),term.getTemp().getTemp(),tmp.getTemp()); 
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else if (term.getTemp()==null && se1.getTemp() != null){
+                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.toString(),tmp.getTemp()); 
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else{
+                                                                                                           Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp.getTemp()); 
+                                                                                                           Cuadruplos.add(cuad); 
+                                                                                                        }
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+plleft+" ,variable no ha sido declarada");  
                                                                                                     } 
@@ -602,7 +616,21 @@ sim_exp ::= term:term                                                           
                                                                                     }
                                                                                     else if(se1.getTerm().getFact().getType()==3){
                                                                                         if(term.getFact().getType()==3){
-                                                                                            RESULT = new Simple_expression(new Term(new Factor(se1.toString()+term.toString())));
+                                                                                            Temp tmp = new Temp();
+                                                                                            RESULT = new Simple_expression(new Term(new Factor(se1.toString()+term.toString())),tmp);
+                                                                                            if (se1.getTemp() == null && term.getTemp() == null){
+                                                                                                Cuadruplo cuad  =  new Cuadruplo ("+",se1.toString(),term.toString(),tmp.getTemp());
+                                                                                                Cuadruplos.add(cuad);
+                                                                                            }else if(term.getTemp()!=null && se1.getTemp() == null){
+                                                                                                Cuadruplo cuad = new Cuadruplo ("+", se1.toString(),term.getTemp().getTemp(),tmp.getTemp()); 
+                                                                                                Cuadruplos.add(cuad);
+                                                                                            }else if (term.getTemp()==null && se1.getTemp() != null){
+                                                                                                Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.toString(),tmp.getTemp()); 
+                                                                                                Cuadruplos.add(cuad);
+                                                                                            }else{
+                                                                                               Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp.getTemp()); 
+                                                                                               Cuadruplos.add(cuad); 
+                                                                                            }
                                                                                         }
                                                                                         else if(term.getFact().getType()==1){
                                                                                             Simbolo tmp2 = null;
@@ -616,7 +644,21 @@ sim_exp ::= term:term                                                           
                                                                                                     System.err.println("Error en la linea: "+plleft+"no se le ha asignado un valor a esta variable");
                                                                                                 else
                                                                                                     if ((ambito.equals(SymbolTable.profundidad))|| (ambito.equals("main")) ||(ambito.contains(SymbolTable.profundidad))){
-                                                                                                        RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())));   
+                                                                                                        Temp tmp = new Temp();
+                                                                                                        RESULT = new Simple_expression(new Term(new Factor(se1.toString()+tmp2.valor.toString())),tmp);
+                                                                                                        if (se1.getTemp() == null && term.getTemp() == null){
+                                                                                                            Cuadruplo cuad  =  new Cuadruplo ("+",se1.toString(),term.toString(),tmp.getTemp());
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else if(term.getTemp()!=null && se1.getTemp() == null){
+                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.toString(),term.getTemp().getTemp(),tmp.getTemp()); 
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else if (term.getTemp()==null && se1.getTemp() != null){
+                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.toString(),tmp.getTemp()); 
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else{
+                                                                                                           Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp.getTemp()); 
+                                                                                                           Cuadruplos.add(cuad); 
+                                                                                                        }
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+plleft+" ,variable no ha sido declarada");  
                                                                                                     }
@@ -643,7 +685,21 @@ sim_exp ::= term:term                                                           
                                                                                                 if(tmp.getTipo().equals("integer")){
                                                                                                     if ((ambito.equals(SymbolTable.profundidad))|| (ambito.equals("main")) ||(ambito.contains(SymbolTable.profundidad))){
                                                                                                         if(term.getFact().getType()==4){
-                                                                                                            RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(term.toString()))));
+                                                                                                            Temp tmp1 = new Temp ();
+                                                                                                            RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(term.toString()))),tmp1);
+                                                                                                            if (se1.getTemp() == null && term.getTemp() == null){
+                                                                                                                Cuadruplo cuad  =  new Cuadruplo ("+",se1.toString(),term.toString(),tmp1.getTemp());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else if(term.getTemp()!=null && se1.getTemp() == null){
+                                                                                                                Cuadruplo cuad = new Cuadruplo ("+", se1.toString(),term.getTemp().getTemp(),tmp1.getTemp()); 
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else if (term.getTemp()==null && se1.getTemp() != null){
+                                                                                                                Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.toString(),tmp1.getTemp()); 
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else{
+                                                                                                               Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp1.getTemp()); 
+                                                                                                               Cuadruplos.add(cuad); 
+                                                                                                            }
                                                                                                         }
                                                                                                         else if(term.getFact().getType()==1){
                                                                                                             Simbolo tmp2 = null;
@@ -657,7 +713,22 @@ sim_exp ::= term:term                                                           
                                                                                                                     System.err.println("Error en la linea: "+plleft+"no se le ha asignado un valor a esta variable");
                                                                                                                 else
                                                                                                                     if ((ambito2.equals(SymbolTable.profundidad))|| (ambito2.equals("main")) ||(ambito2.contains(SymbolTable.profundidad))){
-                                                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(tmp2.valor.toString())))); 
+                                                                                                                        Temp tmp6 = new Temp();
+                                                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(tmp2.valor.toString()))),tmp6);
+                                                                                                                        if (se1.getTemp() == null && term.getTemp() == null){
+                                                                                                                            Cuadruplo cuad  =  new Cuadruplo ("+",se1.toString(),term.toString(),tmp6.getTemp());
+                                                                                                                            Cuadruplos.add(cuad);
+                                                                                                                        }else if(term.getTemp()!=null && se1.getTemp() == null){
+                                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.toString(),term.getTemp().getTemp(),tmp6.getTemp()); 
+                                                                                                                            Cuadruplos.add(cuad);
+                                                                                                                        }else if (term.getTemp()==null && se1.getTemp() != null){
+                                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.toString(),tmp6.getTemp()); 
+                                                                                                                            Cuadruplos.add(cuad);
+                                                                                                                        }else{
+                                                                                                                           Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp6.getTemp()); 
+                                                                                                                           Cuadruplos.add(cuad); 
+                                                                                                                        }
+                                                                                                                        
                                                                                                                     }else{
                                                                                                                         System.err.println("Error en la linea: "+plleft+" ,variable no ha sido declarada");  
                                                                                                                     }
@@ -676,7 +747,21 @@ sim_exp ::= term:term                                                           
                                                                                                 else if(tmp.getTipo().equals("string")){
                                                                                                     if ((ambito.equals(SymbolTable.profundidad))|| (ambito.equals("main")) ||(ambito.contains(SymbolTable.profundidad))){
                                                                                                         if(term.getFact().getType()==2){
-                                                                                                            RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+term.toString())));
+                                                                                                            Temp tmp2 = new Temp();
+                                                                                                            RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+term.toString())),tmp2);
+                                                                                                            if (se1.getTemp() == null && term.getTemp() == null){
+                                                                                                                Cuadruplo cuad  =  new Cuadruplo ("+",se1.toString(),term.toString(),tmp2.getTemp());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else if(term.getTemp()!=null && se1.getTemp() == null){
+                                                                                                                Cuadruplo cuad = new Cuadruplo ("+", se1.toString(),term.getTemp().getTemp(),tmp2.getTemp()); 
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else if (term.getTemp()==null && se1.getTemp() != null){
+                                                                                                                Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.toString(),tmp2.getTemp()); 
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else{
+                                                                                                               Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp2.getTemp()); 
+                                                                                                               Cuadruplos.add(cuad); 
+                                                                                                            }
                                                                                                         }
                                                                                                         else if(term.getFact().getType()==1){
                                                                                                             Simbolo tmp2 = null;
@@ -690,7 +775,21 @@ sim_exp ::= term:term                                                           
                                                                                                                     System.err.println("Error en la linea: "+plleft+"no se le ha asignado un valor a esta variable");
                                                                                                                 else
                                                                                                                     if ((ambito2.equals(SymbolTable.profundidad))|| (ambito2.equals("main")) ||(ambito2.contains(SymbolTable.profundidad))){
-                                                                                                                        RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())));   
+                                                                                                                        Temp tmp4 = new Temp();
+                                                                                                                        RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())),tmp4);
+                                                                                                                        if (se1.getTemp() == null && term.getTemp() == null){
+                                                                                                                            Cuadruplo cuad  =  new Cuadruplo ("+",se1.toString(),term.toString(),tmp4.getTemp());
+                                                                                                                            Cuadruplos.add(cuad);
+                                                                                                                        }else if(term.getTemp()!=null && se1.getTemp() == null){
+                                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.toString(),term.getTemp().getTemp(),tmp4.getTemp()); 
+                                                                                                                            Cuadruplos.add(cuad);
+                                                                                                                        }else if (term.getTemp()==null && se1.getTemp() != null){
+                                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.toString(),tmp4.getTemp()); 
+                                                                                                                            Cuadruplos.add(cuad);
+                                                                                                                        }else{
+                                                                                                                           Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp4.getTemp()); 
+                                                                                                                           Cuadruplos.add(cuad); 
+                                                                                                                        }
                                                                                                                     }else{
                                                                                                                         System.err.println("Error en la linea: "+plleft+" ,variable no ha sido declarada");  
                                                                                                                     }
@@ -709,7 +808,21 @@ sim_exp ::= term:term                                                           
                                                                                                 else if(tmp.getTipo().equals("char")){
                                                                                                     if ((ambito.equals(SymbolTable.profundidad))|| (ambito.equals("main")) ||(ambito.contains(SymbolTable.profundidad))){
                                                                                                         if(term.getFact().getType()==3){
-                                                                                                            RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+term.toString())));
+                                                                                                            Temp tmp7 = new Temp();
+                                                                                                            RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+term.toString())),tmp7);
+                                                                                                            if (se1.getTemp() == null && term.getTemp() == null){
+                                                                                                                Cuadruplo cuad  =  new Cuadruplo ("+",se1.toString(),term.toString(),tmp7.getTemp());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else if(term.getTemp()!=null && se1.getTemp() == null){
+                                                                                                                Cuadruplo cuad = new Cuadruplo ("+", se1.toString(),term.getTemp().getTemp(),tmp7.getTemp()); 
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else if (term.getTemp()==null && se1.getTemp() != null){
+                                                                                                                Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.toString(),tmp7.getTemp()); 
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else{
+                                                                                                               Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp7.getTemp()); 
+                                                                                                               Cuadruplos.add(cuad); 
+                                                                                                            }
                                                                                                         }
                                                                                                         else if(term.getFact().getType()==1){
                                                                                                             Simbolo tmp2 = null;
@@ -723,7 +836,21 @@ sim_exp ::= term:term                                                           
                                                                                                                     System.err.println("Error en la linea: "+plleft+"no se le ha asignado un valor a esta variable");
                                                                                                                 else
                                                                                                                     if ((ambito2.equals(SymbolTable.profundidad))|| (ambito2.equals("main")) ||(ambito2.contains(SymbolTable.profundidad))){
-                                                                                                                        RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())));   
+                                                                                                                        Temp tmp8 = new Temp();
+                                                                                                                        RESULT = new Simple_expression(new Term(new Factor(tmp.valor.toString()+tmp2.valor.toString())),tmp8);
+                                                                                                                        if (se1.getTemp() == null && term.getTemp() == null){
+                                                                                                                            Cuadruplo cuad  =  new Cuadruplo ("+",se1.toString(),term.toString(),tmp8.getTemp());
+                                                                                                                            Cuadruplos.add(cuad);
+                                                                                                                        }else if(term.getTemp()!=null && se1.getTemp() == null){
+                                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.toString(),term.getTemp().getTemp(),tmp8.getTemp()); 
+                                                                                                                            Cuadruplos.add(cuad);
+                                                                                                                        }else if (term.getTemp()==null && se1.getTemp() != null){
+                                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.toString(),tmp8.getTemp()); 
+                                                                                                                            Cuadruplos.add(cuad);
+                                                                                                                        }else{
+                                                                                                                           Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp8.getTemp()); 
+                                                                                                                           Cuadruplos.add(cuad); 
+                                                                                                                        }
                                                                                                                     }else{
                                                                                                                         System.err.println("Error en la linea: "+plleft+" ,variable no ha sido declarada");  
                                                                                                                     }
@@ -773,7 +900,21 @@ sim_exp ::= term:term                                                           
                                                                                                     System.err.println("Error en la linea: "+minleft+"no se le ha asignado un valor a esta variable");
                                                                                                 else
                                                                                                     if ((ambito.equals(SymbolTable.profundidad))|| (ambito.equals("main")) ||(ambito.contains(SymbolTable.profundidad))){
-                                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())-Integer.parseInt(tmp2.valor.toString()))));   
+                                                                                                        Temp tmp3 = new Temp();
+                                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())-Integer.parseInt(tmp2.valor.toString()))),tmp3);
+                                                                                                        if (se1.getTemp() == null && term.getTemp() == null){
+                                                                                                            Cuadruplo cuad  =  new Cuadruplo ("-",se1.toString(),term.toString(),tmp3.getTemp());
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else if(term.getTemp()!=null && se1.getTemp() == null){
+                                                                                                            Cuadruplo cuad = new Cuadruplo ("-", se1.toString(),term.getTemp().getTemp(),tmp3.getTemp()); 
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else if (term.getTemp()==null && se1.getTemp() != null){
+                                                                                                            Cuadruplo cuad = new Cuadruplo ("-", se1.getTemp().getTemp(),term.toString(),tmp3.getTemp()); 
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else{
+                                                                                                           Cuadruplo cuad = new Cuadruplo ("-", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp3.getTemp()); 
+                                                                                                           Cuadruplos.add(cuad); 
+                                                                                                        }
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+minleft+" ,variable no ha sido declarada");  
                                                                                                     }
@@ -801,7 +942,22 @@ sim_exp ::= term:term                                                           
                                                                                                 if(tmp.getTipo().equals("integer")){
                                                                                                     if(term.getFact().getType()==4){
                                                                                                         if ((ambito.equals(SymbolTable.profundidad))|| (ambito.equals("main")) ||(ambito.contains(SymbolTable.profundidad))){
-                                                                                                            RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())-Integer.parseInt(term.toString()))));
+                                                                                                            Temp tmp9 = new Temp();
+                                                                                                            RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())-Integer.parseInt(term.toString()))),tmp9);
+                                                                                                            
+                                                                                                            if (se1.getTemp() == null && term.getTemp() == null){
+                                                                                                                Cuadruplo cuad  =  new Cuadruplo ("-",se1.toString(),term.toString(),tmp9.getTemp());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else if(term.getTemp()!=null && se1.getTemp() == null){
+                                                                                                                Cuadruplo cuad = new Cuadruplo ("-", se1.toString(),term.getTemp().getTemp(),tmp9.getTemp()); 
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else if (term.getTemp()==null && se1.getTemp() != null){
+                                                                                                                Cuadruplo cuad = new Cuadruplo ("-", se1.getTemp().getTemp(),term.toString(),tmp9.getTemp()); 
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else{
+                                                                                                               Cuadruplo cuad = new Cuadruplo ("-", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp9.getTemp()); 
+                                                                                                               Cuadruplos.add(cuad); 
+                                                                                                            }
                                                                                                         }else{
                                                                                                             System.err.println("Error en la linea: "+minleft+" ,variable no ha sido declarada");  
                                                                                                         }
@@ -818,7 +974,21 @@ sim_exp ::= term:term                                                           
                                                                                                                 System.err.println("Error en la linea: "+minleft+"no se le ha asignado un valor a esta variable");
                                                                                                             else
                                                                                                                 if ((ambito2.equals(SymbolTable.profundidad))|| (ambito2.equals("main")) ||(ambito2.contains(SymbolTable.profundidad))){
-                                                                                                                    RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())-Integer.parseInt(tmp2.valor.toString())))); 
+                                                                                                                    Temp tmp10 = new Temp();
+                                                                                                                    RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())-Integer.parseInt(tmp2.valor.toString()))),tmp10); 
+                                                                                                                    if (se1.getTemp() == null && term.getTemp() == null){
+                                                                                                                        Cuadruplo cuad  =  new Cuadruplo ("-",se1.toString(),term.toString(),tmp10.getTemp());
+                                                                                                                        Cuadruplos.add(cuad);
+                                                                                                                    }else if(term.getTemp()!=null && se1.getTemp() == null){
+                                                                                                                        Cuadruplo cuad = new Cuadruplo ("-", se1.toString(),term.getTemp().getTemp(),tmp10.getTemp()); 
+                                                                                                                        Cuadruplos.add(cuad);
+                                                                                                                    }else if (term.getTemp()==null && se1.getTemp() != null){
+                                                                                                                        Cuadruplo cuad = new Cuadruplo ("-", se1.getTemp().getTemp(),term.toString(),tmp10.getTemp()); 
+                                                                                                                        Cuadruplos.add(cuad);
+                                                                                                                    }else{
+                                                                                                                       Cuadruplo cuad = new Cuadruplo ("-", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp10.getTemp()); 
+                                                                                                                       Cuadruplos.add(cuad); 
+                                                                                                                    }
                                                                                                                 }else{
                                                                                                                     System.err.println("Error en la linea: "+minleft+" ,variable no ha sido declarada");  
                                                                                                                 } 
@@ -885,7 +1055,15 @@ term ::= factor:fact                                                            
                                                                                                     System.err.println("Error en la linea: "+timleft+"no se le ha asignado un valor a esta variable");
                                                                                                 else
                                                                                                     if ((ambito.equals(SymbolTable.profundidad))|| (ambito.equals("main")) ||(ambito.contains(SymbolTable.profundidad))){
-                                                                                                        RESULT = new Term(new Factor(Integer.parseInt(term.toString())*Integer.parseInt(tmp2.valor.toString())));   
+                                                                                                        Temp tmp = new Temp();
+                                                                                                        RESULT = new Term(new Factor(Integer.parseInt(term.toString())*Integer.parseInt(tmp2.valor.toString())),tmp);
+                                                                                                        if(term.getTemp()== null){
+                                                                                                            Cuadruplo cuad = new Cuadruplo ("*", term.toString(), fact.toString(), tmp.getTemp());
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else{
+                                                                                                            Cuadruplo cuad = new Cuadruplo ("*", term.getTemp().getTemp(), fact.toString(),tmp.getTemp());
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+timleft+" ,variable no ha sido declarada");  
                                                                                                     }   
@@ -912,7 +1090,16 @@ term ::= factor:fact                                                            
                                                                                                     String ambito = SymbolTable.verificarAmbito(tmp.nombre);
                                                                                                     if(fact.getType()==4){
                                                                                                         if ((ambito.equals(SymbolTable.profundidad))|| (ambito.equals("main")) ||(ambito.contains(SymbolTable.profundidad))){
-                                                                                                            RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())*Integer.parseInt(fact.toString())));
+                                                                                                            Temp tmp12 = new Temp();
+                                                                                                            RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())*Integer.parseInt(fact.toString())),tmp12);
+                                                                                                            
+                                                                                                            if(term.getTemp()== null){
+                                                                                                                Cuadruplo cuad = new Cuadruplo ("*", term.toString(), fact.toString(), tmp12.getTemp());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else{
+                                                                                                                Cuadruplo cuad = new Cuadruplo ("*", term.getTemp().getTemp(), fact.toString(),tmp12.getTemp());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }
                                                                                                         }else{
                                                                                                             System.err.println("Error en la linea: "+timleft+" ,variable no ha sido declarada");  
                                                                                                         } 
@@ -929,7 +1116,15 @@ term ::= factor:fact                                                            
                                                                                                                 System.err.println("Error en la linea: "+timleft+"no se le ha asignado un valor a esta variable");
                                                                                                             else
                                                                                                                 if ((ambito2.equals(SymbolTable.profundidad))|| (ambito2.equals("main")) ||(ambito2.contains(SymbolTable.profundidad))){
-                                                                                                                    RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())*Integer.parseInt(tmp2.valor.toString())));  
+                                                                                                                    Temp tmp13 = new Temp();
+                                                                                                                    RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())*Integer.parseInt(tmp2.valor.toString())),tmp13);
+                                                                                                                    if(term.getTemp()== null){
+                                                                                                                        Cuadruplo cuad = new Cuadruplo ("*", term.toString(), fact.toString(), tmp13.getTemp());
+                                                                                                                        Cuadruplos.add(cuad);
+                                                                                                                    }else{
+                                                                                                                        Cuadruplo cuad = new Cuadruplo ("*", term.getTemp().getTemp(), fact.toString(),tmp13.getTemp());
+                                                                                                                        Cuadruplos.add(cuad);
+                                                                                                                    }
                                                                                                                 }else{
                                                                                                                     System.err.println("Error en la linea: "+timleft+" ,variable no ha sido declarada");  
                                                                                                                 }   
@@ -969,7 +1164,15 @@ term ::= factor:fact                                                            
                                                                                                     System.err.println("Error en la linea: "+divleft+"no se le ha asignado un valor a esta variable");
                                                                                                 else
                                                                                                     if ((ambito2.equals(SymbolTable.profundidad))|| (ambito2.equals("main")) ||(ambito2.contains(SymbolTable.profundidad))){
-                                                                                                        RESULT = new Term(new Factor(Integer.parseInt(term.toString())/Integer.parseInt(tmp2.valor.toString())));
+                                                                                                        Temp tmp = new Temp();
+                                                                                                        RESULT = new Term(new Factor(Integer.parseInt(term.toString())/Integer.parseInt(tmp2.valor.toString())),tmp);
+                                                                                                        if(term.getTemp()== null){
+                                                                                                            Cuadruplo cuad = new Cuadruplo ("/", term.toString(), fact.toString(), tmp.getTemp());
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else{
+                                                                                                            Cuadruplo cuad = new Cuadruplo ("/", term.getTemp().getTemp(), fact.toString(),tmp.getTemp());
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+divleft+" ,variable no ha sido declarada");  
                                                                                                     } 
@@ -996,7 +1199,15 @@ term ::= factor:fact                                                            
                                                                                                     String ambito = SymbolTable.verificarAmbito(tmp.nombre);
                                                                                                     if(fact.getType()==4){
                                                                                                         if ((ambito.equals(SymbolTable.profundidad))|| (ambito.equals("main")) ||(ambito.contains(SymbolTable.profundidad))){
-                                                                                                            RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())/Integer.parseInt(fact.toString())));
+                                                                                                            Temp tmp14 = new Temp();
+                                                                                                            RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())/Integer.parseInt(fact.toString())),tmp14);
+                                                                                                            if(term.getTemp()== null){
+                                                                                                                Cuadruplo cuad = new Cuadruplo ("/", term.toString(), fact.toString(), tmp14.getTemp());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else{
+                                                                                                                Cuadruplo cuad = new Cuadruplo ("/", term.getTemp().getTemp(), fact.toString(),tmp14.getTemp());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }
                                                                                                         }else{
                                                                                                             System.err.println("Error en la linea: "+divleft+" ,variable no ha sido declarada");  
                                                                                                         } 
@@ -1013,7 +1224,15 @@ term ::= factor:fact                                                            
                                                                                                                 System.err.println("Error en la linea: "+divleft+"no se le ha asignado un valor a esta variable");
                                                                                                             else
                                                                                                                 if ((ambito2.equals(SymbolTable.profundidad))|| (ambito2.equals("main")) ||(ambito2.contains(SymbolTable.profundidad))||ambito2.contains("function")){
-                                                                                                                    RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())/Integer.parseInt(tmp2.valor.toString())));   
+                                                                                                                    Temp tmp15 = new Temp();
+                                                                                                                    RESULT = new Term(new Factor(Integer.parseInt(tmp.valor.toString())/Integer.parseInt(tmp2.valor.toString())),tmp15);
+                                                                                                                    if(term.getTemp()== null){
+                                                                                                                        Cuadruplo cuad = new Cuadruplo ("/", term.toString(), fact.toString(), tmp15.getTemp());
+                                                                                                                        Cuadruplos.add(cuad);
+                                                                                                                    }else{
+                                                                                                                        Cuadruplo cuad = new Cuadruplo ("/", term.getTemp().getTemp(), fact.toString(),tmp15.getTemp());
+                                                                                                                        Cuadruplos.add(cuad);
+                                                                                                                    }
                                                                                                                 }else{
                                                                                                                     System.err.println("Error en la linea: "+divleft+" ,variable no ha sido declarada");  
                                                                                                                 }        
