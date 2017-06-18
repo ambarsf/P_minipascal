@@ -529,7 +529,22 @@ sim_exp ::= term:term                                                           
                                                                                                     System.err.println("Error en la linea: "+plleft+" no se le ha asignado un valor a esta variable");
                                                                                                 else
                                                                                                    if ((ambito.equals(SymbolTable.profundidad))|| (ambito.equals("main")) ||(ambito.contains(SymbolTable.profundidad))){
-                                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())+Integer.parseInt(tmp2.valor.toString()))));   
+                                                                                                        System.out.println("ENTRO");
+                                                                                                        Temp tmp = new Temp();
+                                                                                                        RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(se1.toString())+Integer.parseInt(tmp2.valor.toString()))),tmp);
+                                                                                                        if (se1.getTemp() == null && term.getTemp() == null){
+                                                                                                            Cuadruplo cuad  =  new Cuadruplo ("+",se1.toString(),term.toString(),tmp.getTemp());
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else if(term.getTemp()!=null && se1.getTemp() == null){
+                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.toString(),term.getTemp().getTemp(),tmp.getTemp()); 
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else if (term.getTemp()==null && se1.getTemp() != null){
+                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.toString(),tmp.getTemp()); 
+                                                                                                            Cuadruplos.add(cuad);
+                                                                                                        }else{
+                                                                                                           Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp.getTemp()); 
+                                                                                                           Cuadruplos.add(cuad); 
+                                                                                                        }
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+plleft+" ,variable no ha sido declarada");  
                                                                                                     }

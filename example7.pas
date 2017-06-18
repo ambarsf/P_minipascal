@@ -33,5 +33,5 @@ begin
    Alvaro := Ambuchis(a,f);
    arreglo[1] := 15;
    arreglo[2] := 20;
-   arreglo[3] := arreglo[1]+arreglo[2];
+   arreglo[3] := arreglo[1]+arreglo[2]; {ocupo que esto este en las gramaticas para hacerlo 3 directions}
 end.

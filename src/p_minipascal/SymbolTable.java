@@ -144,7 +144,7 @@ public class SymbolTable {
             if(tipo != null)
                 UltimoTipo = tipo;
             if(UltimoTipo.contains("Array")){
-                System.out.println("ENTRO A ULTIMO TIPO CONTAINS ARRAY");
+                //System.out.println("ENTRO A ULTIMO TIPO CONTAINS ARRAY");
                 String tipoArreglo = "";
                 for (int i = 9; i < simbolo.getTipo().length(); i++) {
                     tipoArreglo = tipoArreglo + simbolo.getTipo().charAt(i);
@@ -158,7 +158,7 @@ public class SymbolTable {
                        // System.out.println("NUM2"+num2 );
                        // System.out.println("NUM1"+num1);
                     }
-                    System.out.println("SIZE" + arreglo.length);
+                    //System.out.println("SIZE" + arreglo.length);
                     simbolo.setValor(arreglo);
                 }
                 else if(tipoArreglo.matches("string")){
@@ -199,7 +199,7 @@ public class SymbolTable {
             simbolo.setAmbito(Ambito);
             //System.out.println("AGREGAR TIPO");
             if(UltimoTipo.contains("Array")){
-                System.out.println("ENTRO A ULTIMO TIPO CONTAINS ARRAY");
+                //System.out.println("ENTRO A ULTIMO TIPO CONTAINS ARRAY");
                 String tipoArreglo = "";
                 for (int i = 9; i < simbolo.getTipo().length(); i++) {
                     tipoArreglo = tipoArreglo + simbolo.getTipo().charAt(i);
@@ -289,7 +289,7 @@ public class SymbolTable {
             tablaSimbolos.remove(nombre);//Elimino para actualizar
             tablaSimbolos.put(nombre, simbolo);
             
-            imprimir();
+            //imprimir();
             return simbolo;
         }
         else
