@@ -2,21 +2,25 @@ program exProcedure;
 var
    a, b, c: integer;
    e, f : String;
+   i : char;
 
    function findMin(j: integer, g: integer):integer;
      var x, y, l,  min:String;
          m, n :integer;
      begin
-        m := 10;
-        g:=5;
-        j := 5 + g + m;
+        {m := 10;}
+        {g:=5;}
+        {j := 5 + g + m;}
         min := 'Hola';
         write(' Enter three numbers: ');
         write(' Minimum: ', min);
      end;
 begin
-   a :=5 + 10 + 8;
-   b := a+a ; { esto tira un null pointer exception }
+   {a :=5 + 10 * 8 - 5 + 6 / 3;}
+   {c := 5 / 8 * 7 * 5 + 3 ;}
+   {b := 6/3;}
+   {b := a+a ;}
+   {i := 'e';} {tira error, tenemos que ver que ondas luego}
    e:= 'Ambar' + 'hola';
    f:= 'Ambar';
 end

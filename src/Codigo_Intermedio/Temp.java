@@ -10,15 +10,25 @@ package Codigo_Intermedio;
  * @author ambarsuarez
  */
 public class Temp {
-    private static int cont;
+    private static int cont =0;
     String temp;
 
     public Temp() {
         this.temp = "t"+cont++;     
     }
-    
-    public Temp(String temp){
+
+    public String getTemp() {
+        return temp;
+    }
+
+    public void setTemp(String temp) {
         this.temp = temp;
+    }
+    
+    public String LastTemp(){
+        int num = cont-1;
+        String t = "t"+num;
+        return t;
     }
 
     @Override

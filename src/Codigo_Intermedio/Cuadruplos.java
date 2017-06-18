@@ -12,10 +12,25 @@ import java.util.ArrayList;
  * @author ambarsuarez
  */
 public class Cuadruplos {
-    ArrayList<Cuadruplo> Cuadruplos = new ArrayList();
+    static ArrayList<Cuadruplo> Cuadruplos = new ArrayList();
+
+    public Cuadruplos() {
+        ArrayList<Cuadruplo> Cuadruplos = new ArrayList();
+    }
+    
+    static public void Imprimir(){
+        System.out.println(String.format("%-15s%-15s%-15s%-15s" , "OP", "ARG1","  ARG2","  RES"));     
+        for (int i = 0; i < Cuadruplos.size(); i++) {
+            System.out.println(Cuadruplos.get(i));
+        }
+        
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+    }
     
     
-    public void gen(Cuadruplo cuad){
+    static public void add(Cuadruplo cuad){
         Cuadruplos.add(cuad);
     }
     
