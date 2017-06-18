@@ -1031,7 +1031,7 @@ sim_exp ::= term:term                                                           
 
 term ::= factor:fact                                                            {: RESULT = new Term(fact); :}
          |term:term TIMES:tim factor:fact                                       {:
-                                                                                                                                                                        if(term.getFact().getType()==4){
+                                                                                    if(term.getFact().getType()==4){
                                                                                         if(fact.getType()==4){
                                                                                             Temp tmp = new Temp();
                                                                                             RESULT = new Term(new Factor(Integer.parseInt(term.toString())*Integer.parseInt(fact.toString())),tmp);
