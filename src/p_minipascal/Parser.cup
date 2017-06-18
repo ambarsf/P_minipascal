@@ -337,6 +337,13 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                         if ((ambito1.equals(SymbolTable.profundidad)) ||
                                                                                                            (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
                                                                                                                 SymbolTable.insertar(v.toString(),ex);
+                                                                                                                if (ex.getS_exp1().getTemp()== null){
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }else{
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex.getS_exp1().getTemp().getTemp(),v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }
                                                                                                         }else{
                                                                                                             System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
                                                                                                         }
@@ -355,8 +362,16 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                             && ((ambito2.equals("main")) || (ambito2.contains(ambito1)) || (ambito2.equals(ambito1))))||ambito1.contains("function")||ambito2.contains("function")){
 
                                                                                                                 SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
+                                                                                                                if (ex.getS_exp1().getTemp()== null){
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }else{
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex.getS_exp1().getTemp().getTemp(),v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }
                                                                                                             }else{
-                                                                                                               System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");   
+                                                                                                               System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada"); 
+                                                                                                               
                                                                                                             }
                                                                                                         else
                                                                                                             System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible");
@@ -376,6 +391,13 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                     if ((ambito1.equals(SymbolTable.profundidad)) ||
                                                                                                            (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
                                                                                                                 SymbolTable.insertar(v.toString(),ex);
+                                                                                                                if (ex.getS_exp1().getTemp()== null){
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }else{
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex.getS_exp1().getTemp().getTemp(),v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }
                                                                                                         }else{
                                                                                                             System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
                                                                                                         }
@@ -387,6 +409,13 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                     if ((ambito1.equals(SymbolTable.profundidad)) ||
                                                                                                            (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
                                                                                                                 SymbolTable.insertar(v.toString(),ex);
+                                                                                                                if (ex.getS_exp1().getTemp()== null){
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }else{
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex.getS_exp1().getTemp().getTemp(),v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }
                                                                                                         }else{
                                                                                                             System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
                                                                                                         }
@@ -398,6 +427,13 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                     if ((ambito1.equals(SymbolTable.profundidad)) ||
                                                                                                            (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
                                                                                                                 SymbolTable.insertar(v.toString(),ex);
+                                                                                                                if (ex.getS_exp1().getTemp()== null){
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }else{
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex.getS_exp1().getTemp().getTemp(),v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }
                                                                                                         }else{
                                                                                                             System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
                                                                                                         }
@@ -413,6 +449,13 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                             || ((!ambito1.equals("main")) && ((ambito1.equals(SymbolTable.profundidad)) || ambito1.contains(SymbolTable.profundidad)) 
                                                                                                             && ((ambito2.equals("main")) || (ambito2.contains(ambito1)) || (ambito2.equals(ambito1))))||ambito1.contains("function")||ambito2.contains("function")){
                                                                                                                 SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
+                                                                                                                if (ex.getS_exp1().getTemp()== null){
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }else{
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex.getS_exp1().getTemp().getTemp(),v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }
                                                                                                             }else{
                                                                                                                System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");   
                                                                                                             }
@@ -713,19 +756,28 @@ sim_exp ::= term:term                                                           
                                                                                                                     System.err.println("Error en la linea: "+plleft+"no se le ha asignado un valor a esta variable");
                                                                                                                 else
                                                                                                                     if ((ambito2.equals(SymbolTable.profundidad))|| (ambito2.equals("main")) ||(ambito2.contains(SymbolTable.profundidad))){
+                                                                                                                        
+                                                                                                                        Temp ar1 = new Temp();
+                                                                                                                        Simple_expression arr1 = new Simple_expression(se1.getTerm(),ar1);
+                                                                                                                        Cuadruplo cuad_arr1 = new Cuadruplo("ASSIGN",arr1.toString(),ar1.getTemp());
+                                                                                                                        Cuadruplos.add(cuad_arr1);
+                                                                                                                        Temp ar2 = new Temp();
+                                                                                                                        Simple_expression arr2 = new Simple_expression(term,ar2);
+                                                                                                                        Cuadruplo cuad_arr2 = new Cuadruplo("ASSIGN",arr2.toString(),ar2.getTemp());
+                                                                                                                        Cuadruplos.add(cuad_arr2);
                                                                                                                         Temp tmp6 = new Temp();
                                                                                                                         RESULT = new Simple_expression(new Term(new Factor(Integer.parseInt(tmp.valor.toString())+Integer.parseInt(tmp2.valor.toString()))),tmp6);
-                                                                                                                        if (se1.getTemp() == null && term.getTemp() == null){
-                                                                                                                            Cuadruplo cuad  =  new Cuadruplo ("+",se1.toString(),term.toString(),tmp6.getTemp());
+                                                                                                                        if (arr1.getTemp() == null && arr2.getTemp() == null){
+                                                                                                                            Cuadruplo cuad  =  new Cuadruplo ("+",arr1.toString(),arr2.toString(),tmp6.getTemp());
                                                                                                                             Cuadruplos.add(cuad);
-                                                                                                                        }else if(term.getTemp()!=null && se1.getTemp() == null){
-                                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.toString(),term.getTemp().getTemp(),tmp6.getTemp()); 
+                                                                                                                        }else if(arr2.getTemp()!=null && arr1.getTemp() == null){
+                                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", arr1.toString(),arr2.getTemp().getTemp(),tmp6.getTemp()); 
                                                                                                                             Cuadruplos.add(cuad);
-                                                                                                                        }else if (term.getTemp()==null && se1.getTemp() != null){
-                                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.toString(),tmp6.getTemp()); 
+                                                                                                                        }else if (arr2.getTemp()==null && arr1.getTemp() != null){
+                                                                                                                            Cuadruplo cuad = new Cuadruplo ("+", arr1.getTemp().getTemp(),arr2.toString(),tmp6.getTemp()); 
                                                                                                                             Cuadruplos.add(cuad);
                                                                                                                         }else{
-                                                                                                                           Cuadruplo cuad = new Cuadruplo ("+", se1.getTemp().getTemp(),term.getTemp().getTemp(),tmp6.getTemp()); 
+                                                                                                                           Cuadruplo cuad = new Cuadruplo ("+", arr1.getTemp().getTemp(),arr2.getTemp().getTemp(),tmp6.getTemp()); 
                                                                                                                            Cuadruplos.add(cuad); 
                                                                                                                         }
                                                                                                                         

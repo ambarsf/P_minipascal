@@ -20,7 +20,7 @@ begin
    c := 5 / 8 * 7 * 5 + 3 ;
    b := 6/3;
    d := a+b*c/b;
-   h := a*a*a{*a*a*a};
+   h := a*a*a*a*a*a;
    {i := 'e';} {tira error, tenemos que ver que ondas luego}
    {e:= 'Ambar' + 'hola';}
    {f:= 'Ambar'+ e;}
