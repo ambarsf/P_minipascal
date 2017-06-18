@@ -78,6 +78,7 @@ public class SymbolTable {
     static String UltimaFuncion;
     static int num1;
     static int num2;
+    static int indice;
     
     public static Logger log = Logger.getLogger(SymbolTable.class.getName());            
     
@@ -90,8 +91,15 @@ public class SymbolTable {
         profundidad = "main";
         num1=0;
         num2=0;
+        indice=-1;
         
     }
+
+    public static int getIndice() {
+        return indice;
+    }
+    
+    
     
     static public String verificarTipo(String nombre){
         Simbolo s = tablaSimbolos.get(nombre);
@@ -143,28 +151,28 @@ public class SymbolTable {
                 }
                 if(tipoArreglo.matches("integer")){
                     int[] arreglo = new int[num2-num1+1];
-                    for (int i = 0; i < arreglo.length; i++) {
-                        arreglo[i]=0;
+                    for (int i = num1; i <= num2; i++) {
+                        //arreglo[i]=0;
                         SymbolTable.crear(nombre+"["+i+"]", tipoArreglo, ambito);
-                        System.out.println("ARREGLO VALOR "+arreglo[i]);
-                        System.out.println("NUM2"+num2 );
-                        System.out.println("NUM1"+num1);
+                     //   System.out.println("ARREGLO VALOR "+arreglo[i]);
+                       // System.out.println("NUM2"+num2 );
+                       // System.out.println("NUM1"+num1);
                     }
                     System.out.println("SIZE" + arreglo.length);
                     simbolo.setValor(arreglo);
                 }
                 else if(tipoArreglo.matches("string")){
                     String[] arreglo = new String[num2-num1+1];
-                    for (int i = 0; i < arreglo.length; i++) {
-                        arreglo[i]="";
+                    for (int i = num1; i <= num2; i++) {
+                        //arreglo[i]="";
                         SymbolTable.crear(nombre+"["+i+"]", tipoArreglo, ambito);
                     }
                     simbolo.setValor(arreglo);
                 }
                 else if(tipoArreglo.matches("char")){
                     char[] arreglo = new char[num2-num1+1];
-                    for (int i = 0; i < arreglo.length; i++) {
-                        arreglo[i]='0';
+                    for (int i = num1; i <= num2; i++) {
+                        //arreglo[i]='0';
                         SymbolTable.crear(nombre+"["+i+"]", tipoArreglo, ambito);
                     }
                     simbolo.setValor(arreglo);
@@ -243,18 +251,44 @@ public class SymbolTable {
         if(simbolo != null) //La variable existe
         {
             //Actualizar el valor
-            /*if(simbolo.getTipo().contains("Array")){
-                String tipoArreglo = "";
-                for (int i = 9; i < simbolo.getTipo().length(); i++) {
-                    tipoArreglo = tipoArreglo + simbolo.getTipo().charAt(i);
+            if(nombre.contains("[")){
+             //   String tipoArreglo = "";
+               // System.out.println("ENTRO A ASIGNACION DE VALOR EN ARRAY CON VARIABLE "+nombre);
+              //  int tmp=-1;
+              //  for (int i = 9; i < simbolo.getTipo().length(); i++) {
+                //    tipoArreglo = tipoArreglo + simbolo.getTipo().charAt(i);
+               // }
+                if(simbolo.getTipo().matches("integer")){
+                    Object o = new Integer(valor.toString());
+                    if(o instanceof Integer){
+                        //for (int i = 0; i < nombre.length(); i++) {
+                            //if(nombre.charAt(i)=='[')
+                             //   tmp = Character.getNumericValue(nombre.charAt(i+1));
+                        //}
+                        simbolo.valor=valor;
+                    }
+                    else
+                        System.err.println("Error, se esperaba un integer");
                 }
-                if(tipoArreglo.matches("integer")){
-                    
+                else if(simbolo.getTipo().matches("string")){
+                    if(valor instanceof String){
+                        simbolo.valor=valor;
+                    }
+                    else
+                        System.err.print("Error, se esperaba una string");
                 }
-            }*/
-            simbolo.valor = valor;
+                else if(simbolo.getTipo().matches("char")){
+                    if(valor instanceof Character){
+                        simbolo.valor=valor;
+                    }
+                    else
+                        System.err.print("Error, se esperaba un caracter");
+                }
+            }else
+                simbolo.valor = valor;
             tablaSimbolos.remove(nombre);//Elimino para actualizar
             tablaSimbolos.put(nombre, simbolo);
+            
             imprimir();
             return simbolo;
         }

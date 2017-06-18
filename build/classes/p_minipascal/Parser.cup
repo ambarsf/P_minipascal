@@ -975,10 +975,11 @@ c_params ::= factor:fact COMMA c_params:c_p                                     
 ;
 
 var ::= ent_var: ent_v                                                          {: RESULT = new Variable(ent_v);:}
-        |ind_var: ind_v                                                         {: RESULT = new Variable(ind_v);:}
+        |ind_var: ind_v                                                         {: RESULT = new Variable(ind_v, SymbolTable.getIndice());:}
 ;
 
-ind_var ::= array_var:ar_v LCOR exp:ex RCOR                                     {: RESULT = new Indexed_variable(ar_v, ex); :}
+ind_var ::= array_var:ar_v LCOR exp:ex RCOR                                     {: RESULT = new Indexed_variable(ar_v, ex);
+                                                                                   SymbolTable.indice=Integer.parseInt(ex.toString()); :}
 ;
 
 array_var ::= ent_var:e_var                                                     {: RESULT = new Array_variable(e_var);:}
