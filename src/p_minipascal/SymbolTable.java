@@ -197,7 +197,6 @@ public class SymbolTable {
         if(simbolo.getTipo() == null){
             simbolo.setTipo(UltimoTipo);
             simbolo.setAmbito(Ambito);
-            System.out.println("AGREGAR TIPO");
             if(UltimoTipo.contains("Array")){
                 System.out.println("ENTRO A ULTIMO TIPO CONTAINS ARRAY");
                 String tipoArreglo = "";
@@ -289,7 +288,7 @@ public class SymbolTable {
             tablaSimbolos.remove(nombre);//Elimino para actualizar
             tablaSimbolos.put(nombre, simbolo);
             
-            imprimir();
+            //imprimir();
             return simbolo;
         }
         else

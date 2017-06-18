@@ -21,7 +21,7 @@ begin
    {b := 6/3;}
    {b := a+a ;}
    {i := 'e';} {tira error, tenemos que ver que ondas luego}
-   e:= 'Ambar' + 'hola';
+   e:= 'Ambar' + 'hey';
    f:= 'Ambar';
 end
 .
