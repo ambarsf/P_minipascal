@@ -17,8 +17,7 @@ public class Factor {
     String str;
     int num;
     char ch;
-    boolean verd;
-    boolean fals;
+    boolean bool;
     int type;
     Caller caller;
     String tipo;
@@ -58,6 +57,11 @@ public class Factor {
         type=4;
         tipo = "integer";
     }
+
+    public Factor(boolean bool) {
+        this.bool = bool;
+        type = 6;
+    }
     
     public Factor(Caller caller){
         this.caller = caller;
@@ -84,16 +88,16 @@ public class Factor {
         return num;
     }
 
+    public boolean isBool() {
+        return bool;
+    }
+
+    public void setBool(boolean bool) {
+        this.bool = bool;
+    }
+
     public char getCh() {
         return ch;
-    }
-
-    public boolean isVerd() {
-        return verd;
-    }
-
-    public boolean isFals() {
-        return fals;
     }
 
     public int getType() {
@@ -113,8 +117,10 @@ public class Factor {
             return ""+ch;
         }else if (type ==4){
            return ""+num; 
-        }else{
+        }else if (type==5){
             return ""+caller;
+        }else{
+            return ""+bool;
         }
     }
     

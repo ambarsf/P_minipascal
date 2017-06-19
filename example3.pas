@@ -6,8 +6,8 @@ BEGIN
   WHILE Qty > 0 DO
           BEGIN { WHILE LOOP }
           READ (Number);
-          Sum := Sum + Number;
-          Qty := Qty - 1;
+          Sum := Sum + Sum;
+          Qty := Sum - 1;
           END; { WHILE LOOP }
   WRITE('SUM IS ',Sum);
 END.

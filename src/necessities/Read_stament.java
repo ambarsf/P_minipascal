@@ -12,9 +12,9 @@ import java.util.Vector;
  * @author ambarsuarez
  */
 public class Read_stament {
-   Input_variable in_var; 
+   Variable in_var; 
 
-    public Read_stament(Input_variable in_var) {
+    public Read_stament(Variable in_var) {
         this.in_var = in_var;
     }
    

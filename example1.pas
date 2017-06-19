@@ -5,6 +5,7 @@ PROGRAM FindLarge;
   VAR Number1: INTEGER ;{FIRST NUMBER READ}
   Number2: INTEGER;{SECOND NUMBER READ}
   Larger:INTEGER; {THE LARGER ONE}
+  verd :string;
   BEGIN
   READ  (Number1);
   IF Number1 > Number2 THEN

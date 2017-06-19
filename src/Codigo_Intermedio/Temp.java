@@ -25,11 +25,6 @@ public class Temp {
         this.temp = temp;
     }
     
-    public String LastTemp(){
-        int num = cont-1;
-        String t = "t"+num;
-        return t;
-    }
 
     @Override
     public String toString() {
