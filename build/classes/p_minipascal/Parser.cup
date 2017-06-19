@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import Codigo_Intermedio.Cuadruplos;
 import Codigo_Intermedio.Cuadruplo;
 import Codigo_Intermedio.Temp;
+import Codigo_Intermedio.Etiqueta;
 
 parser code {:
     static SymbolTable tablaSimbolos = new SymbolTable();
@@ -258,11 +259,26 @@ t_id ::= INTEGER:nombre                                                         
          |error                                                                 {: System.err.println("Type Expected"); :}
 ;
 
-c_stament ::= BEGIN staments:sts END                                            {: RESULT = new Compound_stament(sts); :}
+c_stament ::= BEGIN staments:sts END                                            {: RESULT = new Compound_stament(sts);
+                                                                                   //Etiqueta etiq;
+                                                                                   //if(Etiqueta.cicloActual.matches("FOR"))
+                                                                                     //   etiq = new Etiqueta();
+                                                                                 :}
               |BEGIN END                                            
 ;
 
-staments ::= stament:st SEMICOLON staments:sts                                  {:sts.add(st); RESULT = sts; :}
+staments ::= stament:st SEMICOLON staments:sts                                  {:sts.add(st); RESULT = sts;
+                                                                                  /*if(Etiqueta.cicloActual.matches("FOR")){
+                                                                                    Etiqueta etiq = new Etiqueta();
+                                                                                    etiq = new Etiqueta();
+                                                                                    Cuadruplo cuad = new Cuadruplo("+","i","1","i");
+                                                                                    Cuadruplos.add(cuad);
+                                                                                    etiq = new Etiqueta();
+                                                                                    Integer controlador = Etiqueta.cont-4;
+                                                                                    cuad = new Cuadruplo("GOTO", controlador.toString(),"","");
+                                                                                    Cuadruplos.add(cuad);
+                                                                                    Etiqueta.cicloActual = "";
+                                                                                  }*/:}
              |stament:st error staments:sts                                     {: System.err.println(" ; expected"); :} 
              |stament:st SEMICOLON                                              {:RESULT = new Staments(); RESULT.add(st); :}
              |stament:st error                                                  {: System.err.println(" ; expected"); :} 
@@ -514,7 +530,32 @@ while_stament ::= WHILE exp:ex DO stament:st                                    
                   |WHILE exp:ex error stament:st                                {: System.err.println(" reserved word DO expected"); :}
 ;
 
-for_stament ::= FOR ID:id ASSIGN NUMBER:m TO NUMBER:n DO c_stament:sts          {: RESULT = new For_stament(new Parameter(id,m),n,sts); :}
+for_stament ::= FOR ID:id ASSIGN NUMBER:m TO NUMBER:n DO c_stament:sts          {: RESULT = new For_stament(new Parameter(id,m),n,sts);
+                                                                                   Simbolo sim = SymbolTable.buscar(id);
+                                                                                   if(sim == null){
+                                                                                        SymbolTable.crear(id, "integer", "FOR");
+                                                                                        SymbolTable.insertar(id, m); 
+                                                                                   
+                                                                                        Temp tmp = new Temp();
+                                                                                        if(m <= n)
+                                                                                            tmp.setTemp("true");
+                                                                                        else
+                                                                                        tmp.setTemp("false");
+                                                                                        Etiqueta etiq = new Etiqueta();
+                                                                                        Etiqueta.cicloActual = "FOR";
+                                                                                        Cuadruplo cuad = new Cuadruplo("ASSIGN",m.toString(),"",id);
+                                                                                        Cuadruplos.add(cuad);
+                                                                                        //etiq = new Etiqueta();
+                                                                                        //cuad= new Cuadruplo("<=", id, n.toString(), tmp.getTemp());
+                                                                                        cuad= new Cuadruplo("<=", id, n.toString(), etiq.toString());
+                                                                                        Cuadruplos.add(cuad);
+                                                                                        //etiq = new Etiqueta();
+                                                                                        //Integer controlador = Etiqueta.cont +4;
+                                                                                        //cuad = new Cuadruplo("false", controlador.toString(), tmp.getTemp(), "");
+                                                                                        //Cuadruplos.add(cuad);
+                                                                                    }
+                                                                                    else
+                                                                                        System.err.println("Ya existe la variable " + id + "No se puede usar en el FOR" );:}
                 |FOR ID:id error NUMBER:m TO NUMBER:n DO c_stament:sts          {: System.err.println(" =: expected"); :}
                 |FOR ID:id ASSIGN NUMBER:m error NUMBER:n DO c_stament:sts      {: System.err.println(" reserved word TO expected"); :}
                 |FOR ID:id ASSIGN NUMBER:m TO NUMBER:n error c_stament:sts      {: System.err.println(" reserved word DO expected"); :}

@@ -10,8 +10,9 @@ package Codigo_Intermedio;
  * @author ambarsuarez
  */
 public class Etiqueta {
-    private static int cont;
+    public static int cont=0;
     private String etiq;
+    public static String cicloActual = "";
 
     public Etiqueta(String name) {
         this.etiq = name;
@@ -25,6 +26,10 @@ public class Etiqueta {
         this.etiq = etiq;
     }
 
+    public static int getCont() {
+        return cont;
+    }
+   
     @Override
     public String toString() {
         return etiq;

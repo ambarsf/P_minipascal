@@ -135,7 +135,8 @@ public class SymbolTable {
             
     static public Simbolo crear(String nombre, String tipo, String ambito)
     {        
-        Simbolo simbolo = buscar(nombre);                            
+        Simbolo simbolo = buscar(nombre);  
+        
         if(simbolo == null) // La variable no existe
         {
             simbolo = new Simbolo(nombre, tipo, null, ambito);
