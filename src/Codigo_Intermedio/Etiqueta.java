@@ -12,6 +12,7 @@ package Codigo_Intermedio;
 public class Etiqueta {
     private static int cont;
     private String etiq;
+    private Etiqueta temporal;
 
     public Etiqueta(String name) {
         this.etiq = name;
@@ -24,7 +25,7 @@ public class Etiqueta {
     public void setEtiq(String etiq) {
         this.etiq = etiq;
     }
-
+    
     @Override
     public String toString() {
         return etiq;

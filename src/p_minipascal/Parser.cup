@@ -261,14 +261,19 @@ c_stament ::= BEGIN staments:sts END                                            
               |BEGIN END                                            
 ;
 
-staments ::= stament:st SEMICOLON staments:sts                                  {:sts.add(st); RESULT = sts; :}
+staments ::= stament:st SEMICOLON staments:sts                                  {:  System.out.println("Esta es la etiqueta: "+sts.getEtiq());
+                                                                                    sts.add(st); RESULT = sts; :}
              |stament:st error staments:sts                                     {: System.err.println(" ; expected"); :} 
-             |stament:st SEMICOLON                                              {:RESULT = new Staments(); RESULT.add(st); :}
+             |stament:st SEMICOLON                                              {: Etiqueta etiq = new Etiqueta();
+                                                                                   Cuadruplo cuad = new Cuadruplo("ETIQ",etiq.toString());
+                                                                                   Cuadruplos.add(cuad);
+                                                                                   RESULT = new Staments(st,etiq);
+                                                                                   :}
              |stament:st error                                                  {: System.err.println(" ; expected"); :} 
 ;
 
-stament ::= sim_stament:sim_st                                                  {: RESULT = new Stament(sim_st); :}
-            |struct_stament:st_st                                               {: RESULT = new Stament(st_st); :}
+stament ::= sim_stament:sim_st                                                  {:  RESULT = new Stament(sim_st); :}
+            |struct_stament:st_st                                               {:  RESULT = new Stament(st_st); :}
 ;
 
 sim_stament ::= assign_s:as_s                                                   {: RESULT = new Simple_stament(as_s); :}
@@ -503,9 +508,13 @@ struct_stament ::= c_stament: c_st                                              
              |repeat_stament:r_st                                               {: RESULT = new Structured_stament(r_st); :}
 ;
 
-if_stament ::= IF exp:ex THEN stament:st                                        {: RESULT = new If_stament(ex,st); :}
-         |IF exp:ex error stament:st                                            {: System.err.println(" reserved word THEN expected"); :}
-         |IF exp:ex THEN stament:st1 ELSE stament:st2                           {: RESULT = new If_stament(ex,st1,st2); :}
+if_stament ::= IF exp:ex THEN staments:st                                       {: RESULT = new If_stament(ex,st);:}
+         |IF exp:ex error staments:st                                           {: System.err.println(" reserved word THEN expected"); :}
+         |IF exp:ex THEN BEGIN staments:st1 END ELSE BEGIN staments:st2 END     {: Cuadruplo cuadf = new Cuadruplo("GOTO",st2.getEtiq().toString());
+                                                                                   Cuadruplos.add(cuadf);
+                                                                                   Cuadruplo cuadv = new Cuadruplo("IF",ex.toString(),st1.getEtiq().toString());
+                                                                                   Cuadruplos.add(cuadv);
+                                                                                   RESULT = new If_stament(ex,st1,st2); :}
 ;
 
 while_stament ::= WHILE exp:ex DO stament:st                                    {: RESULT = new While_stament(ex,st); :}

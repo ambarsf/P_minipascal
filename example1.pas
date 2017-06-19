@@ -9,8 +9,13 @@ PROGRAM FindLarge;
   BEGIN
   READ  (Number1);
   IF Number1 > Number2 THEN
-          Larger := Number1
+          BEGIN
+          Larger := Number1;
+          verd := 'hola';
+          END
   ELSE
+          BEGIN
           Larger := Number2;
-  WRITE ('THE LARGER OF ' , Number1,' AND ',Number2,' IS ',Larger );
+          END;
+  {WRITE ('THE LARGER OF ' , Number1,' AND ',Number2,' IS ',Larger );}
   END.

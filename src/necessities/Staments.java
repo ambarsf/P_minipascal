@@ -5,6 +5,7 @@
  */
 package necessities;
 
+import Codigo_Intermedio.Etiqueta;
 import java.util.Vector;
 
 /**
@@ -12,7 +13,9 @@ import java.util.Vector;
  * @author ambarsuarez
  */
 public class Staments {
-    Vector values = new Vector();
+    Vector <Stament> values = new Vector();
+    Stament stament;
+    Etiqueta etiq;
     
     public Staments(){
         values = new Vector();
@@ -21,5 +24,26 @@ public class Staments {
     public void add(Stament st){
         values.add(0, st);
     }
+    
+    public Staments(Stament stament){
+        this.stament= stament;
+        values.add(0,stament);
+    }
+    
+    public Staments(Stament stament,Etiqueta etiq){
+        this.stament= stament;
+        this.etiq = etiq;
+        values.add(0,stament);
+    }
+
+    public Etiqueta getEtiq() {
+        return etiq;
+    }
+
+    public void setEtiq(Etiqueta etiq) {
+        this.etiq = etiq;
+    }
+    
+    
     
 }

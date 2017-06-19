@@ -18,7 +18,7 @@ import p_minipascal.Simbolo;
 public class main_app {
     public static void main(String argv[]){
         try{
-            parser p = new parser(new Lexer(new FileReader("example3.pas")));
+            parser p = new parser(new Lexer(new FileReader("example1.pas")));
             p.parse();
             SymbolTable TablaSimbolos = new SymbolTable();
             

@@ -6,7 +6,7 @@
 package Codigo_Intermedio;
 
 import java.util.ArrayList;
-
+import java.util.Collections;
 /**
  *
  * @author ambarsuarez
@@ -19,6 +19,7 @@ public class Cuadruplos {
     }
     
     static public void Imprimir(){
+        Collections.reverse(Cuadruplos);
         System.out.println(String.format("%-15s%-30s%-30s%-15s" , "OP", "ARG1","  ARG2","  RES"));     
         for (int i = 0; i < Cuadruplos.size(); i++) {
             System.out.println(Cuadruplos.get(i));
