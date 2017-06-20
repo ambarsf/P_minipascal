@@ -17,6 +17,12 @@ public class Cuadruplos {
     public Cuadruplos() {
         ArrayList<Cuadruplo> Cuadruplos = new ArrayList();
     }
+
+    public static ArrayList<Cuadruplo> getCuadruplos() {
+        return Cuadruplos;
+    }
+    
+    
     
     static public void Imprimir(){
         //Collections.reverse(Cuadruplos);
@@ -39,9 +45,7 @@ public class Cuadruplos {
         Cuadruplos.add(0,cuad);
     }
 
-    public static ArrayList<Cuadruplo> getCuadruplos() {
-        return Cuadruplos;
-    }
+    
 
     
     

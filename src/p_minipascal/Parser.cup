@@ -257,7 +257,15 @@ t_id ::= INTEGER:nombre                                                         
          |error                                                                 {: System.err.println("Type Expected"); :}
 ;
 
-c_stament ::= BEGIN staments:sts END                                            {: RESULT = new Compound_stament(sts); :}
+c_stament ::= BEGIN staments:sts END                                            {: RESULT = new Compound_stament(sts);
+                                                                                if(Etiqueta.cicloActual.matches("IFELSE")){
+                                                                                    for(int i = 0; i < Cuadruplos.getCuadruplos().size();i++){
+                                                                                        if(Cuadruplos.getCuadruplos().get(i).getOperacion().matches("ETIQ")&&Cuadruplos.getCuadruplos().get(i).getResultado()==null){
+                                                                                            Etiqueta.controlador = Etiqueta.cont-1;
+                                                                                            Cuadruplos.getCuadruplos().get(i).setResultado("Etiq_"+Etiqueta.controlador.toString());
+                                                                                        }
+                                                                                    }
+                                                                                }:}
               |BEGIN END                                            
 ;
 
@@ -507,12 +515,17 @@ struct_stament ::= c_stament: c_st                                              
              |repeat_stament:r_st                                               {: RESULT = new Structured_stament(r_st); :}
 ;
 
-if_stament ::= IF exp:ex THEN staments:st                                       {: RESULT = new If_stament(ex,st);:}
+if_stament ::= IF exp:ex THEN staments:st                                       {: RESULT = new If_stament(ex,st);
+                                                                                   Cuadruplo cuad = new Cuadruplo("IF", ex.toString(), st.getEtiq().toString());
+                                                                                   Cuadruplos.add(cuad);
+                                                                                   Etiqueta.cicloActual = "IF";
+                                                                                 :}
          |IF exp:ex error staments:st                                           {: System.err.println(" reserved word THEN expected"); :}
          |IF exp:ex THEN BEGIN staments:st1 END ELSE BEGIN staments:st2 END     {: Cuadruplo cuadf = new Cuadruplo("GOTO",st2.getEtiq().toString());
                                                                                    Cuadruplos.add(cuadf);
                                                                                    Cuadruplo cuadv = new Cuadruplo("IF",ex.toString(),st1.getEtiq().toString());
                                                                                    Cuadruplos.add(cuadv);
+                                                                                   Etiqueta.cicloActual = "IFELSE";
                                                                                    RESULT = new If_stament(ex,st1,st2); :}
 ;
 
@@ -520,7 +533,32 @@ while_stament ::= WHILE exp:ex DO staments:st                                   
                   |WHILE exp:ex error stament:st                                {: System.err.println(" reserved word DO expected"); :}
 ;
 
-for_stament ::= FOR ID:id ASSIGN NUMBER:m TO NUMBER:n DO c_stament:sts          {: RESULT = new For_stament(new Parameter(id,m),n,sts); :}
+for_stament ::= FOR ID:id ASSIGN NUMBER:m TO NUMBER:n DO c_stament:sts          {: RESULT = new For_stament(new Parameter(id,m),n,sts);
+                                                                                   Simbolo sim = SymbolTable.buscar(id);
+                                                                                   if(sim == null){
+                                                                                        SymbolTable.crear(id, "integer", "FOR");
+                                                                                        SymbolTable.insertar(id, m); 
+                                                                                   
+                                                                                        Temp tmp = new Temp();
+                                                                                        if(m <= n)
+                                                                                            tmp.setTemp("true");
+                                                                                        else
+                                                                                        tmp.setTemp("false");
+                                                                                        Etiqueta etiq = new Etiqueta();
+                                                                                        Etiqueta.cicloActual = "FOR";
+                                                                                        Cuadruplo cuad = new Cuadruplo("ASSIGN",m.toString(),"",id);
+                                                                                        Cuadruplos.add(cuad);
+                                                                                        //etiq = new Etiqueta();
+                                                                                        //cuad= new Cuadruplo("<=", id, n.toString(), tmp.getTemp());
+                                                                                        cuad= new Cuadruplo("<=", id, n.toString(), etiq.toString());
+                                                                                        Cuadruplos.add(cuad);
+                                                                                        //etiq = new Etiqueta();
+                                                                                        //Integer controlador = Etiqueta.cont +4;
+                                                                                        //cuad = new Cuadruplo("false", controlador.toString(), tmp.getTemp(), "");
+                                                                                        //Cuadruplos.add(cuad);
+                                                                                    }
+                                                                                    else
+                                                                                        System.err.println("Ya existe la variable " + id + "No se puede usar en el FOR" ); :}
                 |FOR ID:id error NUMBER:m TO NUMBER:n DO c_stament:sts          {: System.err.println(" =: expected"); :}
                 |FOR ID:id ASSIGN NUMBER:m error NUMBER:n DO c_stament:sts      {: System.err.println(" reserved word TO expected"); :}
                 |FOR ID:id ASSIGN NUMBER:m TO NUMBER:n error c_stament:sts      {: System.err.println(" reserved word DO expected"); :}

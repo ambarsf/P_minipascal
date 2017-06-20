@@ -99,6 +99,250 @@ public class f_codegenerator {
     }
 
     private void generateArithmeticCode(Cuadruplo Cuadruplo_actual) {
+        /*String operation = "";
+        if (actualQuadruple.operator.equals("+")) {
+            operation = "add";
+        } else if (actualQuadruple.operator.equals("-")) {
+            operation = "sub";
+        } else if (actualQuadruple.operator.equals("*")) {
+            operation = "mul";
+        } else if (actualQuadruple.operator.equals("/")) {
+            operation = "div";
+        }
+
+        String primerOperando = "";
+        String segundoOperando = "";
+        String variableLocation = "";
+        boolean isVariable = false;
+        String destinyR = "";
+        int availableIndex = getAvailableTemporal();
+         destinyR = "$t" + availableIndex;
+        if (actualQuadruple.destiny.index != 0) {
+            
+            temporalMap.set(availableIndex, "t" + actualQuadruple.destiny.index);
+        } else if (!actualQuadruple.destiny.name.equals("")) {
+            isVariable = true;
+            //Se tiene que buscar la variable si es global,parametro o local
+            int offsetOpDestino;
+            for (int i = symbolTable.size() - 1; i >= 0; i--) {
+                if ((symbolTable.get(i).scope.equals(actualScope) || symbolTable.get(i).scope.contains("G")) && !symbolTable.get(i).getType().contains("->") && !symbolTable.get(i).getType().contains("record")) {
+                    if(symbolTable.get(i).scope.contains("G")){
+                        code += "   lw "+ destinyR + ",_"+actualQuadruple.destiny.name+"\n";
+                        variableLocation = "_"+actualQuadruple.destiny.name;
+                        break;
+                    }else if(symbolTable.get(i).isParameter()){
+                        int paramNumber = getParamNumber(actualQuadruple.destiny.name);
+                        code += "   move "+destinyR+",$s"+paramNumber+"\n";
+                        variableLocation = "$s"+paramNumber;
+                        break;
+                    }else{
+                        offsetOpDestino = symbolTable.get(i).offset;
+                        if(symbolTable.get(i).getType().equals("integer")){
+                            offsetOpDestino += 4;
+                        }else if(symbolTable.get(i).getType().equals("boolean")){
+                            offsetOpDestino += 1;
+                        }else{
+                           String tipo = buscarId(symbolTable.get(i).getType(),"1").getType();
+                           offsetOpDestino += getTypeSize(tipo);
+                        }
+                        offsetOpDestino += 8;
+                        offsetOpDestino += pilaCantidadParametros.peek()*4;
+                        code += "   lw " +destinyR +",-"+offsetOpDestino+"($fp)\n";
+                        variableLocation = "-"+offsetOpDestino+"($fp)";
+                        break;
+                    }
+                }
+            }
+            temporalMap.set(availableIndex, variableLocation);
+        }
+
+        String operandoIzq = "";
+        if (!actualQuadruple.operand1.v.equals("")) {
+            operandoIzq = actualQuadruple.operand1.v;
+            primerOperando = operandoIzq;
+            if(operandoIzq.equals("RET")){//si el operando es RET
+                int availableIndexIzq = getAvailableTemporal();
+                String destinyOperandoIzq = "$t" + availableIndexIzq;
+                temporalMap.set(availableIndexIzq, "$v0");
+                code += "   move " + destinyOperandoIzq + ",$v0\n"; 
+                primerOperando = destinyOperandoIzq;
+            }            
+        } else if (!actualQuadruple.operand1.name.equals("")) {
+            operandoIzq = actualQuadruple.operand1.name;
+        } else {
+            operandoIzq = "t" + actualQuadruple.operand1.index;
+        }
+        String operandoDer = "";
+        if (!actualQuadruple.operand2.v.equals("")) {
+            operandoDer = actualQuadruple.operand2.v;
+            segundoOperando = operandoDer;
+            if(operandoDer.equals("RET")){//si el operando es RET
+                int availableIndexDer = getAvailableTemporal();
+                String destinyOperandoDer = "$t" + availableIndexDer;
+                temporalMap.set(availableIndexDer, "$v0");
+                code += "   move " + destinyOperandoDer + ",$v0\n"; 
+                segundoOperando = destinyOperandoDer;
+            }
+        } else if (!actualQuadruple.operand2.name.equals("")) {
+            operandoDer = actualQuadruple.operand2.name;
+        } else {
+            operandoDer = "t" + actualQuadruple.operand2.index;
+        }
+        int indiceOpIzq = -1;
+        int indiceOpDer = -1;
+        for (int i = 0; i < temporalMap.size(); i++) {
+            if (temporalMap.get(i).equals(operandoIzq)) {
+                indiceOpIzq = i;
+            }
+            if (temporalMap.get(i).equals(operandoDer)) {
+                indiceOpDer = i;
+            }
+        }
+
+        int availableIndexIzq = -1;
+        if (primerOperando.equals("")) {
+            if (indiceOpIzq != -1) {
+                primerOperando = "$t" + indiceOpIzq;
+                temporalMap.set(indiceOpIzq, "");
+            } else {
+                int offset = 0;
+                boolean esVariable = false;
+                boolean global = false;
+                boolean esParametro = false;
+                //variables locales
+                for (int i = symbolTable.size() - 1; i >= 0; i--) {
+                    if ((symbolTable.get(i).scope.equals(actualScope) || symbolTable.get(i).scope.contains("G")) && !symbolTable.get(i).getType().contains("->") && !symbolTable.get(i).getType().contains("record")) {
+                        offset = symbolTable.get(i).offset;
+                        if(symbolTable.get(i).getType().equals("integer")){
+                        offset += 4;
+                    }else if(symbolTable.get(i).getType().equals("boolean")){
+                        offset += 1;
+                    }else{
+                       String tipo = buscarId(symbolTable.get(i).getType(),"1").getType();
+                       offset += getTypeSize(tipo);
+                    }
+                        if (symbolTable.get(i).getId().equals(operandoIzq)) {
+                            if(symbolTable.get(i).isParameter())
+                                esParametro = true;
+                            esVariable = true;
+                            if (symbolTable.get(i).scope.contains("G")) {
+                                global = true;
+                            }
+                            break;
+                        }
+                    }
+                }
+                //$s0 - $s7
+                offset += pilaCantidadParametros.peek()*4;
+                offset += 8;//$fp y $ra
+                if (esVariable) {
+                    //primerOperando = "-"+offset+"($fp)";
+                    availableIndexIzq = getAvailableTemporal();
+                    String destinyOperandoIzq = "$t" + availableIndexIzq;
+                    temporalMap.set(availableIndexIzq, operandoIzq);
+                    if(esParametro){
+                        int paramNumber = getParamNumber(operandoIzq);
+                        code += "   move "+destinyOperandoIzq+",$s"+paramNumber+"\n";
+                    }else if (global) {
+                        code += "   lw " + destinyOperandoIzq + ",_" + operandoIzq + "\n";
+                    } else {
+                        code += "   lw " + destinyOperandoIzq + ",-" + offset + "($fp)\n";
+                    }
+
+                    primerOperando = destinyOperandoIzq;
+                    //temporalMap.set(availableIndexIzq,"");
+                }
+                
+            }
+        }
+        int availableIndexDer = -1;
+        if (segundoOperando.equals("")) {
+            if (indiceOpDer != -1) {
+                segundoOperando = "$t" + indiceOpDer;
+                temporalMap.set(indiceOpDer, "");
+            } else {
+                int offset = 0;
+                boolean esVariable = false;
+                boolean global = false;
+                boolean esParametro = false;
+                //variables locales
+                for (int i = symbolTable.size() - 1; i >= 0; i--) {
+                    if ((symbolTable.get(i).scope.equals(actualScope) || symbolTable.get(i).scope.contains("G")) && !symbolTable.get(i).getType().contains("->") && !symbolTable.get(i).getType().contains("record")) {
+                        offset = symbolTable.get(i).offset;
+                        if(symbolTable.get(i).getType().equals("integer")){
+                        offset += 4;
+                    }else if(symbolTable.get(i).getType().equals("boolean")){
+                        offset += 1;
+                    }else{
+                       String tipo = buscarId(symbolTable.get(i).getType(),"1").getType();
+                       offset += getTypeSize(tipo);
+                    }
+                        if (symbolTable.get(i).getId().equals(operandoDer)) {
+                            if(symbolTable.get(i).isParameter())
+                                esParametro = true;
+                            esVariable = true;
+                            if (symbolTable.get(i).scope.contains("G")) {
+                                global = true;
+                            }
+                            break;
+                        }
+                    }
+                }
+                //$s0 - $s7
+                offset += pilaCantidadParametros.peek()*4;
+                offset += 8;//$fp y $ra
+                if (esVariable) {
+                    //primerOperando = "-"+offset+"($fp)";
+                    availableIndexDer = getAvailableTemporal();
+                    String destinyOperandoDer = "$t" + availableIndexDer;
+                    temporalMap.set(availableIndexDer, operandoDer);
+                    if(esParametro){
+                        int paramNumber = getParamNumber(operandoDer);
+                        code += "   move "+destinyOperandoDer+",$s"+paramNumber+"\n";
+                    }else if (global) {
+                        code += "   lw " + destinyOperandoDer + ",_" + operandoDer + "\n";
+                    } else {
+                        code += "   lw " + destinyOperandoDer + ",-" + offset + "($fp)\n";
+                    }
+
+                    segundoOperando = destinyOperandoDer;
+                    //temporalMap.set(availableIndexDer,"");
+                }
+            }
+        }
+        code += "   " + operation + " " + destinyR + "," + primerOperando + "," + segundoOperando + "\n";
+        if (availableIndexIzq != -1) {
+            temporalMap.set(availableIndexIzq, "");
+        }
+        if (availableIndexDer != -1) {
+            temporalMap.set(availableIndexDer, "");
+        }
+        if( isVariable) {
+            code += "   sw "+destinyR+","+variableLocation+"\n";
+            temporalMap.set(availableIndex, "");
+        }
+        /*int offset = 0;
+                    boolean esVariable = false;
+                    //$s0 - $s7
+
+                    //variables locales
+                    for (int i = symbolTable.size()-1; i >=0; i--) {
+                        if (symbolTable.get(i).scope.equals(actualScope) && !symbolTable.get(i).getType().contains("->") && !symbolTable.get(i).getType().contains("record")) {
+                            offset = symbolTable.get(i).offset;
+                            offset += symbolTable.get(i).getType().equals("integer") ? 4 : 1;
+                            if(symbolTable.get(i).getId().equals(actualQuadruple.destiny.name)){
+                                esVariable = true;
+                                break;
+                            }
+                        }
+                    }
+                    offset+= 8;//$fp y $ra
+            if(esVariable)
+                code += "   sw "+destinyR+",-"+offset+"($fp)\n";*/
+        //temporalMap.set(availableIndex,"");
+        /*System.out.println("Izquierda: "+indiceOpIzq);
+            System.out.println("Derecha: "+indiceOpDer);
+            System.out.println("Destino: "+destinyR);*/
     }
 
     private void generateCallCode(Cuadruplo Cuadruplo_actual) {
