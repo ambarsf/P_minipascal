@@ -90,7 +90,7 @@ public class SymbolTable {
     static int num1;
     static int num2;
     static int indice;
-    static Integer offset=0;
+    static Integer offset=-4;
     
     public static Logger log = Logger.getLogger(SymbolTable.class.getName());            
     
