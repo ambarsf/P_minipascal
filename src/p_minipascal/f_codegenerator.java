@@ -66,7 +66,7 @@ public class f_codegenerator {
                 generateIfCode(Cuadruplo_actual);
             } else if (Cuadruplo_actual.getOperacion().contains("GOTO")) {
                 code += "   b _" + Cuadruplo_actual.getResultado() + "\n";
-            } else if (Cuadruplo_actual.getOperacion().contains("=")) {
+            } else if (Cuadruplo_actual.getOperacion().contains("ASSIGN")) {
                 generateAssignmentCode(Cuadruplo_actual);
             } else if (Cuadruplo_actual.getOperacion().contains("ETIQ")) {
                 generateTagCode(Cuadruplo_actual);

@@ -261,8 +261,7 @@ c_stament ::= BEGIN staments:sts END                                            
               |BEGIN END                                            
 ;
 
-staments ::= stament:st SEMICOLON staments:sts                                  {:  System.out.println("Esta es la etiqueta: "+sts.getEtiq());
-                                                                                    sts.add(st); RESULT = sts; :}
+staments ::= stament:st SEMICOLON staments:sts                                  {: sts.add(st); RESULT = sts; :}
              |stament:st error staments:sts                                     {: System.err.println(" ; expected"); :} 
              |stament:st SEMICOLON                                              {: Etiqueta etiq = new Etiqueta();
                                                                                    Cuadruplo cuad = new Cuadruplo("ETIQ",etiq.toString());

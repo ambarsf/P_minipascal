@@ -20,7 +20,7 @@ public class main_app {
         try{
             parser p = new parser(new Lexer(new FileReader("example6.pas")));
             p.parse();
-            SymbolTable.imprimir();
+            //SymbolTable.imprimir();
             //imprimiendo Cuadruplos
             //Cuadruplos.Imprimir();
             //obteniendo los mensajes de los cuadruplos
