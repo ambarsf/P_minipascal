@@ -43,10 +43,9 @@ public class f_codegenerator {
         for (int i = 0; i < messages.size(); i++) {
             code += "_msg" + (i + 1) + ":      .asciiz " + messages.get(i) + "\n";
         }
-        for (int i = 0; i < SymbolTable.getTablaSimbolos().size(); i++) {
-            Simbolo actualSymbol = SymbolTable.RetornarSimbolo(i);
-            if (actualSymbol.getAmbito().matches("main")) {
-                code += "_" + actualSymbol.getNombre() + ":      .word " + 0 + "\n";
+        for (Simbolo s : SymbolTable.getTablaSimbolos().values()){
+            if(s.getAmbito().matches("main")){
+              code += "_" + s.getNombre() + ":      .word " + 0 + "\n";  
             }
         }
         // Aqui se colocan las declaraciones de variables globales
