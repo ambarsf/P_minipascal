@@ -1,13 +1,13 @@
 PROGRAM Adder2;
 VAR Number, Sum, Qty:INTEGER;
 BEGIN
-  Sum := 0;
   READ (Qty);
   WHILE Qty > 0 DO
-          BEGIN { WHILE LOOP }
+          BEGIN
           READ (Number);
+          Sum := 0;
           Sum := Sum + Sum;
           Qty := Sum - 1;
-          END; { WHILE LOOP }
+          END;
   WRITE('SUM IS ',Sum);
 END.

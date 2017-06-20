@@ -19,7 +19,7 @@ public class Cuadruplos {
     }
     
     static public void Imprimir(){
-        Collections.reverse(Cuadruplos);
+        //Collections.reverse(Cuadruplos);
         System.out.println(String.format("%-15s%-30s%-30s%-15s" , "OP", "ARG1","  ARG2","  RES"));     
         for (int i = 0; i < Cuadruplos.size(); i++) {
             System.out.println(Cuadruplos.get(i));
@@ -33,6 +33,10 @@ public class Cuadruplos {
     
     static public void add(Cuadruplo cuad){
         Cuadruplos.add(cuad);
+    }
+    
+    static public void addy(Cuadruplo cuad){
+        Cuadruplos.add(0,cuad);
     }
     
 }
