@@ -530,7 +530,7 @@ if_stament ::= IF exp:ex THEN staments:st                                       
                                                                                    RESULT = new If_stament(ex,st1,st2); :}
 ;
 
-while_stament ::= WHILE exp:ex DO stament:st                                    {: RESULT = new While_stament(ex,st); :}
+while_stament ::= WHILE exp:ex DO staments:st                                    {: RESULT = new While_stament(ex,st); :}
                   |WHILE exp:ex error stament:st                                {: System.err.println(" reserved word DO expected"); :}
 ;
 

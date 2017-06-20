@@ -11,11 +11,11 @@ package necessities;
  */
 public class While_stament {
     Expression exp;
-    Stament st;
+    Staments  sts;
 
-    public While_stament(Expression exp, Stament st) {
+    public While_stament(Expression exp, Staments sts) {
         this.exp = exp;
-        this.st = st;
+        this.sts = sts;
     }
     
     

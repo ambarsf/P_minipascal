@@ -3,14 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/isaac/Desktop/Trabajos/Compiladores/Proyecto/Ambar/Compiladores%20II/P_minipascal-master/P_minipascal/src/necessities/Parameters.java</file>
-            <file>file:/C:/Users/isaac/Desktop/Trabajos/Compiladores/Proyecto/Ambar/Compiladores%20II/P_minipascal-master/P_minipascal/src/p_minipascal/SymbolTable.java</file>
-            <file>file:/C:/Users/isaac/Desktop/Trabajos/Compiladores/Proyecto/Ambar/Compiladores%20II/P_minipascal-master/P_minipascal/src/necessities/Caller.java</file>
-            <file>file:/C:/Users/isaac/Desktop/Trabajos/Compiladores/Proyecto/Ambar/Compiladores%20II/P_minipascal-master/P_minipascal/src/p_minipascal/main_app.java</file>
-            <file>file:/C:/Users/isaac/Desktop/Trabajos/Compiladores/Proyecto/Ambar/Compiladores%20II/P_minipascal-master/P_minipascal/src/necessities/Caller_params.java</file>
-            <file>file:/C:/Users/isaac/Desktop/Trabajos/Compiladores/Proyecto/Ambar/Compiladores%20II/P_minipascal-master/P_minipascal/src/necessities/Factor.java</file>
-            <file>file:/C:/Users/isaac/Desktop/Trabajos/Compiladores/Proyecto/Ambar/Compiladores%20II/P_minipascal-master/P_minipascal/src/p_minipascal/Parser.cup</file>
-            <file>file:/C:/Users/isaac/Desktop/Trabajos/Compiladores/Proyecto/Ambar/Compiladores%20II/P_minipascal-master/P_minipascal/src/p_minipascal/parser.java</file>
+            <file>file:/Users/ambarsuarez/Documents/Unitec/Compiladores/P_minipascal/src/p_minipascal/main_app.java</file>
+            <file>file:/Users/ambarsuarez/Documents/Unitec/Compiladores/P_minipascal/src/p_minipascal/Main_Cup.java</file>
+            <file>file:/Users/ambarsuarez/Documents/Unitec/Compiladores/P_minipascal/src/p_minipascal/f_codegenerator.java</file>
         </group>
     </open-files>
 </project-private>
