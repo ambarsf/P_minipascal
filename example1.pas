@@ -8,14 +8,15 @@ PROGRAM FindLarge;
   verd :string;
   BEGIN
   READ  (Number1);
-  IF Number1 > Number2 THEN
+  IF Number1 < Number2 THEN
           BEGIN
           Larger := Number1;
           verd := 'hola';
           END
   ELSE
           BEGIN
+	   	
           Larger := Number2;
           END;
-  {WRITE ('THE LARGER OF ' , Number1,' AND ',Number2,' IS ',Larger );}
+  WRITE ('THE LARGER OF ' , Number1,' AND ',Number2,' IS ',Larger );
   END.

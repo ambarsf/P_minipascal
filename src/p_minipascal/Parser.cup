@@ -531,12 +531,30 @@ repeat_stament ::= REPEAT staments:sts UNTIL exp:ex                             
                   |REPEAT staments:sts error exp:ex                             {: System.err.println(" reserved word UNTIL expected"); :}  
 ;
 exp ::= sim_exp:sime                                                            {: RESULT =  new Expression(sime); :} 
-        |sim_exp:se1 EQU sim_exp:se2                                            {: RESULT = new Equal(se1,se2); :}
-	|sim_exp:se1 NEQ sim_exp:se2                                            {: RESULT = new Nequal(se1,se2); :}
-	|sim_exp:se1 LESS sim_exp:se2                                           {: RESULT = new Less(se1,se2); :}
-	|sim_exp:se1 LESSEQ sim_exp:se2                                         {: RESULT = new LessE(se1,se2); :}
-	|sim_exp:se1 GREATEREQ sim_exp:se2                                      {: RESULT = new GreaterE(se1,se2); :}
-	|sim_exp:se1 GREATER sim_exp:se2                                        {: RESULT = new Greater(se1,se2); :}
+        |sim_exp:se1 EQU sim_exp:se2                                            {: RESULT = new Equal(se1,se2);
+                                                                                   Temp tmp = new Temp();
+                                                                                   Cuadruplo cuad = new Cuadruplo("=", se1.toString(), se2.toString(), tmp.toString());
+                                                                                   Cuadruplos.add(cuad);:}
+	|sim_exp:se1 NEQ sim_exp:se2                                            {: RESULT = new Nequal(se1,se2);
+                                                                                   Temp tmp = new Temp();
+                                                                                   Cuadruplo cuad = new Cuadruplo("<>", se1.toString(), se2.toString(), tmp.toString());
+                                                                                   Cuadruplos.add(cuad); :}
+	|sim_exp:se1 LESS sim_exp:se2                                           {: RESULT = new Less(se1,se2); 
+                                                                                   Temp tmp = new Temp();
+                                                                                   Cuadruplo cuad = new Cuadruplo("<", se1.toString(), se2.toString(), tmp.toString());
+                                                                                   Cuadruplos.add(cuad);:}
+	|sim_exp:se1 LESSEQ sim_exp:se2                                         {: RESULT = new LessE(se1,se2);
+                                                                                   Temp tmp = new Temp();
+                                                                                   Cuadruplo cuad = new Cuadruplo("<=", se1.toString(), se2.toString(), tmp.toString());
+                                                                                   Cuadruplos.add(cuad); :}
+	|sim_exp:se1 GREATEREQ sim_exp:se2                                      {: RESULT = new GreaterE(se1,se2); 
+                                                                                   Temp tmp = new Temp();
+                                                                                   Cuadruplo cuad = new Cuadruplo(">=", se1.toString(), se2.toString(), tmp.toString());
+                                                                                   Cuadruplos.add(cuad);:}
+	|sim_exp:se1 GREATER sim_exp:se2                                        {: RESULT = new Greater(se1,se2);
+                                                                                   Temp tmp = new Temp();
+                                                                                   Cuadruplo cuad = new Cuadruplo(">", se1.toString(), se2.toString(), tmp.toString());
+                                                                                   Cuadruplos.add(cuad); :}
         |error 
         
 ;
