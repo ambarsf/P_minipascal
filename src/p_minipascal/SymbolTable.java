@@ -95,8 +95,12 @@ public class SymbolTable {
         
     }
 
-    public static int getIndice() {
+    public static int getIndice() {   
         return indice;
+    }
+    
+    static public Simbolo RetornarSimbolo(int i){
+        return (Simbolo)tablaSimbolos.get(i);
     }
     
     

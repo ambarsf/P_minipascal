@@ -38,5 +38,12 @@ public class Cuadruplos {
     static public void addy(Cuadruplo cuad){
         Cuadruplos.add(0,cuad);
     }
+
+    public static ArrayList<Cuadruplo> getCuadruplos() {
+        return Cuadruplos;
+    }
+
+    
+    
     
 }

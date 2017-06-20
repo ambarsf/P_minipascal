@@ -23,6 +23,14 @@ public class main_app {
             SymbolTable TablaSimbolos = new SymbolTable();
             
             Cuadruplos.Imprimir();
+            
+            ArrayList<String> messages = new ArrayList();
+            for (int i = 0; i < Cuadruplos.getCuadruplos().size(); i++) {
+                if (Cuadruplos.getCuadruplos().get(i).getOperacion().matches("WRITE")){
+                    messages.add(Cuadruplos.getCuadruplos().get(i).getArgumento1());
+                }
+            }
+            
         }catch(Exception e ){
             e.printStackTrace();
         }
