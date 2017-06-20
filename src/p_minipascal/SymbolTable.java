@@ -33,13 +33,15 @@ class Simbolo
     String tipo;
     Object valor;
     String ambito;
+    Integer offset;
     
-    public Simbolo(String nombre, String tipo ,Object valor, String ambito)
+    public Simbolo(String nombre, String tipo ,Object valor, String ambito, Integer offset)
     {
         this.nombre = nombre;       
         this.tipo = tipo;
         this.valor = valor;
         this.ambito = ambito;
+        this.offset = offset;
     }
     
     public String getNombre(){
@@ -67,6 +69,15 @@ class Simbolo
     public Object getValor(){
         return valor;
     }
+
+    public Integer getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
+    
 }
 
 public class SymbolTable {
@@ -79,6 +90,7 @@ public class SymbolTable {
     static int num1;
     static int num2;
     static int indice;
+    static Integer offset=0;
     
     public static Logger log = Logger.getLogger(SymbolTable.class.getName());            
     
@@ -138,7 +150,22 @@ public class SymbolTable {
         Simbolo simbolo = buscar(nombre);                            
         if(simbolo == null) // La variable no existe
         {
-            simbolo = new Simbolo(nombre, tipo, null, ambito);
+            //Integer offs=0;
+            if(tipo!=null){
+                if(ambito.matches("[a-zA-Z]+_Param[0-9]"))
+                    offset = offset;
+                else if(tipo.matches("integer"))
+                    offset = offset+ 4;
+                else if(tipo.matches("string"))
+                    offset=offset+4;
+                else if(tipo.matches("char"))
+                    offset=offset+1;
+                
+            }
+            if(ambito.matches("function[0-9]"))
+                    offset=0;
+            
+            simbolo = new Simbolo(nombre, tipo, null, ambito, offset);
             //System.out.println("Agregando a tabla de simbolos con nombre: " + nombre);
             tablaSimbolos.put(nombre, simbolo);
             if(tipo != null)
@@ -181,7 +208,7 @@ public class SymbolTable {
             //System.out.println("ULTIMO TIPO EN CREAR" + UltimoTipo);
             
             
-            //imprimir();                
+            imprimir();                
             System.out.println(" ");
             return simbolo;
         }
@@ -197,6 +224,18 @@ public class SymbolTable {
         if(simbolo.getTipo() == null){
             simbolo.setTipo(UltimoTipo);
             simbolo.setAmbito(Ambito);
+            if(Ambito.contains("_Param"))
+                offset = offset;
+            else if(UltimoTipo.matches("integer"))
+                    offset = offset+ 4;
+                else if(UltimoTipo.matches("string"))
+                    offset=offset+4;
+                else if(UltimoTipo.matches("char"))
+                    offset=offset+1;
+          //  System.out.println("AMBITOOOO" + Ambito);
+            if(Ambito.matches("function[0-9]"))
+                    offset=0;
+            simbolo.setOffset(offset);
             //System.out.println("AGREGAR TIPO");
             if(UltimoTipo.contains("Array")){
                 //System.out.println("ENTRO A ULTIMO TIPO CONTAINS ARRAY");
@@ -358,7 +397,7 @@ public class SymbolTable {
                 //}
             //}else
             System.out.println(String.format("      "
-                    + "Nombre: %-15s valor: %-15s tipo: %-15s ambito: %-15s",s.nombre, s.valor, s.tipo, s.ambito));
+                    + "Nombre: %-15s valor: %-15s tipo: %-15s ambito: %-15s  offset: %-15s",s.nombre, s.valor, s.tipo, s.ambito, s.offset));
         }
         System.out.println("Saliendo de imprimir en TablaSimbolos\n ");        
     }

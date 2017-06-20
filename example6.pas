@@ -15,7 +15,6 @@ var
         write(' Enter three numbers: ');
         write(' Minimum: ', min);
      end;
-
 begin
    a :=5 + 10 * 8 - 5 + 6 / 3;
    c := 5 / 8 * 7 * 5 + 3 ;
@@ -23,7 +22,13 @@ begin
    d := a+b*c/b;
    h := a*a*a*a*a*a;
    {i := 'e';} {tira error, tenemos que ver que ondas luego}
+   FOR inicio := 0 TO 10 DO
+	begin
+		FOR inicio2 := 0 TO 5 DO
+			begin
+	
+			end;
+	end;
    {e:= 'Ambar' + 'hola';}
    {f:= 'Ambar'+ e;}
-end
-.
+end.
