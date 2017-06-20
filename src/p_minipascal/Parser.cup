@@ -257,7 +257,15 @@ t_id ::= INTEGER:nombre                                                         
          |error                                                                 {: System.err.println("Type Expected"); :}
 ;
 
-c_stament ::= BEGIN staments:sts END                                            {: RESULT = new Compound_stament(sts); :}
+c_stament ::= BEGIN staments:sts END                                            {: RESULT = new Compound_stament(sts);
+                                                                                if(Etiqueta.cicloActual.matches("IFELSE")){
+                                                                                    for(int i = 0; i < Cuadruplos.getCuadruplos().size();i++){
+                                                                                        if(Cuadruplos.getCuadruplos().get(i).getOperacion().matches("ETIQ")&&Cuadruplos.getCuadruplos().get(i).getResultado()==null){
+                                                                                            Etiqueta.controlador = Etiqueta.cont-1;
+                                                                                            Cuadruplos.getCuadruplos().get(i).setResultado("Etiq_"+Etiqueta.controlador.toString());
+                                                                                        }
+                                                                                    }
+                                                                                }:}
               |BEGIN END                                            
 ;
 
@@ -514,6 +522,7 @@ if_stament ::= IF exp:ex THEN staments:st                                       
                                                                                    Cuadruplos.add(cuadf);
                                                                                    Cuadruplo cuadv = new Cuadruplo("IF",ex.toString(),st1.getEtiq().toString());
                                                                                    Cuadruplos.add(cuadv);
+                                                                                   Etiqueta.cicloActual = "IFELSE";
                                                                                    RESULT = new If_stament(ex,st1,st2); :}
 ;
 

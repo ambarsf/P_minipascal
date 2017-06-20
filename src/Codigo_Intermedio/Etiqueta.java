@@ -10,8 +10,11 @@ package Codigo_Intermedio;
  * @author ambarsuarez
  */
 public class Etiqueta {
-    private static int cont;
+    public static int cont=0;
+    public static Integer controlador;
+    public static String controladorEtiqueta;
     private String etiq;
+    public static String cicloActual="";
     private Etiqueta temporal;
 
     public Etiqueta(String name) {
