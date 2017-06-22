@@ -17,27 +17,29 @@ import p_minipascal.SymbolTable;
  * @author ambarsuarez
  */
 public class f_codegenerator {
+   //esta es la lista de mensajes _msg(num);
    ArrayList<String> messages = new ArrayList();
-   ArrayList<String> temporalMap = new ArrayList<>(Arrays.asList("", "", "", "", "", "", "", "", "", ""));
-   ArrayList<String> argumentsMap = new ArrayList<>(Arrays.asList("", "", "", ""));
-   ArrayList<String> temporalSMap = new ArrayList<>(Arrays.asList("", "", "", "", "", "", "", ""));
+   ArrayList<String> temporal = new ArrayList<>(Arrays.asList("", "", "", "", "", "", "", "", "", ""));
+   ArrayList<String> argumentos = new ArrayList<>(Arrays.asList("", "", "", "")); 
+   ArrayList<String> temporales = new ArrayList<>(Arrays.asList("", "", "", "", "", "", "", ""));
    String actualScope = "main";
    String code = "";
-   Stack<Integer> pilaCantidadParametros = new Stack<Integer>();
-   Stack<ArrayList<String>> pilaTemporalesVivos = new Stack<ArrayList<String>>();
+   //para tratar de manejar la pila
+   Stack<Integer> stack_cant_params = new Stack<Integer>();
+   Stack<ArrayList<String>> stack_temps_alive = new Stack<ArrayList<String>>();
 
     public f_codegenerator(ArrayList<String> messages) {
         this.messages = messages;
     }
     
     public void generateCode() {
-        generateDataHeader();
+        generateHeader();
         code += ".text\n.globl main\nmain:\n";
         generateQuadrupleCode();
 
     }
     
-    public void generateDataHeader() {
+    public void generateHeader() {
         code += ".data\n";
         for (int i = 0; i < messages.size(); i++) {
             code += "_msg" + (i + 1) + ":      .asciiz " + messages.get(i) + "\n";
@@ -52,7 +54,7 @@ public class f_codegenerator {
     public void generateQuadrupleCode() {
         Cuadruplo Cuadruplo_actual;
         code += "   move $fp,$sp\n";
-        pilaTemporalesVivos.add(new ArrayList<String>());
+        stack_temps_alive.add(new ArrayList<String>());
         generateStartFunctionCode();
         for (int i = 0; i < Cuadruplos.getCuadruplos().size(); i++) {
             Cuadruplo_actual = Cuadruplos.getCuadruplos().get(i);
@@ -63,7 +65,7 @@ public class f_codegenerator {
             } else if (Cuadruplo_actual.getOperacion().contains("ASSIGN")) {
                 generateAssignmentCode(Cuadruplo_actual);
             } else if (Cuadruplo_actual.getOperacion().contains("ETIQ")) {
-                generateTagCode(Cuadruplo_actual);
+                generateEtiqCode(Cuadruplo_actual);
             } else if (Cuadruplo_actual.getOperacion().contains("WRITE")) {
                 generatePrintCode(Cuadruplo_actual);
             } else if (Cuadruplo_actual.getOperacion().equals("+") || Cuadruplo_actual.getOperacion().equals("-") || Cuadruplo_actual.getOperacion().equals("*") || Cuadruplo_actual.getOperacion().equals("/")) {
@@ -84,7 +86,8 @@ public class f_codegenerator {
     private void generateAssignmentCode(Cuadruplo Cuadruplo_actual) {
     }
 
-    private void generateTagCode(Cuadruplo Cuadruplo_actual) {
+    private void generateEtiqCode(Cuadruplo Cuadruplo_actual) {
+            code += "_" + Cuadruplo_actual.getArgumento1() + ":\n";
     }
 
     private void generatePrintCode(Cuadruplo Cuadruplo_actual) {
@@ -109,12 +112,12 @@ public class f_codegenerator {
         code += "   lw $fp,-4($sp)\n";
         code += "   lw $ra,-8($sp)\n";
         int posicion = 12;
-        int cantidadParams = pilaCantidadParametros.pop();
+        int cantidadParams = stack_cant_params.pop();
         for(int i = 0; i<cantidadParams; i++){
             code += "   lw $s"+i+",-"+posicion+"($sp)\n";
             posicion += 4;
         }
-        ArrayList<String> temporalesVivos = pilaTemporalesVivos.pop();
+        ArrayList<String> temporalesVivos = stack_temps_alive.pop();
         int posicionTemporal = 0;
         for(int i = temporalesVivos.size()-1; i>=0;i--){
             code += "   lw "+temporalesVivos.get(i)+","+posicionTemporal+"($sp)\n";
@@ -123,6 +126,25 @@ public class f_codegenerator {
     }
 
     private void generateCallCode(Cuadruplo Cuadruplo_actual) {
+        ArrayList<String> temporalesVivos = new ArrayList<String>();
+        int sumaTemporales = 0;
+        for(int i = 0; i<temporal.size(); i++){
+            if(!temporal.get(i).equals("")){
+                temporalesVivos.add("$t"+i);                
+            }
+        }
+        for(int i = 0; i< temporalesVivos.size();i++){
+            sumaTemporales += 4;
+            code += "   sw "+temporalesVivos.get(i)+",-"+sumaTemporales+"($sp)\n";
+            
+        }
+        code += "   sub $sp,$sp,"+(sumaTemporales)+"\n";
+        stack_temps_alive.push(temporalesVivos);
+        String [] name_func = Cuadruplo_actual.getArgumento1().split(",");
+        code += "   jal _" + name_func[0] + "\n";
+        for(int i = 0; i<argumentos.size(); i++){
+            argumentos.set(i,"");
+        }
     }
 
     private void generateStartFunctionCode() {
@@ -131,8 +153,8 @@ public class f_codegenerator {
     
     public int getAvailableTemporal() {
         int index;
-        for (index = 0; index < temporalMap.size(); index++) {
-            if (temporalMap.get(index).equals("")) {
+        for (index = 0; index < temporal.size(); index++) {
+            if (temporal.get(index).equals("")) {
                 break;
             }
         }
@@ -141,18 +163,18 @@ public class f_codegenerator {
 
     public int getAvailableArgument() {
         int index;
-        for (index = 0; index < argumentsMap.size(); index++) {
-            if (argumentsMap.get(index).equals("")) {
+        for (index = 0; index < argumentos.size(); index++) {
+            if (argumentos.get(index).equals("")) {
                 break;
             }
         }
         return index;
     }
 
-    public int getAvailableTemporalS() {
+    public int getAvailableTemporales() {
         int index;
-        for (index = 0; index < temporalSMap.size(); index++) {
-            if (temporalSMap.get(index).equals("")) {
+        for (index = 0; index < temporales.size(); index++) {
+            if (temporales.get(index).equals("")) {
                 break;
             }
         }

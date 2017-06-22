@@ -18,7 +18,7 @@ import p_minipascal.Simbolo;
 public class main_app {
     public static void main(String argv[]){
         try{
-            parser p = new parser(new Lexer(new FileReader("example7.pas")));
+            parser p = new parser(new Lexer(new FileReader("example6.pas")));
             p.parse();
             //SymbolTable.imprimir();
             //imprimiendo Cuadruplos
