@@ -27,7 +27,9 @@ public class main_app {
             ArrayList<String> messages = new ArrayList();
             for (int i = 0; i < Cuadruplos.getCuadruplos().size(); i++) {
                 if (Cuadruplos.getCuadruplos().get(i).getOperacion().matches("WRITE")){
-                    messages.add(Cuadruplos.getCuadruplos().get(i).getArgumento1());
+                    if (Cuadruplos.getCuadruplos().get(i).getArgumento1().contains("'")){
+                        messages.add(Cuadruplos.getCuadruplos().get(i).getArgumento1());
+                    }
                 }
             }
             //Creando codigo Final
