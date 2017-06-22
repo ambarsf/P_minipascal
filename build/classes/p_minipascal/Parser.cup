@@ -286,6 +286,60 @@ c_stament ::= BEGIN staments:sts END                                            
                                                                                             Cuadruplos.getCuadruplos().get(i).setResultado("Etiq_"+Etiqueta.controlador.toString());
                                                                                         }
                                                                                     }
+                                                                                }
+                                                                                else if(Etiqueta.cicloActual.matches("WHILE")){
+                                                                                    int contWHILE=0;
+                                                                                    String TempWHILE = "";
+                                                                                    for(int i = 0; i < Cuadruplos.getCuadruplos().size();i++){
+                                                                                        if(Cuadruplos.getCuadruplos().get(i).getOperacion().matches("ETIQ")&&Cuadruplos.getCuadruplos().get(i).getResultado()==null){
+                                                                                            if(contWHILE==0){
+                                                                                                Etiqueta.controlador = Etiqueta.cont-1;
+                                                                                                contWHILE++;
+                                                                                                TempWHILE = Temp.temp;
+                                                                                            }else if(contWHILE==1){
+                                                                                                Etiqueta.controlador = Etiqueta.cont-3;
+                                                                                                contWHILE++;
+                                                                                                TempWHILE = "";
+                                                                                            }
+                                                                                            else{
+                                                                                                Etiqueta.controlador = Etiqueta.cont-1;
+                                                                                                TempWHILE = "";
+                                                                                            }
+                                                                                            Cuadruplos.getCuadruplos().get(i).setResultado("Etiq_"+Etiqueta.controlador.toString());
+                                                                                            Cuadruplos.getCuadruplos().get(i).setArgumento2(TempWHILE);
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                else if(Etiqueta.cicloActual.matches("REPEAT")){
+                                                                                    int contREPEAT=0;
+                                                                                    String TempREPEAT = "";
+                                                                                    for(int i = 0; i < Cuadruplos.getCuadruplos().size();i++){
+                                                                                        if(Cuadruplos.getCuadruplos().get(i).getOperacion().matches("ETIQ")&&Cuadruplos.getCuadruplos().get(i).getResultado()==null){
+                                                                                            if(contREPEAT==0){
+                                                                                                Etiqueta.controlador = Etiqueta.cont-1;
+                                                                                                contREPEAT++;
+                                                                                                TempREPEAT = "";
+                                                                                            }else if(contREPEAT==1){
+                                                                                                Etiqueta.controlador = Etiqueta.cont;
+                                                                                                contREPEAT++;
+                                                                                                TempREPEAT = Temp.temp;
+                                                                                            }
+                                                                                            else{
+                                                                                                Etiqueta.controlador = Etiqueta.cont-1;
+                                                                                                TempREPEAT = "";
+                                                                                            }
+                                                                                            Cuadruplos.getCuadruplos().get(i).setResultado("Etiq_"+Etiqueta.controlador.toString());
+                                                                                            Cuadruplos.getCuadruplos().get(i).setArgumento2(TempREPEAT);
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                else if(Etiqueta.cicloActual.matches("IF")){
+                                                                                    for(int i = 0; i < Cuadruplos.getCuadruplos().size();i++){
+                                                                                        if(Cuadruplos.getCuadruplos().get(i).getOperacion().matches("ETIQ")&&Cuadruplos.getCuadruplos().get(i).getResultado()==null){
+                                                                                            Etiqueta.controlador = Etiqueta.cont;
+                                                                                            Cuadruplos.getCuadruplos().get(i).setResultado("Etiq_"+Etiqueta.controlador.toString());
+                                                                                        }
+                                                                                    }
                                                                                 }:}
               |BEGIN END                                            
 ;
@@ -537,7 +591,8 @@ struct_stament ::= c_stament: c_st                                              
 ;
 
 if_stament ::= IF exp:ex THEN staments:st                                       {: RESULT = new If_stament(ex,st);
-                                                                                   Cuadruplo cuad = new Cuadruplo("IF", ex.toString(), st.getEtiq().toString());
+                                                                                   Integer controlador = Etiqueta.cont;
+                                                                                   Cuadruplo cuad = new Cuadruplo("IF", Temp.temp, "Etiq_"+controlador.toString());
                                                                                    Cuadruplos.add(cuad);
                                                                                    Etiqueta.cicloActual = "IF";
                                                                                  :}
@@ -550,7 +605,9 @@ if_stament ::= IF exp:ex THEN staments:st                                       
                                                                                    RESULT = new If_stament(ex,st1,st2); :}
 ;
 
-while_stament ::= WHILE exp:ex DO staments:st                                    {: RESULT = new While_stament(ex,st); :}
+while_stament ::= WHILE exp:ex DO staments:st                                    {: RESULT = new While_stament(ex,st);
+                                                                                    Etiqueta.cicloActual = "WHILE"; 
+                                                                                    :}
                   |WHILE exp:ex error stament:st                                {: System.err.println(" reserved word DO expected"); :}
 ;
 
@@ -588,7 +645,11 @@ for_stament ::= FOR ID:id ASSIGN NUMBER:m TO NUMBER:n DO c_stament:sts          
                 |FOR ID:id ASSIGN NUMBER:m TO NUMBER:n error c_stament:sts      {: System.err.println(" reserved word DO expected"); :}
 ;
 
-repeat_stament ::= REPEAT staments:sts UNTIL exp:ex                             {: RESULT = new Repeat_stament(sts,ex); :}
+repeat_stament ::= REPEAT staments:sts UNTIL exp:ex                             {: RESULT = new Repeat_stament(sts,ex); 
+                                                                                   Etiqueta.cicloActual = "REPEAT";
+                                                                                   Integer controlador = Etiqueta.cont -1;
+                                                                                   Cuadruplo cuad = new Cuadruplo("GOTO", "","", "Etiq_"+controlador.toString());
+                                                                                   Cuadruplos.add(cuad);:}
                   |REPEAT staments:sts error exp:ex                             {: System.err.println(" reserved word UNTIL expected"); :}  
 ;
 exp ::= sim_exp:sime                                                            {: RESULT =  new Expression(sime); :} 

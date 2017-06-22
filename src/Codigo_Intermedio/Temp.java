@@ -11,7 +11,7 @@ package Codigo_Intermedio;
  */
 public class Temp {
     private static int cont =0;
-    String temp;
+    public static String temp;
 
     public Temp() {
         this.temp = "t_"+cont++;     
