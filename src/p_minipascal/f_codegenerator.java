@@ -75,8 +75,7 @@ public class f_codegenerator {
 
     }
 
-    private void generateIfCode(Cuadruplo actualQuadruple) {
-       
+    private void generateIfCode(Cuadruplo actualQuadruple) {    
     }
     
     private void generateArithmeticCode(Cuadruplo Cuadruplo_actual) {
