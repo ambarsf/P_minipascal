@@ -27,7 +27,7 @@ begin
 	a:=16;
 		{FOR inicio2 := 0 TO 5 DO
 			begin
-	
+
 			end;}
 	end;
    e:= 'Ambar' + 'hola';

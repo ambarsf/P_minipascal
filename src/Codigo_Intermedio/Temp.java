@@ -14,7 +14,7 @@ public class Temp {
     String temp;
 
     public Temp() {
-        this.temp = "t"+cont++;     
+        this.temp = "t_"+cont++;     
     }
 
     public String getTemp() {

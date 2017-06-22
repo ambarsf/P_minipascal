@@ -1453,19 +1453,19 @@ caller ::= ID:id LPAREN c_params:c_p RPAREN                                     
                                                                                        else{
                                                                                            for (int i = 0; i < c_p.getCallers().size(); i++) {
                                                                                                Simbolo tmp2 = SymbolTable.buscarConAmbito(id+"_Param"+i);
-                                                                                               //System.out.println(tmp2);
                                                                                                if(tmp2 != null){
-                                                                                                   // System.out.println("TMP2 "+tmp2.getNombre());
-                                                                                                   // System.out.println("TIPO " +tmp2.getTipo());
-                                                                                                   // System.out.println(c_p.getCallers().get(i));
                                                                                                     Simbolo tmp3 = SymbolTable.buscar(c_p.getCallers().get(i).toString());
                                                                                                     if(!tmp3.getTipo().equals(tmp2.getTipo()))
                                                                                                         System.err.println("El tipo de "+c_p.getCallers().get(i).toString() +" es incorrecto");
                                                                                                     else{
                                                                                                         SymbolTable.insertar(tmp2.getNombre(), tmp3.valor);
+                                                                                                        Cuadruplo cuad = new Cuadruplo("PARAM",c_p.getCallers().get(i).toString());
+                                                                                                        Cuadruplos.add(cuad);
                                                                                                     }
                                                                                                }
                                                                                            }
+                                                                                           Cuadruplo cuad = new Cuadruplo("CALL",id+","+c_p.getCallers().size());
+                                                                                           Cuadruplos.add(cuad);
                                                                                        }
                                                                                    }:}
 ;
