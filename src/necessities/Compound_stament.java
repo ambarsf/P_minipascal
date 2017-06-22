@@ -18,6 +18,10 @@ public class Compound_stament {
     public Compound_stament(Staments staments) {
         this.staments = staments;
     }
+
+    public Staments getStaments() {
+        return staments;
+    }
     
     
     

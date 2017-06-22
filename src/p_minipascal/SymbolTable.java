@@ -212,7 +212,7 @@ public class SymbolTable {
             //System.out.println("ULTIMO TIPO EN CREAR" + UltimoTipo);
             
             
-            imprimir();                
+            //imprimir();                
             System.out.println(" ");
             return simbolo;
         }

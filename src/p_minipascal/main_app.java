@@ -22,7 +22,7 @@ public class main_app {
             p.parse();
             //SymbolTable.imprimir();
             //imprimiendo Cuadruplos
-            //Cuadruplos.Imprimir();
+            Cuadruplos.Imprimir();
             //obteniendo los mensajes de los cuadruplos
             ArrayList<String> messages = new ArrayList();
             for (int i = 0; i < Cuadruplos.getCuadruplos().size(); i++) {

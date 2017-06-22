@@ -265,6 +265,27 @@ c_stament ::= BEGIN staments:sts END                                            
                                                                                             Cuadruplos.getCuadruplos().get(i).setResultado("Etiq_"+Etiqueta.controlador.toString());
                                                                                         }
                                                                                     }
+                                                                                }
+                                                                                else if(Etiqueta.cicloActual.matches("FOR")){
+                                                                                    int contFOR=0;
+                                                                                    for(int i = 0; i < Cuadruplos.getCuadruplos().size();i++){
+                                                                                        if(Cuadruplos.getCuadruplos().get(i).getOperacion().matches("<=")){
+                                                                                            Cuadruplo cuad = new Cuadruplo("+", Cuadruplos.getCuadruplos().get(i).getArgumento1(), "1", Cuadruplos.getCuadruplos().get(i).getArgumento1());
+                                                                                            Cuadruplos.add(cuad);
+                                                                                        }
+                                                                                        if(Cuadruplos.getCuadruplos().get(i).getOperacion().matches("ETIQ")&&Cuadruplos.getCuadruplos().get(i).getResultado()==null){
+                                                                                            if(contFOR==0){
+                                                                                                Etiqueta.controlador = Etiqueta.cont-2;
+                                                                                                contFOR++;
+                                                                                            }else if(contFOR==1){
+                                                                                                Etiqueta.controlador = Etiqueta.cont-3;
+                                                                                                contFOR++;
+                                                                                            }
+                                                                                            else
+                                                                                                Etiqueta.controlador = Etiqueta.cont-1;
+                                                                                            Cuadruplos.getCuadruplos().get(i).setResultado("Etiq_"+Etiqueta.controlador.toString());
+                                                                                        }
+                                                                                    }
                                                                                 }:}
               |BEGIN END                                            
 ;
@@ -544,13 +565,16 @@ for_stament ::= FOR ID:id ASSIGN NUMBER:m TO NUMBER:n DO c_stament:sts          
                                                                                             tmp.setTemp("true");
                                                                                         else
                                                                                         tmp.setTemp("false");
-                                                                                        Etiqueta etiq = new Etiqueta();
+                                                                                        //Etiqueta etiq = new Etiqueta();
                                                                                         Etiqueta.cicloActual = "FOR";
                                                                                         Cuadruplo cuad = new Cuadruplo("ASSIGN",m.toString(),"",id);
                                                                                         Cuadruplos.add(cuad);
                                                                                         //etiq = new Etiqueta();
                                                                                         //cuad= new Cuadruplo("<=", id, n.toString(), tmp.getTemp());
-                                                                                        cuad= new Cuadruplo("<=", id, n.toString(), etiq.toString());
+                                                                                        cuad= new Cuadruplo("<=", id, n.toString(), sts.getStaments().getEtiq().toString());
+                                                                                        Cuadruplos.add(cuad);
+                                                                                        Integer controlador = Etiqueta.cont -2;
+                                                                                        cuad = new Cuadruplo("GOTO","","","Etiq_"+controlador.toString());
                                                                                         Cuadruplos.add(cuad);
                                                                                         //etiq = new Etiqueta();
                                                                                         //Integer controlador = Etiqueta.cont +4;
@@ -558,7 +582,7 @@ for_stament ::= FOR ID:id ASSIGN NUMBER:m TO NUMBER:n DO c_stament:sts          
                                                                                         //Cuadruplos.add(cuad);
                                                                                     }
                                                                                     else
-                                                                                        System.err.println("Ya existe la variable " + id + "No se puede usar en el FOR" ); :}
+                                                                                        System.err.println("Ya existe la variable " + id + "No se puede usar en el FOR" );:}
                 |FOR ID:id error NUMBER:m TO NUMBER:n DO c_stament:sts          {: System.err.println(" =: expected"); :}
                 |FOR ID:id ASSIGN NUMBER:m error NUMBER:n DO c_stament:sts      {: System.err.println(" reserved word TO expected"); :}
                 |FOR ID:id ASSIGN NUMBER:m TO NUMBER:n error c_stament:sts      {: System.err.println(" reserved word DO expected"); :}
@@ -1150,8 +1174,12 @@ sim_exp ::= term:term                                                           
                                                                                     else
                                                                                         System.err.println("Error en la linea: "+minleft+" tipo incompatible, se esperaba entero");
                                                                                 }:}
-            |sim_exp:se1 AND term:term                                           
-            |sim_exp:se1 OR term:term  
+            |sim_exp:se1 AND term:term                                          {:Temp temp = new Temp();
+                                                                                  Cuadruplo cuad = new Cuadruplo("AND",se1.toString(), term.toString(), temp.toString());
+                                                                                  Cuadruplos.add(cuad);:}
+            |sim_exp:se1 OR term:term                                           {:Temp temp = new Temp();
+                                                                                  Cuadruplo cuad = new Cuadruplo("NOT", se1.toString(), term.toString(), temp.toString());
+                                                                                  Cuadruplos.add(cuad);:}
 ;
 
 term ::= factor:fact                                                            {: RESULT = new Term(fact); :}
