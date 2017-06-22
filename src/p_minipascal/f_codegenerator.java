@@ -81,6 +81,13 @@ public class f_codegenerator {
     }
     
     private void generateArithmeticCode(Cuadruplo Cuadruplo_actual) {
+        //si la suma son dos immediate add solo acepta un immediate en la segunda pos.
+        if (Cuadruplo_actual.getArgumento1().matches(code)){
+            
+        }else{
+            //si no son dos immediate.
+            
+        }
     }
 
     private void generateAssignmentCode(Cuadruplo Cuadruplo_actual) {
