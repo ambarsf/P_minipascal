@@ -84,7 +84,7 @@ conststr = "'"{AllButR_Quotation}*"'"
     	"*"                     { return new Symbol(sym.TIMES, yyline+1, yycolumn+1);}
     	"/"                     { return new Symbol(sym.DIVIDE, yyline+1, yycolumn+1);}
 
-	"("                     { return symbol(sym.LPAREN); }
+	"("                     { return new Symbol(sym.LPAREN, yyline+1, yycolumn+1); }
     	")"                     { return symbol(sym.RPAREN); }
     	"\["                    { return symbol(sym.LCOR); }
    	"\]"                    { return symbol(sym.RCOR); }

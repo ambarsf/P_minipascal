@@ -207,7 +207,7 @@ p_dec ::= FUNCTION ID:id COLON type:tipo                                       {
           |FUNCTION ID:id LPAREN parameters:p RPAREN COLON type:tipo SEMICOLON {: RESULT = new Procedure_d (id,tipo,p);
                                                                                 for(int i=0;i<p.getParametros().size();i++){
                                                                                     SymbolTable.crear(p.getParametros().get(i).getId(), p.getParametros().get(i).getTipo().toString(), id + "_Param"+i);
-                                                                                    //System.out.println("parametros " + p.getParametros().get(i).getId());
+                                                                                    
                                                                                 }
                                                                                 SymbolTable.crear(id, tipo.toString(), "function"+p.getParametros().size());
                                                                                 //SymbolTable.insertar(id, p.getParametros());
@@ -1503,14 +1503,14 @@ factor ::= var:v                                                                
 
 ;
 
-caller ::= ID:id LPAREN c_params:c_p RPAREN                                     {: RESULT = new Caller(id, c_p);
+caller ::= ID:id LPAREN:lpa c_params:c_p RPAREN                                     {: RESULT = new Caller(id, c_p);
                                                                                    Simbolo tmp = null;
                                                                                    tmp = SymbolTable.buscar(id);
                                                                                    if(tmp == null)
                                                                                         System.err.println("La funcion no existe");
                                                                                    else{
                                                                                        if(Character.getNumericValue(tmp.getAmbito().charAt(tmp.getAmbito().length()-1))!=c_p.getCallers().size())
-                                                                                           System.err.println("la cantidad de argumentos es distinta");
+                                                                                           System.err.println("Error en la linea: "+lpaleft+" ,la cantidad de argumentos es distinta");
                                                                                        else{
                                                                                            for (int i = 0; i < c_p.getCallers().size(); i++) {
                                                                                                Simbolo tmp2 = SymbolTable.buscarConAmbito(id+"_Param"+i);
