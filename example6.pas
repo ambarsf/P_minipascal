@@ -8,6 +8,7 @@ var
      var x, y, l,  min:String;
          m, n :integer;
      begin
+        a := 'hey';
         b:= 5;
         a:= b+b;
         g:=5;

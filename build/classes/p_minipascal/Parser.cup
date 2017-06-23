@@ -378,7 +378,7 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                         if(tmp.valor == null){                                                                                       
                                                                                             String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
                                                                                             if(tipoVariable.equals("integer")&&tmp2==null){
-                                                                                                if(ex.getS_exp1()!=null){
+                                                                                                /*if(ex.getS_exp1()!=null){
                                                                                                     if (ex.getS_exp1().getTerm().getFact().getType()==4)
                                                                                                         if ((ambito1.equals(SymbolTable.profundidad)) ||
                                                                                                            (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
@@ -395,7 +395,27 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                         }
                                                                                                     else
                                                                                                             System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un integer");
+                                                                                                }*/
+                                                                                                if(ex.getS_exp1()!=null){
+                                                                                                    if ((ambito1.equals(SymbolTable.profundidad)) ||
+                                                                                                    (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
+                                                                                                        if (ex.getS_exp1().getTerm().getFact().getType()==4){
+                                                                                                            SymbolTable.insertar(v.toString(),ex);
+                                                                                                            if (ex.getS_exp1().getTemp()== null){
+                                                                                                                Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else{
+                                                                                                                Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex.getS_exp1().getTemp().getTemp(),v.toString());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }
+                                                                                                        }else{
+                                                                                                            System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un integer");
+                                                                                                        }
+                                                                                                    }else{
+                                                                                                        System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
+                                                                                                    }
                                                                                                 }
+                                                                                                
                                                                                             }
                                                                                             else if (tipoVariable.equals("string")&&tmp2==null){
                                                                                                 /*if(ex.getS_exp1()!=null){
@@ -414,9 +434,9 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                             System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
                                                                                                         }
                                                                                                     else
-                                                                                                        System.err.println("Error en la linea: "+asleft+"Tipo de asignacion incompatible, se esperaba una String.");
+                                                                                                        System.err.println("Error en la linea: "+asleft+", tipo de asignacion incompatible, se esperaba una String.");
                                                                                                 }*/
-                                                                                                if (ex.getS_exp1()!null){
+                                                                                                if (ex.getS_exp1()!=null){
                                                                                                     if ((ambito1.equals(SymbolTable.profundidad)) ||
                                                                                                     (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
                                                                                                        if (ex.getS_exp1().getTerm().getFact().getType()==2){
@@ -429,7 +449,7 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                                     Cuadruplos.add(cuad);
                                                                                                                 }
                                                                                                        }else{
-                                                                                                            System.err.println("Error en la linea: "+asleft+"Tipo de asignacion incompatible, se esperaba una String.");
+                                                                                                            System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba una String.");
                                                                                                        }
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
@@ -438,7 +458,7 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                 
                                                                                             }
                                                                                             else if (tipoVariable.equals("char")&&tmp2==null){
-                                                                                                if(ex.getS_exp1()!= null){
+                                                                                                /*if(ex.getS_exp1()!= null){
                                                                                                     if(ex.getS_exp1().getTerm().getFact().getType()==3)
                                                                                                         if ((ambito1.equals(SymbolTable.profundidad)) ||
                                                                                                            (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
@@ -455,11 +475,30 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                         }
                                                                                                     else
                                                                                                         System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un char.");
+                                                                                                }*/
+                                                                                                if (ex.getS_exp1()!=null){
+                                                                                                  if ((ambito1.equals(SymbolTable.profundidad)) ||
+                                                                                                           (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
+                                                                                                        if(ex.getS_exp1().getTerm().getFact().getType()==3){
+                                                                                                            SymbolTable.insertar(v.toString(),ex);
+                                                                                                                if (ex.getS_exp1().getTemp()== null){
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }else{
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex.getS_exp1().getTemp().getTemp(),v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }
+                                                                                                        }else{
+                                                                                                            System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un char.");
+                                                                                                        }
+                                                                                                    }else{
+                                                                                                        System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
+                                                                                                    }
                                                                                                 }
                                                                                             }
                                                                                             else if(tmp2!=null){
                                                                                                 String ambito2 = SymbolTable.verificarAmbito(tmp2.nombre);
-                                                                                                if(ex.getS_exp1()!=null){
+                                                                                                /*if(ex.getS_exp1()!=null){
                                                                                                     if(ex.getS_exp1().getTerm().getFact().getType()==1){
                                                                                                         if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
                                                                                                             if(((ambito1.equals("main") && ambito2.equals("main")) && ((SymbolTable.profundidad.equals("main")) ||(!SymbolTable.profundidad.equals("main")))) 
@@ -488,12 +527,42 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                         else
                                                                                                             System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible");
                                                                                                     }
+                                                                                                }*/
+                                                                                                if(ex.getS_exp1()!=null){
+                                                                                                  if(((ambito1.equals("main") && ambito2.equals("main")) && ((SymbolTable.profundidad.equals("main")) ||(!SymbolTable.profundidad.equals("main")))) 
+                                                                                                            || ((ambito1.equals("main") && !ambito2.equals("main")) && ((ambito2.equals(SymbolTable.profundidad)) || ambito2.contains(SymbolTable.profundidad)))
+                                                                                                            || ((!ambito1.equals("main")) && ((ambito1.equals(SymbolTable.profundidad)) || ambito1.contains(SymbolTable.profundidad)) 
+                                                                                                            && ((ambito2.equals("main")) || (ambito2.contains(ambito1)) || (ambito2.equals(ambito1))))||ambito1.contains("function")||ambito2.contains("function")){
+                                                                                                                if(ex.getS_exp1().getTerm().getFact().getType()==1){
+                                                                                                                    if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString()))){
+                                                                                                                        SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
+                                                                                                                        if (ex.getS_exp1().getTemp()== null){
+                                                                                                                            Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
+                                                                                                                            Cuadruplos.add(cuad);
+                                                                                                                        }else{
+                                                                                                                            Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex.getS_exp1().getTemp().getTemp(),v.toString());
+                                                                                                                            Cuadruplos.add(cuad);
+                                                                                                                        }
+                                                                                                                    }else{
+                                                                                                                        System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible");
+                                                                                                                    }
+                                                                                                                }else if (ex.getS_exp1().getTerm().getFact().getType()==5){
+                                                                                                                    if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getCaller().toString()))){
+                                                                                                                        SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getCaller().toString()));
+                                                                                                                    }else{
+                                                                                                                        System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible");
+                                                                                                                    }
+                                                                                                                }
+                                                                                                    }else{
+                                                                                                        System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
+                                                                                                    }
                                                                                                 }
+                                                                                                
                                                                                             }
                                                                                         }else if(tmp.valor != null){
                                                                                             String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
                                                                                             if(tipoVariable.equals("integer")&&tmp2==null){
-                                                                                                if(ex.getS_exp1().getTerm().getFact().getType()== 4)
+                                                                                                /*if(ex.getS_exp1().getTerm().getFact().getType()== 4)
                                                                                                     if ((ambito1.equals(SymbolTable.profundidad)) ||
                                                                                                            (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
                                                                                                                 SymbolTable.insertar(v.toString(),ex);
@@ -508,10 +577,29 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                             System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
                                                                                                         }
                                                                                                 else
-                                                                                                    System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un integer");
+                                                                                                    System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un integer");*/
+                                                                                             
+                                                                                                    
+                                                                                                    if ((ambito1.equals(SymbolTable.profundidad)) ||
+                                                                                                       (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
+                                                                                                       if(ex.getS_exp1().getTerm().getFact().getType()== 4){
+                                                                                                            SymbolTable.insertar(v.toString(),ex);
+                                                                                                                if (ex.getS_exp1().getTemp()== null){
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }else{
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex.getS_exp1().getTemp().getTemp(),v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }
+                                                                                                       }else{
+                                                                                                            System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un integer");
+                                                                                                       }
+                                                                                                    }else{
+                                                                                                        System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
+                                                                                                    }
                                                                                             }
                                                                                             else if (tipoVariable.equals("string")&&tmp2==null){
-                                                                                                if(ex.getS_exp1().getTerm().getFact().getType()==2)
+                                                                                                /*if(ex.getS_exp1().getTerm().getFact().getType()==2)
                                                                                                     if ((ambito1.equals(SymbolTable.profundidad)) ||
                                                                                                            (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
                                                                                                                 SymbolTable.insertar(v.toString(),ex);
@@ -526,10 +614,28 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                             System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
                                                                                                         }
                                                                                                 else
-                                                                                                    System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba una String");
+                                                                                                    System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba una String");*/
+
+                                                                                                if ((ambito1.equals(SymbolTable.profundidad)) ||
+                                                                                                   (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
+                                                                                                        if(ex.getS_exp1().getTerm().getFact().getType()==2){
+                                                                                                            SymbolTable.insertar(v.toString(),ex);
+                                                                                                            if (ex.getS_exp1().getTemp()== null){
+                                                                                                                Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else{
+                                                                                                                Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex.getS_exp1().getTemp().getTemp(),v.toString());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }
+                                                                                                        }else{
+                                                                                                            System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba una String");
+                                                                                                        }
+                                                                                                }else{
+                                                                                                    System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
+                                                                                                }
                                                                                             }
                                                                                             else if (tipoVariable.equals("char")&&tmp2==null){
-                                                                                                if(ex.getS_exp1().getTerm().getFact().getType()==3)
+                                                                                                /*if(ex.getS_exp1().getTerm().getFact().getType()==3)
                                                                                                     if ((ambito1.equals(SymbolTable.profundidad)) ||
                                                                                                            (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
                                                                                                                 SymbolTable.insertar(v.toString(),ex);
@@ -544,11 +650,30 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                             System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
                                                                                                         }
                                                                                                 else
-                                                                                                    System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un char");
+                                                                                                    System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un char");*/
+
+                                                                                                if ((ambito1.equals(SymbolTable.profundidad)) ||
+                                                                                                   (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
+                                                                                                        if(ex.getS_exp1().getTerm().getFact().getType()==3){
+                                                                                                            SymbolTable.insertar(v.toString(),ex);
+                                                                                                            if (ex.getS_exp1().getTemp()== null){
+                                                                                                                Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }else{
+                                                                                                                Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex.getS_exp1().getTemp().getTemp(),v.toString());
+                                                                                                                Cuadruplos.add(cuad);
+                                                                                                            }
+                                                                                                        }else{
+                                                                                                            System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible, se esperaba un char");
+                                                                                                        }
+                                                                                                }else{
+                                                                                                    System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");
+                                                                                                }
+                                                                                                
                                                                                             }
                                                                                             else if(tmp2!=null){
                                                                                                 String ambito2 = SymbolTable.verificarAmbito(tmp2.nombre);
-                                                                                                if(ex.getS_exp1().getTerm().getFact().getType()==1){
+                                                                                                /*if(ex.getS_exp1().getTerm().getFact().getType()==1){
                                                                                                     if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString())))
                                                                                                         if(((ambito1.equals("main") && ambito2.equals("main")) && ((SymbolTable.profundidad.equals("main")) ||(!SymbolTable.profundidad.equals("main")))) 
                                                                                                             || ((ambito1.equals("main") && !ambito2.equals("main")) && ((ambito2.equals(SymbolTable.profundidad)) || ambito2.contains(SymbolTable.profundidad)))
@@ -568,7 +693,29 @@ assign_s ::= var:v ASSIGN:as exp:ex                                             
                                                                                                     else
                                                                                                         System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible");
 
-                                                                                                }
+                                                                                                }*/
+                                                                                                    
+                                                                                                    if(((ambito1.equals("main") && ambito2.equals("main")) && ((SymbolTable.profundidad.equals("main")) ||(!SymbolTable.profundidad.equals("main")))) 
+                                                                                                        || ((ambito1.equals("main") && !ambito2.equals("main")) && ((ambito2.equals(SymbolTable.profundidad)) || ambito2.contains(SymbolTable.profundidad)))
+                                                                                                        || ((!ambito1.equals("main")) && ((ambito1.equals(SymbolTable.profundidad)) || ambito1.contains(SymbolTable.profundidad)) 
+                                                                                                        && ((ambito2.equals("main")) || (ambito2.contains(ambito1)) || (ambito2.equals(ambito1))))||ambito1.contains("function")||ambito2.contains("function")){
+                                                                                                        if(ex.getS_exp1().getTerm().getFact().getType()==1){
+                                                                                                            if(tipoVariable.equals(SymbolTable.verificarTipo(ex.getS_exp1().getTerm().getFact().getVar().toString()))){
+                                                                                                                SymbolTable.insertar(v.toString(), SymbolTable.verificarValor(ex.getS_exp1().getTerm().getFact().getVar().toString()));
+                                                                                                                if (ex.getS_exp1().getTemp()== null){
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }else{
+                                                                                                                    Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex.getS_exp1().getTemp().getTemp(),v.toString());
+                                                                                                                    Cuadruplos.add(cuad);
+                                                                                                                }   
+                                                                                                            }else{
+                                                                                                                System.err.println("Error en la linea: "+asleft+" tipo de asignacion incompatible");
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }else{
+                                                                                                        System.err.println("Error en la linea: "+asleft+" ,variable no ha sido declarada");   
+                                                                                                    }
                                                                                             }
                                                                                         }
                                                                                     }
