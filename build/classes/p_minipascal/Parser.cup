@@ -879,8 +879,7 @@ sim_exp ::= term:term                                                           
                                                                                             tmp2 = SymbolTable.buscar(term.toString());
                                                                                             if(tmp2==null){
                                                                                                 System.err.println("Error en la linea: "+plleft+" la variable "+term.toString()+" no existe");
-                                                                                            }
-                                                                                            else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
+                                                                                            }else if(tmp2!=null&&tmp2.getTipo().equals("integer")){
                                                                                                 String ambito = SymbolTable.verificarAmbito(tmp2.nombre);
                                                                                                 if(tmp2.valor == null)
                                                                                                     System.err.println("Error en la linea: "+plleft+" no se le ha asignado un valor a esta variable");
@@ -905,12 +904,10 @@ sim_exp ::= term:term                                                           
                                                                                                     }else{
                                                                                                         System.err.println("Error en la linea: "+plleft+" ,variable no ha sido declarada");  
                                                                                                     }
-                                                                                                }
-                                                                                            else{
+                                                                                                }else{
                                                                                                 System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos enteros");
                                                                                             }
-                                                                                        }
-                                                                                        else{
+                                                                                        }else{
                                                                                             System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos enteros");
                                                                                         }
                                                                                     }

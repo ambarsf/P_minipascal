@@ -8,7 +8,6 @@ var
      var x, y, l,  min:String;
          m, n :integer;
      begin
-        a := 'hey';
         b:= 5;
         a:= b+b;
         g:=5;
@@ -21,7 +20,8 @@ var
      function findMax(j: integer, g: integer):integer;
        var j, t :integer;
        begin
-          x:='hey';
+          t := 10;
+          j := t+h;
        end;
 begin
    a := 10; {5 + 10 * 8 - 5 + 6 / 3;}
