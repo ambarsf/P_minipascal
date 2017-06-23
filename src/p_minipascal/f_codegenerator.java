@@ -68,7 +68,9 @@ public class f_codegenerator {
                 generateEtiqCode(Cuadruplo_actual);
             } else if (Cuadruplo_actual.getOperacion().contains("WRITE")) {
                 generatePrintCode(Cuadruplo_actual);
-            } else if (Cuadruplo_actual.getOperacion().equals("+") || Cuadruplo_actual.getOperacion().equals("-") || Cuadruplo_actual.getOperacion().equals("*") || Cuadruplo_actual.getOperacion().equals("/")) {
+            } else if (Cuadruplo_actual.getOperacion().equals("+") || Cuadruplo_actual.getOperacion().equals("-") || Cuadruplo_actual.getOperacion().equals("*") || Cuadruplo_actual.getOperacion().equals("/")
+                        || Cuadruplo_actual.getOperacion().equals("<")|| Cuadruplo_actual.getOperacion().equals("<=")|| Cuadruplo_actual.getOperacion().equals("=")|| Cuadruplo_actual.getOperacion().equals(">=")
+                        || Cuadruplo_actual.getOperacion().equals(">=")) {
                 generateArithmeticCode(Cuadruplo_actual);
             } else if (Cuadruplo_actual.getOperacion().contains("CALL")) {
                 generateCallCode(Cuadruplo_actual);
@@ -82,12 +84,44 @@ public class f_codegenerator {
     
     private void generateArithmeticCode(Cuadruplo Cuadruplo_actual) {
         //si la suma son dos immediate add solo acepta un immediate en la segunda pos.
-        if (Cuadruplo_actual.getArgumento1().matches(code)){
+        //if (Cuadruplo_actual.getArgumento1().matches(code)){
             
-        }else{
+        //}else{
             //si no son dos immediate.
             
+        //}
+        String operation = "";
+        if (Cuadruplo_actual.getOperacion().equals("+")) {
+            operation = "add";
+        } else if (Cuadruplo_actual.getOperacion().equals("-")) {
+            operation = "sub";
+        } else if (Cuadruplo_actual.getOperacion().equals("*")) {
+            operation = "mul";
+        } else if (Cuadruplo_actual.getOperacion().equals("/")) {
+            operation = "div";
+        } else if (Cuadruplo_actual.getOperacion().equals("<")) {
+            operation = "bless";
+        } else if (Cuadruplo_actual.getOperacion().equals("<=")) {
+            operation = "bleq";
+        } else if (Cuadruplo_actual.getOperacion().equals("=")) {
+            operation = "beq";
+        } else if (Cuadruplo_actual.getOperacion().equals(">=")) {
+            operation = "greq";
+        }else if (Cuadruplo_actual.getOperacion().equals(">")) {
+            operation = "gre";
         }
+        code += operation+"     $"+Cuadruplo_actual.getArgumento1()+", $"+Cuadruplo_actual.getArgumento2()+", $"+Cuadruplo_actual.getResultado()+"\n";
+        /*String primerOperando = "";
+        String segundoOperando = "";
+        String variableLocation = "";
+        boolean isVariable = false;
+        String destinyR = "";
+        
+        int availableIndex = getAvailableTemporal();
+         destinyR = "$t" + availableIndex;
+         */
+         
+        
     }
 
     private void generateAssignmentCode(Cuadruplo Cuadruplo_actual) {

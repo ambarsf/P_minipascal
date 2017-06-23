@@ -18,9 +18,9 @@ import p_minipascal.Simbolo;
 public class main_app {
     public static void main(String argv[]){
         try{
-            parser p = new parser(new Lexer(new FileReader("example6.pas")));
+            parser p = new parser(new Lexer(new FileReader("example7.pas")));
             p.parse();
-            //SymbolTable.imprimir();
+            SymbolTable.imprimir();
             //imprimiendo Cuadruplos
             Cuadruplos.Imprimir();
             //obteniendo los mensajes de los cuadruplos
@@ -32,10 +32,22 @@ public class main_app {
                     }
                 }
             }
+            for (int i = 0; i < Cuadruplos.getCuadruplos().size()-1; i++) {
+                if(Cuadruplos.getCuadruplos().get(i).getArgumento2()!=null){
+                    if((Cuadruplos.getCuadruplos().get(i).getOperacion().equals(Cuadruplos.getCuadruplos().get(i+1).getOperacion()))&&
+                        (Cuadruplos.getCuadruplos().get(i).getArgumento2().equals(Cuadruplos.getCuadruplos().get(i+1).getArgumento2()))){
+                        Cuadruplos.getCuadruplos().remove(i);
+                        //Cuadruplos.getCuadruplos().remove(i+1);
+                    
+                    }
+                }
+            }
             //Creando codigo Final
             f_codegenerator  Codigo_final = new f_codegenerator(messages);
             Codigo_final.generateCode();
             Codigo_final.printCode();
+            //Cuadruplos.Imprimir();
+
             
         }catch(Exception e ){
             e.printStackTrace();
