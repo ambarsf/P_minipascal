@@ -26,7 +26,7 @@ begin
    a := 10; {5 + 10 * 8 - 5 + 6 / 3;}
    {x:=10;}
    c:= 5;
-   d:= findMin(a,c,5);
+   d:= findMin(a,c);
    b := 6/3;
    {d := a+b*c/b+i;}
    h := a*a*a*a*a*a;
