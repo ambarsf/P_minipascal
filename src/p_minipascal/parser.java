@@ -809,6 +809,7 @@ class CUP$parser$actions {
                                                                                                Simbolo tmp2 = SymbolTable.buscarConAmbito(id+"_Param"+i);
                                                                                                if(tmp2 != null){
                                                                                                     Simbolo tmp3 = SymbolTable.buscar(c_p.getCallers().get(i).toString());
+                                                                                                    if(tmp3!=null)
                                                                                                     if(!tmp3.getTipo().equals(tmp2.getTipo()))
                                                                                                         System.err.println("El tipo de "+c_p.getCallers().get(i).toString() +" es incorrecto");
                                                                                                     else{
@@ -1729,7 +1730,7 @@ class CUP$parser$actions {
                                                                                                                     }
                                                                                                             }
                                                                                                             else{
-                                                                                                                System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos chars");
+                                                                                                                System.err.println("Error en la linea: "+plleft+" no se pueden sumar estos valores, se esperan dos enteros");
                                                                                                             }
                                                                                                         }
                                                                                                         else{
@@ -2454,12 +2455,21 @@ class CUP$parser$actions {
                                                                                 Simbolo tmp = null;
                                                                                 Simbolo tmp2 = null;
                                                                                 tmp = SymbolTable.buscar(v.toString());
-                                                                                if (ex!=null ){
+                                                                               // if(ex.toString()!="")
+                                                                               if(ex!=null)
+                                                                                if (ex.getS_exp1()!=null){
+                                                                                    //System.out.println("EX"+ex.toString() );
+                                                                                    
                                                                                     tmp2 = SymbolTable.buscar(ex.toString());
                                                                                     if(tmp == null){
                                                                                         System.err.println("Error en la linea: "+asleft+" variable " +v.toString()+ " no existe.");
-                                                                                    } 
+                                                                                    }
                                                                                     else if(tmp!=null){
+                                                                                        if(ex.toString().matches("[a-zA-Z]+[a-zA-Z]*[0-9]*")&&tmp2==null&&ex.toString()!=null)
+                                                                                            System.err.println("Error en la linea: "+asleft+" variable " +ex.toString()+ " no existe.");
+                                                                                        //if(tmp2==null){
+                                                                                        //    System.err.println("Error en la linea: "+asleft+" variable " +ex.toString()+ " no existe.");
+                                                                                        //}
                                                                                         String ambito1 = SymbolTable.verificarAmbito(tmp.nombre);
                                                                                         if(tmp.valor == null){                                                                                       
                                                                                             String tipoVariable = SymbolTable.verificarTipo(tmp.nombre);
@@ -2668,7 +2678,8 @@ class CUP$parser$actions {
                                                                                                     
                                                                                                     if ((ambito1.equals(SymbolTable.profundidad)) ||
                                                                                                        (ambito1.equals("main") && !SymbolTable.profundidad.equals("main")) || (ambito1.contains(SymbolTable.profundidad))||ambito1.contains("function")){
-                                                                                                       if(ex.getS_exp1().getTerm().getFact().getType()== 4){
+                                                                                                       if(ex.getS_exp1()!=null)
+                                                                                                        if(ex.getS_exp1().getTerm().getFact().getType()== 4){
                                                                                                             SymbolTable.insertar(v.toString(),ex);
                                                                                                                 if (ex.getS_exp1().getTemp()== null){
                                                                                                                     Cuadruplo cuad= new Cuadruplo("ASSIGN",""+ex,v.toString());
@@ -2806,7 +2817,7 @@ class CUP$parser$actions {
                                                                                         }
                                                                                     }
                                                                                 }else{
-                                                                                    
+
                                                                                 }
                                                                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("assign_s",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
