@@ -15,7 +15,6 @@ PROGRAM FindLarge;
           END
   ELSE
           BEGIN
-	   	
           Larger := Number2;
           END;
   WRITE ('THE LARGER OF ' , Number1,' AND ',Number2,' IS ',Larger );

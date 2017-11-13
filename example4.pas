@@ -1,28 +1,21 @@
 program exfunction;
-var a, b, c,min :Integer;
+var a, b, c :Integer;
     d,c,l       :String;
     x,l,m,w     :Char;
 function findMin(x: integer, m: integer):integer;
-  var a, b, c,  min:Integer;
+  var y:Integer;
   begin
      write(' Enter three numbers: ');
-     a := a+3;
+     y := 3;
      write(' Minimum: ', min);
- {Hola
- como estas ?}
-end;
-procedudure findMin(x: integer, m: integer):integer;
+  end;
+
+  function findMax(x: integer, m: integer):integer;
+    var y:Integer;
+    begin
+       write(' Enter three numbers: ');
+       y := 3;
+    end;
 begin
-  write('Fernando Reyes Magos: ');
-end;
-function findMin(x: integer, m: integer):integer;
-begin
-  if a<a then
-    read(b);
-end;
-begin
-   while a=b do
-   a:=a;
-     write('Fernando Reyes Magos: ');
-end
-.
+ min := 5;
+end.

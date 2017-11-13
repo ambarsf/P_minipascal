@@ -22,18 +22,18 @@
 {22}     function findMax(j: integer, g: integer):integer;
 {23}       var j, t :integer;
 {24}       begin
-{25}          x:='hey';
+{25}          {x:='hey';}
 {26}       end;
 {27}begin
 {28}   a := 10; {5 + 10 * 8 - 5 + 6 / 3;}
-{29}   a := 'cadena';
-{30}   e := 11;
+{29}   {a := 'cadena';}
+{30}   {e := 11;}
 {31}   noexiste:= 10;
 {32}   a:= noexiste;
 {33}   a:= 10 + noexiste;
 {34}   e := 'cadena';
 {35}   x:=10;
-{36}   min:= 'Rosa'; 
+{36}   min:= 'Rosa';
 {37}   c:= 5;
 {38}   a:= 'Cadena' + 'cadena';
 {39}   a:= 4 + c;

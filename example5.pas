@@ -14,7 +14,6 @@ PROGRAM Loop;
     WRITE('ENTER THE CARD NUMBER TO VERIFY ');
     READ(CardNumber);
     CheckDigit := CardNumber;
-    DigitsLeft := CardNumber;
     Sum := 0;
     WHILE DigitsLeft > 0 DO
             BEGIN
