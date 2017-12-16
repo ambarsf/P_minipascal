@@ -18,11 +18,11 @@ import p_minipascal.Simbolo;
 public class main_app {
     public static void main(String argv[]){
         try{
-            parser p = new parser(new Lexer(new FileReader("example6.pas")));
+            parser p = new parser(new Lexer(new FileReader("example5.pas")));
             p.parse();
-            SymbolTable.imprimir();
+            //SymbolTable.imprimir();
             //imprimiendo Cuadruplos
-            //Cuadruplos.Imprimir();
+            Cuadruplos.Imprimir();
             //obteniendo los mensajes de los cuadruplos
             ArrayList<String> messages = new ArrayList();
             for (int i = 0; i < Cuadruplos.getCuadruplos().size(); i++) {

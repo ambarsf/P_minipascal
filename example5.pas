@@ -20,9 +20,5 @@ PROGRAM Loop;
 	    Sum:= 26/2;
             DigitsLeft := 'cadena es esto';
 	    DigitsLeft2 := DigitsLeft;
-            END;
-    IF CheckDigit = Sum THEN
-            WRITE(CardNumber,' IS VALID')
-    ELSE
-      WRITE(CardNumber,' IS INVALID');
+            END;;
     END.
