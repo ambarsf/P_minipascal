@@ -42,7 +42,7 @@ public class f_codegenerator {
     public void generateHeader() {
         code += ".data\n";
         for (int i = 0; i < messages.size(); i++) {
-            code += "_msg" + (i + 1) + ":      .asciiz " + messages.get(i) + "\n";
+            code += "_msg" + (i ) + ":      .asciiz " + messages.get(i) + "\n";
         }
         for (Simbolo s : SymbolTable.getTablaSimbolos().values()){
             if(s.getAmbito().matches("main")){
@@ -132,7 +132,7 @@ public class f_codegenerator {
     }
 
     private void generatePrintCode(Cuadruplo Cuadruplo_actual) {
-        int encontrado=-1;
+        int encontrado=0;
         for (int i = 0; i < messages.size(); i++) {
             if (Cuadruplo_actual.getArgumento1().matches(messages.get(i))){
                 encontrado=i;
@@ -142,9 +142,11 @@ public class f_codegenerator {
         if (encontrado==-1){
             
         }else{
+            code+= " \n";
             code+="   li $v0, 4\n";
             code+="   la $a0,_msg"+encontrado+"\n";
             code+="   syscall\n";
+            code+= " \n";
         }
         
     }
