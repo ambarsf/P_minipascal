@@ -128,7 +128,11 @@ public class f_codegenerator {
 
     private void generateAssignmentCode(Cuadruplo Cuadruplo_actual) {
         if (Cuadruplo_actual.getArgumento1().contains("'")){
-            
+            code += "\n";
+            Temporal tmp = new Temporal();
+            code += "   li _"+tmp+", "+Cuadruplo_actual.getArgumento1()+"\n";
+            code += "   sw $"+tmp+", _"+Cuadruplo_actual.getResultado()+"\n";          
+            code += "\n";          
         }else if (Cuadruplo_actual.getArgumento1().matches("^([1-9]|[1-9][0-9]|[1-9][0-9][0-9])$")){
             code += "\n";
             Temporal tmp = new Temporal();
