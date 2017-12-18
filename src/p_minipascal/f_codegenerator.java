@@ -68,6 +68,8 @@ public class f_codegenerator {
                 generateEtiqCode(Cuadruplo_actual);
             } else if (Cuadruplo_actual.getOperacion().contains("WRITE")) {
                 generatePrintCode(Cuadruplo_actual);
+            } else if (Cuadruplo_actual.getOperacion().contains("READ")) {
+                generateReadCode(Cuadruplo_actual);
             } else if (Cuadruplo_actual.getOperacion().equals("+") || Cuadruplo_actual.getOperacion().equals("-") || Cuadruplo_actual.getOperacion().equals("*") || Cuadruplo_actual.getOperacion().equals("/")
                         || Cuadruplo_actual.getOperacion().equals("<")|| Cuadruplo_actual.getOperacion().equals("<=")|| Cuadruplo_actual.getOperacion().equals("=")|| Cuadruplo_actual.getOperacion().equals(">=")
                         || Cuadruplo_actual.getOperacion().equals(">=")) {
@@ -155,6 +157,14 @@ public class f_codegenerator {
             code+= " \n";
         }
         
+    }
+    
+    public void generateReadCode(Cuadruplo Cuadruplo_actual){
+        code += "\n";
+        code += "   li $v0, 5\n";
+        code += "   syscall\n";
+        code += "   sw $v0, _"+Cuadruplo_actual.getArgumento1()+"\n";
+        code += "\n";
     }
     public void generateFinalFunctionCode() {
         code += "   move $sp, $fp\n";
