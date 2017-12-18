@@ -34,7 +34,7 @@ public class f_codegenerator {
     
     public void generateCode() {
         generateHeader();
-        code += ".text\n.globl main\nmain:\n";
+        code += ".text\n.globl main\n\nmain:\n";
         generateQuadrupleCode();
 
     }
@@ -42,7 +42,7 @@ public class f_codegenerator {
     public void generateHeader() {
         code += ".data\n";
         for (int i = 0; i < messages.size(); i++) {
-            code += "_msg" + (i ) + ":      .asciiz " + messages.get(i) + "\n";
+            code += "_msg" + (i) + ":      .asciiz " + messages.get(i) + "\n";
         }
         for (Simbolo s : SymbolTable.getTablaSimbolos().values()){
             if(s.getAmbito().matches("main")){
@@ -53,7 +53,7 @@ public class f_codegenerator {
     
     public void generateQuadrupleCode() {
         Cuadruplo Cuadruplo_actual;
-        code += "   move $fp,$sp\n";
+        code += "move $fp,$sp\n";
         stack_temps_alive.add(new ArrayList<String>());
         generateStartFunctionCode();
         for (int i = 0; i < Cuadruplos.getCuadruplos().size(); i++) {
@@ -100,17 +100,17 @@ public class f_codegenerator {
         } else if (Cuadruplo_actual.getOperacion().equals("/")) {
             operation = "div";
         } else if (Cuadruplo_actual.getOperacion().equals("<")) {
-            operation = "bless";
+            operation = "blt";
         } else if (Cuadruplo_actual.getOperacion().equals("<=")) {
-            operation = "bleq";
+            operation = "ble";
         } else if (Cuadruplo_actual.getOperacion().equals("=")) {
             operation = "beq";
         } else if (Cuadruplo_actual.getOperacion().equals(">=")) {
-            operation = "greq";
+            operation = "bge";
         }else if (Cuadruplo_actual.getOperacion().equals(">")) {
-            operation = "gre";
+            operation = "bgt";
         }
-        code += operation+"     $"+Cuadruplo_actual.getArgumento1()+", $"+Cuadruplo_actual.getArgumento2()+", $"+Cuadruplo_actual.getResultado()+"\n";
+        code += operation+"     _"+Cuadruplo_actual.getArgumento1()+", _"+Cuadruplo_actual.getArgumento2()+", $"+Cuadruplo_actual.getResultado()+"\n";
         /*String primerOperando = "";
         String segundoOperando = "";
         String variableLocation = "";
@@ -132,7 +132,7 @@ public class f_codegenerator {
     }
 
     private void generatePrintCode(Cuadruplo Cuadruplo_actual) {
-        int encontrado=0;
+        int encontrado=-1;
         for (int i = 0; i < messages.size(); i++) {
             if (Cuadruplo_actual.getArgumento1().matches(messages.get(i))){
                 encontrado=i;
@@ -140,6 +140,12 @@ public class f_codegenerator {
         }
         
         if (encontrado==-1){
+            code += "\n";
+            code+="   li $v0, 1\n";
+            code+="   lw $a0,_"+Cuadruplo_actual.getArgumento1()+"\n";
+            code+="   syscall\n";
+            code+= " \n";
+                    
             
         }else{
             code+= " \n";

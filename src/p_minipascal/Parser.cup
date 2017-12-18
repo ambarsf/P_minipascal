@@ -731,7 +731,10 @@ proc_s ::= proc_id:p_id                                                         
 proc_id ::= ID:id                                                               {: RESULT = new Procedure_iden(id); :}
 ;
 
-read_s ::= READ LPAREN var:i_v RPAREN                                           {: RESULT = new Read_stament(i_v); :}
+read_s ::= READ LPAREN var:i_v RPAREN                                           {: RESULT = new Read_stament(i_v); 
+                                                                                    Cuadruplo cuad =  new Cuadruplo("READ", i_v.toString());
+                                                                                    Cuadruplos.add(cuad);
+                                                                                :}
           |READ error var:i_v RPAREN                                            {: System.err.println(" ( expected"); :}
           |READ LPAREN var:i_v error                                            {: System.err.println(" ) expected"); :}
 ;
